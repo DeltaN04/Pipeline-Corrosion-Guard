@@ -6,10 +6,23 @@ Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs, n
 > **Synthetic data only.** Engineering formulas are **simplified educational approximations**,
 > **NOT for real integrity decisions.**
 
+## Problem
+
+Pipeline operators review thousands of inline-inspection (ILI) corrosion anomalies by hand. Missed
+critical defects (predicted time-to-failure under a year) become leaks, ruptures or regulator
+findings; over-escalated ones waste scarce engineer hours. This PoC asks: can a small multi-agent
+system triage anomalies by risk, explain every decision, and catch the criticals that plain rule
+tables miss — fully offline, no paid APIs?
+
+**What it does:** Planner scopes the run → Research enriches context (interacting anomalies,
+dirty records) → Executor triages with engineering tools (simplified B31G, risk scoring) →
+Critic challenges borderline calls, upgrades missed criticals and loops back → confidence gate
+for human approval → work orders, report and notifications for approved items.
+
 ## Setup & run
 
 ```bash
-cd corrosionguard
+git clone https://github.com/DeltaN04/Pipeline-Corrosion-Guard && cd Pipeline-Corrosion-Guard
 python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt  # or: uv pip install ...
 .venv/bin/python data/generate_data.py        # regenerate synthetic data (seed 42)
 .venv/bin/python -m pytest tests/ -q          # validation suite (23 tests)
@@ -36,6 +49,28 @@ One-command equivalent: `pip install -r requirements.txt && streamlit run app.py
 .venv/bin/python src/graph/runner.py data/ili_anomalies.csv
 ```
 
+## How it works
+
+```mermaid
+flowchart LR
+  A[ILI anomalies CSV] --> B[Planner<br/>scope + plan]
+  B --> C[Research agent<br/>interactions, dirty records]
+  C --> D[Executor<br/>B31G + risk triage]
+  D --> E[Critic<br/>challenges borderline calls<br/>upgrades missed criticals]
+  E -->|loop-back while issues| D
+  E --> F[Confidence gate<br/>human approval of IMMEDIATEs]
+  F --> G[Work orders · report · notifications]
+```
+
+Key design decisions:
+
+- **Deterministic mock LLM by default** — every run is reproducible and the audit trail is honest;
+  swap to a local model (`LLM_BACKEND="ollama"`) with a one-line change in `src/llm/provider.py`.
+- **Critic loop-back is the point** — the critic upgrades missed criticals and explains each change;
+  this is where validation recall moves 0.85 → 0.98.
+- **Human approval gate** — nothing is finalised until a human confirms IMMEDIATE-class findings.
+- **Offline and free** — no network at runtime; Streamlit UI over a local synthetic CSV.
+
 ## Assumptions
 
 - Manual review baseline: 20 min/anomaly (stated in UI + REPORT; adjust to your shop's number).
@@ -59,3 +94,20 @@ corrosionguard/
   docs/  architecture.md, architecture.png, generate_diagram.py
   outputs/  work orders, summaries, notifications (generated at runtime)
 ```
+
+## Results & validation
+
+- **23 pytest tests** over the agent logic, tools and schemas.
+- End-to-end triage on the synthetic benchmark (300 anomalies, 15 dirty records flagged):
+  final missed-critical recall **0.98** vs **0.85** for legacy labels — upgrades come from the
+  critic's loop-back and are explained per item.
+- The manual-review baseline (20 min/anomaly) is an explicit assumption, stated in the UI and
+  REPORT — adjust to your shop's number.
+
+## Limitations & future work
+
+- Synthetic data and simplified engineering formulas (Modified B31G, 1.1×SMYS, 1.0 m interaction
+  threshold) — educational use only, **not for real integrity decisions**.
+- Mock LLM rationales are template text; a real local model would enrich research and explanations.
+- Future: real ILI datasets and full code suite (RSTRENG), GIS/chainage map integration,
+  persistence + auth for multi-user deployment, scheduled re-triage as new inspection runs land.
