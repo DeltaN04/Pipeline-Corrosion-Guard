@@ -270,13 +270,17 @@ elif page.startswith("6"):
                                            st.session_state.approvals)
             st.session_state.outputs = out
             res["outputs"] = out
-            st.success(f"Generated {out['n_orders']} work orders.")
+            st.success(f"Generated {out.get('n_work_orders', 0)} work orders · {out.get('n_scheduled', 0)} scheduled for monitoring.")
         out = st.session_state.outputs or res.get("outputs")
         if out:
             wo = pd.read_csv(out["work_orders_csv"])
             st.dataframe(wo, use_container_width=True)
             st.download_button("Download work orders CSV", wo.to_csv(index=False),
                                file_name="work_orders.csv")
+            if out.get("scheduled_monitoring_csv") and Path(out["scheduled_monitoring_csv"]).exists():
+                sched = pd.read_csv(out["scheduled_monitoring_csv"])
+                st.download_button("Download scheduled monitoring CSV", sched.to_csv(index=False),
+                                   file_name="scheduled_monitoring.csv")
             with open(out["summary_md"]) as f:
                 md = f.read()
             st.download_button("Download engineer summary (.md)", md, file_name="summary.md")
