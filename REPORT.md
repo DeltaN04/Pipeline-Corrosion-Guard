@@ -44,6 +44,8 @@ and downtime.
 - **Orchestration (LangGraph)** — `Planner → Research → Executor → Critic → router`:
   UPGRADE_REQUIRED loops back with conservative constraints (max 2 iterations); unresolved
   items escalate to the more severe class (`ESCALATED`); human approval gate for IMMEDIATE.
+  **Final triage always honors the Critic**: final severity = more severe of
+  (post-rework Executor class, Critic screen class).
 
 ## 4. Architecture explanation
 
@@ -58,7 +60,7 @@ See `docs/ARCHITECTURE_EXPLAINED.md` (component table, edge table, decision poin
   results, verdicts, iteration, objections, escalations, human decisions, outputs, A2A
   messages, metrics, validation_errors, rework_stats, ground_truth, ablation snapshots.
 - **Validation**: pydantic schemas gate every agent I/O (`src/schemas/models.py`); failures
-  logged to `validation_errors` and quarantined. 26 tests green.
+  logged to `validation_errors` and quarantined. 29 tests green.
 - **LLM Swap**: `src/llm/provider.py` exposes `llm_text(llm, prompt)` calling `llm.invoke()`.
   `SimpleFakeChatModel` drop-in test proves a non-mock chat model runs the pipeline end to end.
 
@@ -68,27 +70,64 @@ Data: 300 anomalies per seed across 4 pipelines (40 km each). Truth from the ind
 ground-truth model; legacy labels degraded on planted missed-criticals; ~5% dirty records.
 **Tuning seed: 42. Held-out evaluation seeds: 7 and 99.**
 
-| Seed | System | Recall (critical) | Precision | TP | FP | FN |
-|------|--------|-------------------|-----------|----|----|----|
-| 42 (tune) | Legacy manual labels | 0.333 | 1.000 | 10 | 0 | 20 |
-| 42 (tune) | Executor only (no context) | 0.667 | 0.211 | 20 | 75 | 10 |
-| 42 (tune) | Executor after rework | 0.667 | 0.215 | 20 | 73 | 10 |
-| 42 (tune) | Final (Executor + Critic) | 0.667 | 0.215 | 20 | 73 | 10 |
-| 7 (eval) | Legacy | 0.423 | 1.000 | 11 | 0 | 15 |
-| 7 (eval) | Executor only | 0.692 | 0.176 | 18 | 84 | 8 |
-| 7 (eval) | Final | 0.692 | 0.180 | 18 | 82 | 8 |
-| 99 (eval) | Legacy | 0.364 | 1.000 | 12 | 0 | 21 |
-| 99 (eval) | Executor only | 0.818 | 0.307 | 27 | 61 | 6 |
-| 99 (eval) | Final | 0.818 | 0.318 | 27 | 58 | 6 |
+### Critical-class (IMMEDIATE + 60_DAY) recall / precision
 
-- **missed_caught** (truth critical, legacy below critical, final critical): 13 / 8 / 16 (seeds 42/7/99).
-- **false_alarms** (legacy below critical, final critical, truth NOT critical): 73 / 82 / 58.
-- **Rework loop**: 1 iteration; objections raised at iteration 0 are all resolved at iteration 1.
-- **Interacting share**: ~3–5%. **Escalated**: 0–3%. **Runtime**: <0.2 s per 300-anomaly run.
-- **Precision target note**: the pre-set target (precision >= 0.40 with recall >= 0.70) was
-  **not reachable by threshold tuning alone**. Root cause: ILI measurement noise (±10% of wall
-  thickness) pushes genuinely shallow anomalies over the depth threshold, creating false alarms
-  that no threshold adjustment can remove without also dropping recall. Reported honestly.
+| Seed | Legacy | Executor only | Executor after rework | Critic screen | Final |
+|------|--------|---------------|----------------------|---------------|-------|
+| 42 (tune) | 0.333 / 1.000 | 0.667 / 0.211 | 0.733 / 0.208 | 0.733 / 0.208 | **0.733 / 0.208** |
+| 7 (eval) | 0.423 / 1.000 | 0.692 / 0.176 | 0.731 / 0.178 | 0.731 / 0.178 | **0.731 / 0.178** |
+| 99 (eval) | 0.364 / 1.000 | 0.818 / 0.307 | 0.879 / 0.282 | 0.879 / 0.282 | **0.879 / 0.282** |
+
+Aggregate eval seeds 7+99: legacy recall 0.393; executor_only 0.755/0.241;
+executor_after_rework = critic_screen = final: **recall 0.805, precision 0.230**.
+
+### IMMEDIATE-only recall / precision (eval seeds 7+99 means)
+
+| System | IMMEDIATE recall | IMMEDIATE precision |
+|--------|------------------|---------------------|
+| Legacy | 0.079 | 0.500 |
+| Executor only | 0.675 | 0.589 |
+| Executor after rework | 0.728 | 0.436 |
+| Critic screen = Final | 0.728 | 0.436 |
+
+### Classification accuracy (seed 42 example; per-seed values in metrics.json)
+
+Exact-class accuracy ≈ 0.50–0.55; within-one-class accuracy ≈ 0.85–0.89 across systems.
+Over-triage (predicted class more severe than truth): 111–136 per run.
+Under-triage: 10–16 per run.
+
+### Missed criticals and false alarms
+
+- **missed_caught** (truth critical, legacy below critical, final critical): 15 / 9 / 18 (seeds 42/7/99).
+- **false_alarms** (final critical, truth not critical): 84 / 88 / 74.
+- **Adjacency of false alarms** (seed 42): 48 adjacent-class (truly 180_DAY flagged 60_DAY/IMMEDIATE,
+  or truly MONITOR flagged 180_DAY), 36 two-plus classes off (mostly truly MONITOR flagged 60_DAY+).
+
+### Measurement-noise experiment (same seeds, pipeline re-run with zero noise)
+
+| Seed | Final precision (noisy) | Final precision (zero noise) | Delta |
+|------|------------------------|------------------------------|-------|
+| 42 | 0.208 | 0.216 | +0.008 |
+| 7 | 0.178 | 0.182 | +0.004 |
+| 99 | 0.282 | 0.284 | +0.002 |
+
+**Measured conclusion:** ILI sizing noise is **NOT** the primary contributor to false alarms
+(mean precision delta only +0.005). The false alarms are dominated by genuinely ambiguous
+shallow anomalies with context flags (HCA/crossing/interaction) that the rules flag
+conservatively. Over-triage is a deliberate conservative bias, not a noise artifact.
+
+### Critic's measured contribution — stated truthfully
+
+- **Critical recall:** the Critic screen alone (0.733–0.879) equals the final system on every
+  seed — because final now always honors the Critic. The Critic is the *dominant* contributor
+  to critical recall; the Executor-only ablation (0.667–0.818) is lower.
+- **Rework adds nothing measurable on top of the Critic screen**: executor_after_rework and
+  critic_screen rows are identical on all three seeds. The conservative Executor shares the
+  Critic's rule family, so adopting the Critic's constraints deterministically reproduces the
+  screen class — the "loop" converges by construction, not by independent reasoning.
+- **What the Critic adds:** it is the recall floor (nothing ends below its screen); its
+  independent screen is what forces UPGRADE_REQUIRED objections in the first place. But its
+  precision (0.18–0.28) is inherited by the final system verbatim.
 
 ### Rework convergence caveat
 
@@ -104,12 +143,11 @@ second opinion rather than a rule-family mirror.
 
 - **Synthetic data**: patterns are designed, not operator ILI; no vendor formats, no GIS.
 - **Simplified formulas**: B31G/ERF/risk rules are educational approximations; **not for real decisions**.
-- **Low precision / over-triage**: final critical precision is 0.18–0.32 (target was >= 0.40,
-  not reached). Of the anomalies flagged critical by the pipeline, only ~20–30% are truly
-  critical — 58–82 false alarms per 300-anomaly run. Root cause: ILI sizing noise pushes
-  shallow anomalies over depth thresholds; threshold tuning cannot fix this without sacrificing
-  recall. Flagging is deliberately conservative (better to over-inspect than miss a rupture),
-  but a production system would need calibrated noise models or multi-signal confirmation.
+- **Low precision / over-triage**: final critical precision is 0.18–0.28 across seeds.
+  The zero-noise experiment shows this is **not** primarily an ILI-sizing-noise artifact —
+  false alarms are genuinely ambiguous shallow/context-flagged anomalies that the rules treat
+  conservatively. ~75% of flagged items are not truly critical (over-triage 111–136 per run),
+  and 48/84 of seed-42 false alarms are adjacent-class (off by one severity level).
 - **Mock LLM**: template prose only — no real language understanding.
 - **Rule-family mirror**: rework convergence is partly by design (see §6 caveat).
 - **Static thresholds**: no learning from engineer feedback yet.

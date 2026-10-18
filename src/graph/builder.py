@@ -295,6 +295,13 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
     rework_stats["resolved_on_rework"] = len(resolved_on_rework)
     rework_stats["escalated"] = len(escalated)
 
+    # HONOR THE CRITIC: final_class is never below the Critic's screen class,
+    # for every anomaly — including those marked "resolved on rework".
+    for v in verdicts:
+        ex_cls = by_risk.get(v["anomaly_id"], {}).get("triage_class", v.get("executor_class"))
+        sc_cls = v.get("critic_screen_class", "MONITOR")
+        v["final_class"] = ex_cls if SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0) else sc_cls
+
     llm = get_chat_model()
     by_enrich = {str(r.get("anomaly_id")): r for r in state.get("enriched", []) or []}
     approvals = dict(state.get("human_decisions", {}) or {})
@@ -310,6 +317,8 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
                        executor_class_initial=executor_class_initial,
                        executor_after_rework=executor_after_rework)
     metrics["rework_stats"] = rework_stats
+    metrics["executor_class_initial_map"] = executor_class_initial
+    metrics["executor_after_rework_map"] = executor_after_rework
 
     b = _bus(state)
     b.send("automation", "user", "RUN_COMPLETE", {"n_work_orders": outputs["n_work_orders"], "n_scheduled": outputs["n_scheduled"], "metrics": metrics})
@@ -338,6 +347,7 @@ def _metrics(
         ("legacy", {a: by_enrich.get(a, {}).get("legacy_manual_label") for a in truth}),
         ("executor_only", executor_class_initial or {}),
         ("executor_after_rework", executor_after_rework or {}),
+        ("critic_screen", {v["anomaly_id"]: v.get("critic_screen_class", "MONITOR") for v in verdicts}),
         ("final", {v["anomaly_id"]: v["final_class"] for v in verdicts}),
     ]
 

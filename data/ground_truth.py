@@ -156,10 +156,13 @@ def compute_true_state(
 def generate_true_anomalies(
     seed: int = 42,
     n_total: int = 300,
+    apply_noise: bool = True,
 ) -> pd.DataFrame:
     """Generate anomalies with TRUE state (hidden) and observed (noisy) columns.
     
     This is the main entry point for data generation.
+    apply_noise=False yields noise-free observations (used for the measurement-noise
+    experiment in scripts/run_eval.py).
     """
     rng = np.random.default_rng(seed)
     rnd = random.Random(seed)
@@ -283,8 +286,15 @@ def generate_true_anomalies(
             df.loc[idx, "clock_position"] = cluster_clock
             df.loc[idx, "true_depth_pct"] = max(df.loc[idx, "true_depth_pct"], 55 + j * 3)
 
-    # Now add measurement noise to get observed columns
-    df = add_measurement_noise(df, rng)
+    # Now add measurement noise to get observed columns (or use true values directly)
+    if apply_noise:
+        df = add_measurement_noise(df, rng)
+    else:
+        # Noise-free: observed == true (used to isolate measurement-noise impact)
+        for idx, row in df.iterrows():
+            df.at[idx, "depth_pct"] = row["true_depth_pct"]
+            df.at[idx, "prior_depth_pct"] = row["true_prior_depth_pct"]
+            df.at[idx, "growth_rate_pct_per_yr"] = row["true_growth_pct_per_yr"]
 
     # Recompute observed ERF and growth from noisy depths (for agent view)
     for idx, row in df.iterrows():

@@ -92,7 +92,7 @@ def executor_triage(
         return "IMMEDIATE"
     if d >= 60 or (e is not None and e >= 0.85) or (g or -1) >= 4 or (p or -1) >= 80:
         return "60_DAY"
-    if d >= 60 or (e is not None and e >= 0.6) or (g or -1) >= 2:
+    if d >= 40 or (e is not None and e >= 0.6) or (g or -1) >= 2:
         return "180_DAY"
     return "MONITOR"
 
@@ -138,13 +138,13 @@ def executor_triage_conservative(
         return "60_DAY"
     if (g or -1) >= 4:
         return "60_DAY"
-    if d >= 60 and (hca or near_road or near_water or interacting or near_weld):
+    if d >= 50 and (hca or near_road or near_water or interacting or near_weld):
         return "60_DAY"
     if (p or -1) >= 80:
         return "60_DAY"
 
     # 180_DAY thresholds
-    if d >= 60:
+    if d >= 40:
         return "180_DAY"
     if e is not None and e >= 0.6:
         return "180_DAY"
@@ -193,14 +193,14 @@ def full_screen_class(
         reasons.append("ERF>=0.85")
     if (g or -1) >= 4:
         reasons.append("rapid growth>=4%/yr")
-    if d >= 60 and (hca or near_road or near_water or interacting or near_weld):
-        reasons.append("depth>=60% with HCA/crossing/weld/interaction context")
+    if d >= 50 and (hca or near_road or near_water or interacting or near_weld):
+        reasons.append("depth>=50% with HCA/crossing/weld/interaction context")
     if (projected_2yr or -1) >= 80:
         reasons.append("projected depth>=80% within 2yr")
     if reasons:
         return "60_DAY", reasons
-    if d >= 60:
-        reasons.append("depth>=60%")
+    if d >= 40:
+        reasons.append("depth>=40%")
     if e != -1 and e >= 0.6:
         reasons.append("ERF>=0.6")
     if (g or -1) >= 2:
