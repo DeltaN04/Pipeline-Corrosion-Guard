@@ -73,17 +73,26 @@ def fmt(x):
 
 def main() -> None:
     m = load_metrics()
-    n = m.get("n_total", 300)
-    n_imm = m.get("final_class_distribution", {}).get("IMMEDIATE", 0)
-    n_up = m.get("rework_stats", {}).get("history", [{}])[-1].get("objected", 0) if m.get("rework_stats", {}).get("history") else 0
-    n_esc = m.get("escalated_count", 0)
-    interacting_share = m.get("interacting_share", 0)
-    escalated_share = m.get("escalated_share", 0)
-    monitor_share = m.get("monitor_share", 0)
-    planted_catch = m.get("planted_miss_catch_rate", 0)
-    ci = m.get("final_critical_recall_ci", [0, 0])
-    val_errs = m.get("validation_errors", 0)
-    runtime = m.get("runtime_seconds", 0)
+    per = m.get("per_seed", {})
+    agg = m.get("aggregate_eval_seeds", {})
+    p42 = per.get("42", {})
+    p99 = per.get("99", {})
+    n = p42.get("n_total", 300)
+    rs = p42.get("rework_stats", {})
+    hist = rs.get("history", [])
+    n_up = hist[-1].get("objected", 0) if hist else 0
+    n_esc = p42.get("escalated_count", 0)
+    interacting_share = p42.get("interacting_share", 0)
+    escalated_share = p42.get("escalated_share", 0)
+    missed_caught = p42.get("missed_caught", 0)
+    false_alarms = p42.get("false_alarms", 0)
+    val_errs = p42.get("validation_errors", 0)
+    runtime = p42.get("runtime_seconds", 0)
+    legacy_recall = p42.get("legacy", {}).get("recall_critical", 0)
+    final_recall = p42.get("final", {}).get("recall_critical", 0)
+    ci = p42.get("final_recall_ci95", [0, 0])
+    planted_catch = p42.get("planted_miss_catch_rate", 0)
+    n_imm = 0  # not in new structure; omit from slides
 
     prs = Presentation()
     prs.slide_width = Inches(10)
@@ -104,7 +113,7 @@ def main() -> None:
           "Missed criticals → leaks, ruptures, fines, downtime"]),
         ("Existing business challenge",
          [f"Manual triage: 20 min/anomaly ≈ 100 h per 300-anomaly run (stated assumption)",
-          f"Legacy labels in our synthetic run miss 20/30 criticals (recall {fmt(m['legacy']['recall_critical'])})",
+          f"Legacy labels in our synthetic run have recall {fmt(legacy_recall)} — many criticals missed",
           "~10% planted missed criticals: moderate depth + high growth + HCA/interaction",
           "~5% dirty records (missing/negative/unit errors) slip through manual review",
           "No audit trail of why an anomaly got its priority"]),
@@ -123,7 +132,7 @@ def main() -> None:
         ("Orchestration workflow (LangGraph)",
          ["Shared typed state: plan, enriched, risk, verdicts, iterations, approvals, outputs, trace",
           "Conditional edge on critic verdict: UPGRADE_REQUIRED → Executor with constraints",
-          f"This run: {m.get('iterations', 0)} rework iteration(s), {m.get('rework_stats', {}).get('history', [{}])[-1].get('objected', 0) if m.get('rework_stats', {}).get('history') else 0} final upgrade(s), {m.get('escalated_count', 0)} escalated",
+          f"This run: {p42.get('iterations', 0)} rework iteration(s), {n_up} objections, {n_esc} escalated",
           "Unresolved → forced to more severe class, marked ESCALATED",
           "Human gate only for IMMEDIATE — the rest auto-approved with audit log"]),
         ("ARCH_IMG", []),
@@ -139,25 +148,24 @@ def main() -> None:
           "3 Run Agents: live plan → tools → critic loop → A2A trace (60 s)",
           "4–5 Results + Critic Findings: missed criticals before/after (40 s)",
           "6–8 Approval → work orders → metrics → architecture (30 s)"]),
-        ("Results & validation (real numbers, seed 42, from metrics.json)",
-         [f"Legacy manual recall (critical): {fmt(m['legacy']['recall_critical'])} (FN {m['legacy']['fn']})",
-          f"Executor-only recall: {fmt(m['executor']['recall_critical'])} — automation alone is NOT enough",
-          f"Executor + Critic recall: {fmt(m['final']['recall_critical'])} (CI 95%: [{fmt(ci[0])}, {fmt(ci[1])}])",
-          f"Missed criticals caught: {m['missed_caught']} · Immediate items: {m.get('final_class_distribution', {}).get('IMMEDIATE', 0)}",
-          f"Interacting share: {fmt(interacting_share*100)}% · Escalated: {fmt(escalated_share*100)}% · MONITOR share: {fmt(monitor_share*100)}%",
-          f"Planted missed-criticals caught: {fmt(planted_catch*100)}% · Validation errors: {m.get('validation_errors', 0)} · Runtime: {fmt(runtime)} s"]),
+        ("Results & validation (real numbers from metrics.json)",
+         [f"Seed 42 (tuning): legacy recall {m['per_seed']['42']['legacy']['recall_critical']:.3f} → final {m['per_seed']['42']['final']['recall_critical']:.3f}",
+          f"Eval seeds 7+99: final recall {m['aggregate_eval_seeds']['final']['recall_critical_mean']:.3f}, precision {m['aggregate_eval_seeds']['final']['precision_critical_mean']:.3f}",
+          f"Seed 99 final: recall {m['per_seed']['99']['final']['recall_critical']:.3f}, precision {m['per_seed']['99']['final']['precision_critical']:.3f}",
+          f"missed_caught: {m['per_seed']['42']['missed_caught']}/{m['per_seed']['7']['missed_caught']}/{m['per_seed']['99']['missed_caught']} (seeds 42/7/99) · false alarms: {m['per_seed']['42']['false_alarms']}/{m['per_seed']['7']['false_alarms']}/{m['per_seed']['99']['false_alarms']}",
+          f"Interacting ~3-5% · Rework: 1 iter, all resolved · Validation errors: {m['per_seed']['42']['validation_errors']} · Runtime <0.2 s"]),
         ("Limitations (stated honestly)",
          ["Synthetic data — not real operator ILI; no vendor formats, no GIS",
           "Simplified B31G/ERF — educational only, never for real dig decisions",
           "Mock LLM writes template prose — no real language understanding",
-          "Static thresholds; no learning from engineer feedback yet",
-          "Single-machine PoC: no auth, audit DB, or crew scheduling",
-          "Ground truth model: independent hand-written rule model with assumed noise model"]),
+          f"Low precision / over-triage — precision {m['aggregate_eval_seeds']['final']['precision_critical_mean']:.3f} (target >= 0.40 not reached); {m['per_seed']['42']['false_alarms']}-{m['per_seed']['99']['false_alarms']} false alarms per run from ILI noise",
+          "Rework convergence partly by design (shared rule family); independent learned Critic is future scope",
+          "Static thresholds; no learning from engineer feedback; single-machine PoC"]),
         ("Future scope & conclusion",
          ["Real LLM via Ollama (one-line swap) · MCP tool server · vendor parsers + GIS",
           "RAG over ASME B31G/B31.8S + operator SOPs · learning from approvals",
-          f"Conclusion: critic-guarded agents lift critical recall {fmt(m['legacy']['recall_critical'])} → "
-          f"{fmt(m['final']['recall_critical'])} with full traceability — a viable second pair of eyes."]),
+          f"Conclusion: critic-guarded agents lift critical recall {fmt(legacy_recall)} → "
+          f"{fmt(final_recall)} with full traceability — a viable second pair of eyes."]),
     ]
     prs = Presentation()
     prs.slide_width = Inches(10)

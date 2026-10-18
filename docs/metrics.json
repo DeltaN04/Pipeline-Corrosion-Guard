@@ -1,153 +1,427 @@
 {
-  "timestamp": "2026-10-18T11:19:58.205182+00:00",
-  "n_total": 300,
-  "n_anomalies": 300,
-  "iterations": 1,
-  "legacy": {
-    "recall_critical": 0.333,
-    "precision_critical": 1.0,
-    "tp": 10,
-    "fp": 0,
-    "fn": 20
-  },
-  "executor": {
-    "recall_critical": 0.733,
-    "precision_critical": 0.208,
-    "tp": 22,
-    "fp": 84,
-    "fn": 8
-  },
-  "final": {
-    "recall_critical": 0.733,
-    "precision_critical": 0.208,
-    "tp": 22,
-    "fp": 84,
-    "fn": 8
-  },
-  "confusion_final": {
-    "MONITOR->IMMEDIATE": 7,
-    "180_DAY->60_DAY": 48,
-    "60_DAY->IMMEDIATE": 6,
-    "180_DAY->180_DAY": 63,
-    "IMMEDIATE->IMMEDIATE": 8,
-    "MONITOR->60_DAY": 20,
-    "MONITOR->MONITOR": 76,
-    "MONITOR->180_DAY": 46,
-    "180_DAY->IMMEDIATE": 9,
-    "60_DAY->60_DAY": 3,
-    "60_DAY->180_DAY": 5,
-    "IMMEDIATE->180_DAY": 3,
-    "IMMEDIATE->60_DAY": 5,
-    "180_DAY->MONITOR": 1
-  },
-  "missed_caught": 104,
-  "rework_stats": {
-    "history": [
-      {
-        "iteration": 0,
-        "objected": 33,
-        "resolved": 0,
-        "resolved_ids": [],
-        "remaining": 33
+  "timestamp": "2026-10-18T17:17:55.727764+00:00",
+  "tuning_seed": 42,
+  "evaluation_seeds": [
+    7,
+    99
+  ],
+  "per_seed": {
+    "42": {
+      "seed": 42,
+      "n_total": 300,
+      "iterations": 1,
+      "legacy": {
+        "recall_critical": 0.333,
+        "precision_critical": 1.0,
+        "tp": 10,
+        "fp": 0,
+        "fn": 20
       },
-      {
-        "iteration": 1,
-        "objected": 0,
-        "resolved": 33,
-        "resolved_ids": [
+      "executor_only": {
+        "recall_critical": 0.667,
+        "precision_critical": 0.211,
+        "tp": 20,
+        "fp": 75,
+        "fn": 10
+      },
+      "executor_after_rework": {
+        "recall_critical": 0.667,
+        "precision_critical": 0.215,
+        "tp": 20,
+        "fp": 73,
+        "fn": 10
+      },
+      "final": {
+        "recall_critical": 0.667,
+        "precision_critical": 0.215,
+        "tp": 20,
+        "fp": 73,
+        "fn": 10
+      },
+      "final_recall_ci95": [
+        0.485,
+        0.85
+      ],
+      "final_precision_ci95": [
+        0.135,
+        0.304
+      ],
+      "confusion_final": {
+        "MONITOR->IMMEDIATE": 7,
+        "180_DAY->60_DAY": 37,
+        "60_DAY->IMMEDIATE": 6,
+        "180_DAY->180_DAY": 63,
+        "IMMEDIATE->IMMEDIATE": 8,
+        "MONITOR->60_DAY": 20,
+        "MONITOR->MONITOR": 84,
+        "MONITOR->180_DAY": 38,
+        "180_DAY->IMMEDIATE": 9,
+        "60_DAY->60_DAY": 2,
+        "60_DAY->180_DAY": 4,
+        "180_DAY->MONITOR": 12,
+        "IMMEDIATE->180_DAY": 3,
+        "IMMEDIATE->60_DAY": 4,
+        "60_DAY->MONITOR": 2,
+        "IMMEDIATE->MONITOR": 1
+      },
+      "missed_caught": 13,
+      "false_alarms": 73,
+      "rework_stats": {
+        "history": [
+          {
+            "iteration": 0,
+            "objected": 23,
+            "resolved": 0,
+            "resolved_ids": [],
+            "remaining": 23
+          },
+          {
+            "iteration": 1,
+            "objected": 0,
+            "resolved": 23,
+            "resolved_ids": [
+              "A-0001",
+              "A-0021",
+              "A-0052",
+              "A-0067",
+              "A-0082",
+              "A-0103",
+              "A-0125",
+              "A-0144",
+              "A-0151",
+              "A-0164",
+              "A-0172",
+              "A-0180",
+              "A-0182",
+              "A-0189",
+              "A-0193",
+              "A-0211",
+              "A-0220",
+              "A-0222",
+              "A-0241",
+              "A-0262",
+              "A-0277",
+              "A-0293",
+              "A-0297"
+            ],
+            "remaining": 0
+          }
+        ],
+        "all_objection_ids": [
+          "A-0172",
+          "A-0222",
+          "A-0293",
+          "A-0151",
+          "A-0211",
           "A-0001",
-          "A-0009",
-          "A-0021",
-          "A-0039",
-          "A-0052",
-          "A-0061",
+          "A-0125",
+          "A-0262",
+          "A-0193",
           "A-0067",
-          "A-0076",
+          "A-0277",
+          "A-0021",
+          "A-0052",
+          "A-0144",
+          "A-0241",
+          "A-0220",
           "A-0082",
           "A-0103",
-          "A-0125",
-          "A-0144",
-          "A-0147",
           "A-0164",
-          "A-0165",
-          "A-0172",
-          "A-0173",
-          "A-0180",
-          "A-0182",
           "A-0189",
-          "A-0193",
-          "A-0194",
-          "A-0202",
-          "A-0211",
-          "A-0218",
-          "A-0219",
-          "A-0220",
-          "A-0222",
-          "A-0241",
-          "A-0262",
-          "A-0277",
-          "A-0296",
-          "A-0297"
+          "A-0297",
+          "A-0180",
+          "A-0182"
         ],
-        "remaining": 0
-      }
-    ],
-    "all_objection_ids": [
-      "A-0180",
-      "A-0061",
-      "A-0147",
-      "A-0189",
-      "A-0277",
-      "A-0211",
-      "A-0194",
-      "A-0220",
-      "A-0165",
-      "A-0082",
-      "A-0262",
-      "A-0296",
-      "A-0164",
-      "A-0172",
-      "A-0193",
-      "A-0039",
-      "A-0173",
-      "A-0067",
-      "A-0021",
-      "A-0052",
-      "A-0222",
-      "A-0241",
-      "A-0125",
-      "A-0001",
-      "A-0202",
-      "A-0218",
-      "A-0009",
-      "A-0297",
-      "A-0103",
-      "A-0076",
-      "A-0219",
-      "A-0182",
-      "A-0144"
-    ],
-    "resolved_on_rework": 33,
-    "escalated": 0
+        "resolved_on_rework": 23,
+        "escalated": 0
+      },
+      "interacting_share": 0.0333,
+      "escalated_share": 0.0,
+      "validation_errors": 0,
+      "runtime_seconds": 0.08
+    },
+    "7": {
+      "seed": 7,
+      "n_total": 300,
+      "iterations": 1,
+      "legacy": {
+        "recall_critical": 0.423,
+        "precision_critical": 1.0,
+        "tp": 11,
+        "fp": 0,
+        "fn": 15
+      },
+      "executor_only": {
+        "recall_critical": 0.692,
+        "precision_critical": 0.176,
+        "tp": 18,
+        "fp": 84,
+        "fn": 8
+      },
+      "executor_after_rework": {
+        "recall_critical": 0.692,
+        "precision_critical": 0.18,
+        "tp": 18,
+        "fp": 82,
+        "fn": 8
+      },
+      "final": {
+        "recall_critical": 0.692,
+        "precision_critical": 0.18,
+        "tp": 18,
+        "fp": 82,
+        "fn": 8
+      },
+      "final_recall_ci95": [
+        0.52,
+        0.864
+      ],
+      "final_precision_ci95": [
+        0.11,
+        0.258
+      ],
+      "confusion_final": {
+        "180_DAY->60_DAY": 39,
+        "MONITOR->60_DAY": 29,
+        "MONITOR->IMMEDIATE": 7,
+        "180_DAY->180_DAY": 55,
+        "60_DAY->180_DAY": 3,
+        "MONITOR->MONITOR": 79,
+        "60_DAY->60_DAY": 6,
+        "IMMEDIATE->IMMEDIATE": 10,
+        "180_DAY->IMMEDIATE": 7,
+        "MONITOR->180_DAY": 44,
+        "180_DAY->MONITOR": 14,
+        "IMMEDIATE->60_DAY": 2,
+        "60_DAY->MONITOR": 2,
+        "IMMEDIATE->MONITOR": 2,
+        "IMMEDIATE->180_DAY": 1
+      },
+      "missed_caught": 8,
+      "false_alarms": 82,
+      "rework_stats": {
+        "history": [
+          {
+            "iteration": 0,
+            "objected": 19,
+            "resolved": 0,
+            "resolved_ids": [],
+            "remaining": 19
+          },
+          {
+            "iteration": 1,
+            "objected": 0,
+            "resolved": 19,
+            "resolved_ids": [
+              "A-0017",
+              "A-0068",
+              "A-0104",
+              "A-0109",
+              "A-0116",
+              "A-0129",
+              "A-0150",
+              "A-0152",
+              "A-0158",
+              "A-0178",
+              "A-0187",
+              "A-0193",
+              "A-0199",
+              "A-0210",
+              "A-0240",
+              "A-0241",
+              "A-0252",
+              "A-0277",
+              "A-0296"
+            ],
+            "remaining": 0
+          }
+        ],
+        "all_objection_ids": [
+          "A-0187",
+          "A-0116",
+          "A-0150",
+          "A-0178",
+          "A-0129",
+          "A-0199",
+          "A-0017",
+          "A-0193",
+          "A-0158",
+          "A-0109",
+          "A-0152",
+          "A-0240",
+          "A-0277",
+          "A-0068",
+          "A-0241",
+          "A-0210",
+          "A-0252",
+          "A-0296",
+          "A-0104"
+        ],
+        "resolved_on_rework": 19,
+        "escalated": 0
+      },
+      "interacting_share": 0.0333,
+      "escalated_share": 0.0,
+      "validation_errors": 0,
+      "runtime_seconds": 0.07
+    },
+    "99": {
+      "seed": 99,
+      "n_total": 300,
+      "iterations": 1,
+      "legacy": {
+        "recall_critical": 0.364,
+        "precision_critical": 1.0,
+        "tp": 12,
+        "fp": 0,
+        "fn": 21
+      },
+      "executor_only": {
+        "recall_critical": 0.818,
+        "precision_critical": 0.307,
+        "tp": 27,
+        "fp": 61,
+        "fn": 6
+      },
+      "executor_after_rework": {
+        "recall_critical": 0.818,
+        "precision_critical": 0.318,
+        "tp": 27,
+        "fp": 58,
+        "fn": 6
+      },
+      "final": {
+        "recall_critical": 0.818,
+        "precision_critical": 0.318,
+        "tp": 27,
+        "fp": 58,
+        "fn": 6
+      },
+      "final_recall_ci95": [
+        0.676,
+        0.941
+      ],
+      "final_precision_ci95": [
+        0.225,
+        0.418
+      ],
+      "confusion_final": {
+        "MONITOR->60_DAY": 17,
+        "180_DAY->60_DAY": 27,
+        "MONITOR->IMMEDIATE": 6,
+        "180_DAY->IMMEDIATE": 8,
+        "180_DAY->180_DAY": 69,
+        "IMMEDIATE->60_DAY": 2,
+        "MONITOR->180_DAY": 47,
+        "60_DAY->60_DAY": 6,
+        "IMMEDIATE->IMMEDIATE": 15,
+        "MONITOR->MONITOR": 78,
+        "60_DAY->IMMEDIATE": 4,
+        "60_DAY->180_DAY": 4,
+        "IMMEDIATE->MONITOR": 1,
+        "180_DAY->MONITOR": 15,
+        "IMMEDIATE->180_DAY": 1
+      },
+      "missed_caught": 16,
+      "false_alarms": 58,
+      "rework_stats": {
+        "history": [
+          {
+            "iteration": 0,
+            "objected": 24,
+            "resolved": 0,
+            "resolved_ids": [],
+            "remaining": 24
+          },
+          {
+            "iteration": 1,
+            "objected": 0,
+            "resolved": 24,
+            "resolved_ids": [
+              "A-0040",
+              "A-0049",
+              "A-0076",
+              "A-0082",
+              "A-0084",
+              "A-0103",
+              "A-0127",
+              "A-0142",
+              "A-0173",
+              "A-0183",
+              "A-0229",
+              "A-0233",
+              "A-0249",
+              "A-0251",
+              "A-0253",
+              "A-0256",
+              "A-0258",
+              "A-0261",
+              "A-0267",
+              "A-0271",
+              "A-0278",
+              "A-0279",
+              "A-0292",
+              "A-0297"
+            ],
+            "remaining": 0
+          }
+        ],
+        "all_objection_ids": [
+          "A-0258",
+          "A-0278",
+          "A-0049",
+          "A-0127",
+          "A-0267",
+          "A-0249",
+          "A-0253",
+          "A-0229",
+          "A-0142",
+          "A-0256",
+          "A-0251",
+          "A-0271",
+          "A-0233",
+          "A-0084",
+          "A-0082",
+          "A-0292",
+          "A-0183",
+          "A-0103",
+          "A-0173",
+          "A-0040",
+          "A-0297",
+          "A-0076",
+          "A-0279",
+          "A-0261"
+        ],
+        "resolved_on_rework": 24,
+        "escalated": 0
+      },
+      "interacting_share": 0.0333,
+      "escalated_share": 0.0,
+      "validation_errors": 0,
+      "runtime_seconds": 0.07
+    }
   },
-  "interacting_count": 10,
-  "interacting_share": 0.0333,
-  "escalated_count": 0,
-  "escalated_share": 0.0,
-  "final_class_distribution": {
-    "IMMEDIATE": 30,
-    "60_DAY": 76,
-    "180_DAY": 117,
-    "MONITOR": 77
+  "aggregate_eval_seeds": {
+    "legacy": {
+      "recall_critical_mean": 0.393,
+      "precision_critical_mean": 1.0
+    },
+    "executor_only": {
+      "recall_critical_mean": 0.755,
+      "precision_critical_mean": 0.241
+    },
+    "executor_after_rework": {
+      "recall_critical_mean": 0.755,
+      "precision_critical_mean": 0.249
+    },
+    "final": {
+      "recall_critical_mean": 0.755,
+      "precision_critical_mean": 0.249
+    }
   },
-  "monitor_share": 0.2567,
-  "planted_miss_total": 30,
-  "planted_miss_caught": 22,
-  "planted_miss_catch_rate": 0.7333,
-  "final_critical_recall_ci": [
-    0.5666,
-    0.8975
-  ],
-  "validation_errors": 0,
-  "runtime_seconds": 0.09
+  "notes": [
+    "Thresholds tuned on seed 42 only; seeds 7 and 99 are held-out evaluation.",
+    "Precision target >= 0.40 not reachable by threshold tuning alone; root cause is ILI measurement noise.",
+    "Rework convergence comes from the conservative Executor sharing the Critic's rule family."
+  ]
 }

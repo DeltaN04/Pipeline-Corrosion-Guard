@@ -299,14 +299,14 @@ elif page.startswith("7"):
     else:
         m = res["metrics"]
         # Guard against incomplete metrics
-        required_keys = ["legacy", "executor", "final"]
+        required_keys = ["legacy", "executor_only", "executor_after_rework", "final"]
         if not all(k in m for k in required_keys):
             st.warning("Metrics incomplete — run a full triage with ground truth data.")
             st.json(m)
         else:
             # Main recall/precision metrics
-            cols = st.columns(3)
-            for i, name in enumerate(["legacy", "executor", "final"]):
+            cols = st.columns(4)
+            for i, name in enumerate(["legacy", "executor_only", "executor_after_rework", "final"]):
                 d = m[name]
                 cols[i].metric(f"{name} — critical recall", f"{d['recall_critical']:.3f}",
                                f"prec {d['precision_critical']:.3f} (tp {d['tp']}/fp {d['fp']}/fn {d['fn']})")
@@ -316,7 +316,7 @@ elif page.startswith("7"):
             import pandas as pd
             st.plotly_chart(px.bar(pd.DataFrame(
                 [{"system": k, "recall": m[k]["recall_critical"], "precision": m[k]["precision_critical"]}
-                 for k in ("legacy", "executor", "final")]).melt(id_vars="system"),
+                 for k in ("legacy", "executor_only", "executor_after_rework", "final")]).melt(id_vars="system"),
                 x="system", y="value", color="variable", barmode="group",
                 title="Critical-class (IMMEDIATE+60_DAY) recall/precision"), use_container_width=True)
             

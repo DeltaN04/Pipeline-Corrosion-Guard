@@ -23,3 +23,5 @@ class CGState(TypedDict, total=False):
     metrics: Dict[str, Any]
     ground_truth: Dict[str, str]  # anomaly_id -> truth_class (for metrics only)
     rework_stats: Dict[str, Any]  # per-iteration rework tracking
+    executor_class_initial: Dict[str, str]  # iteration-0 executor classes (ablation)
+    executor_after_rework: Dict[str, str]  # post-rework executor classes (ablation)

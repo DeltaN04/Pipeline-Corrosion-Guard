@@ -1,7 +1,7 @@
 # CorrosionGuard — Project Report
 
 > Agentic AI triage of pipeline corrosion inspection findings.
-> **All data synthetic** (seeded generator, seed 42). Formulas **simplified educational
+> **All data synthetic** (seeded generator). Formulas **simplified educational
 > approximations — NOT for real integrity decisions.** Runs fully offline (Mock LLM).
 
 *Report generated from `docs/metrics.json` — see `scripts/run_eval.py`.*
@@ -32,96 +32,94 @@ and downtime.
 
 - **Planner** — parses the run request, emits an ordered TaskPlan (task/owner/tools), picks
   routing (small vs large batch) and deep-check scope. Plan visible in UI.
-- **Research** — tools: `pipeline_metadata`, `growth_rate` (prior vs current depth), `hca_lookup`
-  (map confirmation + mismatch flags), `nearby_features` (weld <5 m, road, water),
-  `find_interactions` (axial gap ≤ 50×wall_thickness_mm + clock window ≤ 1.5h), `validate_record`
-  (missing/impossible/unit errors), `note_keywords` (severe-word scan).
-- **Executor (Risk Engine)** — tools: simplified Modified B31G safe pressure, ERF = MAOP/safe
-  pressure, 2-yr projected depth, transparent weighted risk score (likelihood×consequence with
-  listed factors), numbers-only triage class. Every number traceable to a tool call.
-- **Critic (independent validator)** — re-derives a screen class with the *full* context rules
-  (never copies the executor), checks note-vs-number contradictions (`severe/sharp/undercut/
-  leak/crack`), ERF ≥ 1.0, rapid growth, interaction/HCA context, and legacy-label comparison;
-  emits AGREE / DOWNGRADE_RISK / UPGRADE_REQUIRED + missed-critical flags. Can reject results.
-- **Business Automation** — work orders (priority, location, action, due date by class:
-  Immediate +0 d, 60-day +60 d, 180-day +180 d, Monitor +365 d), engineer summary, simulated
-  email/Slack payloads written to disk (never sent).
+- **Research** — tools: `pipeline_metadata`, `growth_rate`, `hca_lookup`, `nearby_features`,
+  `find_interactions`, `validate_record`, `note_keywords`.
+- **Executor (Risk Engine)** — B31G safe pressure, ERF, 2-yr projected depth, weighted risk
+  score, numbers-only triage class. Every number traceable to a tool call.
+- **Critic (independent validator)** — re-derives a screen class with full context rules
+  (never copies the executor), note-vs-number contradictions, legacy-label comparison;
+  AGREE / DOWNGRADE_RISK / UPGRADE_REQUIRED + missed-critical flags.
+- **Business Automation** — work orders (IMMEDIATE + 60_DAY), scheduled monitoring list
+  (180_DAY), engineer summary, simulated email/Slack payloads written to disk.
 - **Orchestration (LangGraph)** — `Planner → Research → Executor → Critic → router`:
-  UPGRADE_REQUIRED loops back with conservative constraints (depth/growth bumps, forced
-  interaction), max 2 iterations; still-unresolved items escalate to the more severe class
-  (`ESCALATED`); then a human approval gate for IMMEDIATE items, then automation. All handoffs
-  are typed `AgentMessage` envelopes on an in-process bus with a full UI-visible trace.
+  UPGRADE_REQUIRED loops back with conservative constraints (max 2 iterations); unresolved
+  items escalate to the more severe class (`ESCALATED`); human approval gate for IMMEDIATE.
 
 ## 4. Architecture explanation
 
 See `docs/ARCHITECTURE_EXPLAINED.md` (component table, edge table, decision points, draw.io layout, Mermaid flowchart).
-See `docs/architecture_drawio.png` (if present) for the rendered diagram.
 
 ## 5. Implementation details
 
 - **Mock LLM** (`src/llm/mock_model.py`): subclasses LangChain `BaseChatModel`; parses marker
   tags (`[PLAN]`, `[RISK_RATIONALE]`, `[CRITIC]`, `[SUMMARY]`, `[WORKORDER]`) plus `key=value`
-  facts from the prompt and fills fixed templates — deterministic, offline, zero randomness.
-  Agents call it only for human-readable rationales/summaries/objections; **never for numbers**.
+  facts → fixed deterministic templates. Agents use it only for prose; **never for numbers**.
 - **State** (`src/graph/state.py`): TypedDict with request, plan, anomalies, enriched, risk
-  results, verdicts, iteration count, objections, escalations, human decisions, outputs,
-  A2A messages, metrics, validation_errors, rework_stats, ground_truth.
-- **Validation**: pydantic schemas gate every agent I/O (`src/schemas/models.py`); pytest suite
-  (26 tests) covers B31G hand-computed cases, ERF logic, growth projection, clustering,
-  data-quality rules, critic upgrades, graph loop termination (iteration ≤ 2), LLM swap with
-  FakeListChatModel, and an end-to-end threshold test. Seed 42.
+  results, verdicts, iteration, objections, escalations, human decisions, outputs, A2A
+  messages, metrics, validation_errors, rework_stats, ground_truth, ablation snapshots.
+- **Validation**: pydantic schemas gate every agent I/O (`src/schemas/models.py`); failures
+  logged to `validation_errors` and quarantined. 26 tests green.
 - **LLM Swap**: `src/llm/provider.py` exposes `llm_text(llm, prompt)` calling `llm.invoke()`.
-  MockChatModel implements `_generate`; a `SimpleFakeChatModel` test proves the pipeline runs
-  with a drop-in replacement.
+  `SimpleFakeChatModel` drop-in test proves a non-mock chat model runs the pipeline end to end.
 
-## 6. Output validation & results (actual run, 300 anomalies, seed 42)
+## 6. Output validation & results (real numbers from docs/metrics.json)
 
-*Numbers below are from `docs/metrics.json` generated by `scripts/run_eval.py`.*
+Data: 300 anomalies per seed across 4 pipelines (40 km each). Truth from the independent
+ground-truth model; legacy labels degraded on planted missed-criticals; ~5% dirty records.
+**Tuning seed: 42. Held-out evaluation seeds: 7 and 99.**
 
-Data: 300 anomalies across 4 pipelines (40 km each). Truth classes (independent ground truth
-model): IMMEDIATE 30, 60_DAY 76, 180_DAY 117, MONITOR 77. Legacy labels deliberately
-degraded on 30 planted missed-criticals; 15 dirty records planted (missing/negative/unit errors).
+| Seed | System | Recall (critical) | Precision | TP | FP | FN |
+|------|--------|-------------------|-----------|----|----|----|
+| 42 (tune) | Legacy manual labels | 0.333 | 1.000 | 10 | 0 | 20 |
+| 42 (tune) | Executor only (no context) | 0.667 | 0.211 | 20 | 75 | 10 |
+| 42 (tune) | Executor after rework | 0.667 | 0.215 | 20 | 73 | 10 |
+| 42 (tune) | Final (Executor + Critic) | 0.667 | 0.215 | 20 | 73 | 10 |
+| 7 (eval) | Legacy | 0.423 | 1.000 | 11 | 0 | 15 |
+| 7 (eval) | Executor only | 0.692 | 0.176 | 18 | 84 | 8 |
+| 7 (eval) | Final | 0.692 | 0.180 | 18 | 82 | 8 |
+| 99 (eval) | Legacy | 0.364 | 1.000 | 12 | 0 | 21 |
+| 99 (eval) | Executor only | 0.818 | 0.307 | 27 | 61 | 6 |
+| 99 (eval) | Final | 0.818 | 0.318 | 27 | 58 | 6 |
 
-| System | Critical recall (IMMEDIATE+60_DAY) | Precision | TP / FP / FN |
-|---|---|---|---|
-| (a) Legacy manual labels | 0.333 | 1.000 | 10 / 0 / 20 |
-| (b) Executor only (numbers, no context) | 0.733 | 0.208 | 22 / 84 / 8 |
-| (c) Executor + Critic (final) | **0.733** | 0.208 | 22 / 84 / 8 |
+- **missed_caught** (truth critical, legacy below critical, final critical): 13 / 8 / 16 (seeds 42/7/99).
+- **false_alarms** (legacy below critical, final critical, truth NOT critical): 73 / 82 / 58.
+- **Rework loop**: 1 iteration; objections raised at iteration 0 are all resolved at iteration 1.
+- **Interacting share**: ~3–5%. **Escalated**: 0–3%. **Runtime**: <0.2 s per 300-anomaly run.
+- **Precision target note**: the pre-set target (precision >= 0.40 with recall >= 0.70) was
+  **not reachable by threshold tuning alone**. Root cause: ILI measurement noise (±10% of wall
+  thickness) pushes genuinely shallow anomalies over the depth threshold, creating false alarms
+  that no threshold adjustment can remove without also dropping recall. Reported honestly.
 
-- False negatives: **20 → 8**; missed-criticals caught: **104** legacy under-calls corrected to
-  critical classes (30 deliberately planted + noise rows); **0** items escalated (all resolved on rework).
-- Rework loop: 1 iteration, **53** objections raised, all **53 resolved** on rework iteration 1, 0 remaining.
-- Interacting anomalies: **10/300 (3.3%)** — within target 3-10%.
-- Escalated: **0/300 (0%)** — well under 20% limit.
-- MONITOR share: **25.7%** — well above 10% minimum.
-- Planted missed-criticals caught: **22/30 (73.3%)** — exceeds 70% threshold.
-- Runtime: **0.09 s** (requirement: <30 s).
-- Validation errors: **0**.
-- 95% bootstrap CI for final critical recall: **[0.567, 0.898]**.
+### Rework convergence caveat
 
-> **Key finding**: Executor-only recall (0.733) exceeds legacy (0.333) because the independent
-> ground truth model differs from legacy labels. The Critic does not further improve recall
-> because the Executor's conservative rework mode already resolves all critic objections.
-> Legacy labels were degraded from a *different* ground truth model, so legacy recall is low.
+The rework loop's perfect convergence (all objections resolved at iteration 1) comes from the
+conservative Executor **sharing the Critic's rule family**: `executor_triage_conservative`
+implements the same thresholds as the Critic's `full_screen_class`, so adopting the Critic's
+constraints (depth_bump, growth_bump, force_interaction) deterministically raises the class to
+match the Critic screen. A truly independent Critic (learned model, different formulation, or
+physics-based finite-element check) is **future scope** and would make the loop a genuine
+second opinion rather than a rule-family mirror.
 
 ## 7. Limitations
 
-- **Synthetic data**: patterns are designed, not operator ILI; no vendor formats (POF/CSV dialects),
-  no GIS, no inline tool uncertainty modelling.
-- **Simplified formulas**: B31G/ERF/risk rules are educational approximations; **must not drive
-  real dig/pressure decisions.**
-- **Mock LLM**: writes template prose only — no real language understanding; swap to Ollama for that.
+- **Synthetic data**: patterns are designed, not operator ILI; no vendor formats, no GIS.
+- **Simplified formulas**: B31G/ERF/risk rules are educational approximations; **not for real decisions**.
+- **Low precision / over-triage**: final critical precision is 0.18–0.32 (target was >= 0.40,
+  not reached). Of the anomalies flagged critical by the pipeline, only ~20–30% are truly
+  critical — 58–82 false alarms per 300-anomaly run. Root cause: ILI sizing noise pushes
+  shallow anomalies over depth thresholds; threshold tuning cannot fix this without sacrificing
+  recall. Flagging is deliberately conservative (better to over-inspect than miss a rupture),
+  but a production system would need calibrated noise models or multi-signal confirmation.
+- **Mock LLM**: template prose only — no real language understanding.
+- **Rule-family mirror**: rework convergence is partly by design (see §6 caveat).
 - **Static thresholds**: no learning from engineer feedback yet.
 - **Single-machine PoC**: no auth, audit DB, or crew scheduling.
-- **Ground truth model**: independent but still a hand-written rule model with assumed noise model
-  (10% of wall thickness at 80% confidence); not a calibrated statistical model.
 
 ## 8. Future scope
 
-Real LLM via Ollama (one-line swap, already interfaced); MCP tool server exposing `src/tools/`;
-real ILI vendor parsers + GIS/HCA integration; RAG over integrity-management procedures
-(ASME B31G/B31.8S, operator SOPs) grounding rationales; active learning from approval/reject
-feedback to tune thresholds; scheduling/crew optimisation; hardened deployment with audit trail.
+Real LLM via Ollama (one-line swap); MCP tool server; real ILI vendor parsers + GIS; RAG over
+ASME B31G/B31.8S + operator SOPs; **learned or physics-based independent Critic**; calibrated
+noise models to reduce over-triage; active learning from approval feedback.
 
 ---
 

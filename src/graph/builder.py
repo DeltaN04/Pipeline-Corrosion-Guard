@@ -101,6 +101,13 @@ def n_executor(state: CGState) -> Dict[str, Any]:
     it = state.get("iteration", 0) or 0
     is_rework = it > 0
 
+    # Preserve iteration-0 executor classes for ablation metrics.
+    # Snapshot the first-pass classes before any rework/critic overwrite them.
+    if is_rework:
+        executor_class_initial = dict(state.get("executor_class_initial", {}))
+    else:
+        executor_class_initial = {}  # will be populated below after execute
+
     # On rework, only re-execute anomalies that the critic objected to
     if is_rework:
         objected_ids = {o["anomaly_id"] for o in state.get("critic_objections", []) or []}
@@ -138,11 +145,17 @@ def n_executor(state: CGState) -> Dict[str, Any]:
         results = exec_agent.execute(state.get("enriched", []), llm, None, is_rework=False)
 
     results_validated = _validate_outputs(RiskResult, results, state, "executor")
+
+    # After first-pass execute, snapshot executor classes for ablation
+    if not is_rework and results_validated:
+        executor_class_initial = {r["anomaly_id"]: r["triage_class"] for r in results_validated if "anomaly_id" in r}
+
     b = _bus(state)
     b.send("executor", "critic", "RISK_RESULTS",
            {"n": len(results_validated), "iteration": it,
             "immediate": sum(1 for r in results_validated if r["triage_class"] == "IMMEDIATE")})
-    return {"risk_results": results_validated, "messages": b.messages}
+    return {"risk_results": results_validated, "messages": b.messages,
+            "executor_class_initial": executor_class_initial}
 
 
 def n_critic(state: CGState) -> Dict[str, Any]:
@@ -227,6 +240,12 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
     escalated: list[str] = []
     resolved_on_rework: list[str] = []
 
+    # Iteration-0 executor classes (pre-Critic) for ablation — never overwritten now.
+    executor_class_initial = dict(state.get("executor_class_initial", {}))
+    # Post-rework executor classes for the "after rework" ablation row.
+    executor_after_rework = {r["anomaly_id"]: r["triage_class"]
+                             for r in (state.get("risk_results", []) or []) if "anomaly_id" in r}
+
     # Use tracked objection IDs from rework stats
     rework_stats = dict(state.get("rework_stats", {}))
     all_objection_ids = set(rework_stats.get("all_objection_ids", []))
@@ -241,7 +260,7 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
         if SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0):
             # Resolved on rework
             if v["verdict"] == "UPGRADE_REQUIRED":
-                v["executor_class"] = ex_cls
+                # Do NOT overwrite v["executor_class"] — keep iteration-0 value for ablation.
                 v["final_class"] = ex_cls
                 v["verdict"] = "AGREE"
                 v["reasons"] = [f"converged on rework iteration {it}: executor adopted conservative assumptions"] + v["reasons"]
@@ -264,7 +283,6 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
                 ex_cls = by_risk.get(v["anomaly_id"], {}).get("triage_class", v["executor_class"])
                 sc_cls = v["critic_screen_class"]
                 if SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0):
-                    v["executor_class"] = ex_cls
                     v["final_class"] = ex_cls
                     v["verdict"] = "AGREE"
                     resolved_on_rework.append(v["anomaly_id"])
@@ -288,7 +306,9 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
         (state.get("trace_id", "run") or "run"), "outputs", llm, approvals)
 
     ground_truth = state.get("ground_truth", {})
-    metrics = _metrics(ground_truth, verdicts, by_enrich)
+    metrics = _metrics(ground_truth, verdicts, by_enrich,
+                       executor_class_initial=executor_class_initial,
+                       executor_after_rework=executor_after_rework)
     metrics["rework_stats"] = rework_stats
 
     b = _bus(state)
@@ -298,7 +318,13 @@ def n_finalize(state: CGState) -> Dict[str, Any]:
             "rework_stats": rework_stats}
 
 
-def _metrics(ground_truth: Dict[str, str], verdicts, by_enrich) -> Dict[str, Any]:
+def _metrics(
+    ground_truth: Dict[str, str],
+    verdicts,
+    by_enrich,
+    executor_class_initial: Dict[str, str] | None = None,
+    executor_after_rework: Dict[str, str] | None = None,
+) -> Dict[str, Any]:
     from collections import Counter
 
     truth = ground_truth
@@ -308,12 +334,15 @@ def _metrics(ground_truth: Dict[str, str], verdicts, by_enrich) -> Dict[str, Any
     def critical(c: str) -> bool:
         return c in ("IMMEDIATE", "60_DAY")
 
-    out: Dict[str, Any] = {}
-    for name, pred_map in (
-        ("legacy", {a: (by_enrich.get(a, {}).get("legacy_manual_label")) for a in truth}),
-        ("executor", {v["anomaly_id"]: v["executor_class"] for v in verdicts}),
+    pred_maps = [
+        ("legacy", {a: by_enrich.get(a, {}).get("legacy_manual_label") for a in truth}),
+        ("executor_only", executor_class_initial or {}),
+        ("executor_after_rework", executor_after_rework or {}),
         ("final", {v["anomaly_id"]: v["final_class"] for v in verdicts}),
-    ):
+    ]
+
+    out: Dict[str, Any] = {}
+    for name, pred_map in pred_maps:
         tp = sum(1 for a, t in truth.items() if critical(t) and critical(pred_map.get(a, "MONITOR")))
         fp = sum(1 for a, t in truth.items() if not critical(t) and critical(pred_map.get(a, "MONITOR")))
         fn = sum(1 for a, t in truth.items() if critical(t) and not critical(pred_map.get(a, "MONITOR")))
@@ -321,7 +350,24 @@ def _metrics(ground_truth: Dict[str, str], verdicts, by_enrich) -> Dict[str, Any
                      "precision_critical": round(tp / max(1, tp + fp), 3), "tp": tp, "fp": fp, "fn": fn}
     out["confusion_final"] = {f"{k[0]}->{k[1]}": v for k, v in
                               Counter((truth[v["anomaly_id"]], v["final_class"]) for v in verdicts if v["anomaly_id"] in truth).items()}
-    out["missed_caught"] = sum(1 for v in verdicts if v.get("missed_critical") and critical(v["final_class"]))
+
+    # Redefined: missed_catch = truth critical AND legacy below critical AND final critical
+    # False alarm = legacy below critical AND final critical AND truth NOT critical
+    missed_caught = 0
+    false_alarms = 0
+    for a, t in truth.items():
+        legacy_label = by_enrich.get(a, {}).get("legacy_manual_label")
+        final_class = next((v["final_class"] for v in verdicts if v["anomaly_id"] == a), "MONITOR")
+        legacy_critical = critical(legacy_label) if legacy_label else False
+        truth_critical = critical(t)
+        final_critical = critical(final_class)
+        if truth_critical and not legacy_critical and final_critical:
+            missed_caught += 1
+        elif not truth_critical and not legacy_critical and final_critical:
+            false_alarms += 1
+
+    out["missed_caught"] = missed_caught
+    out["false_alarms"] = false_alarms
     out["n_total"] = len(truth)
     return out
 

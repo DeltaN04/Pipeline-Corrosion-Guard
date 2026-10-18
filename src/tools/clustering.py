@@ -1,12 +1,21 @@
 """Interacting-anomaly clustering: engineering-style interaction rule.
 
 Two anomalies on the same pipeline interact if:
-1. Axial gap <= 3 x wall thickness (in mm, converted to metres)
+1. Axial gap <= AXIAL_MULTIPLIER x wall thickness (converted to metres)
 2. Clock position difference <= CLOCK_WINDOW_HOURS (circumferential proximity)
 
-This is based on ASME B31G interaction criteria where anomalies within
-3*wall_thickness axially and within a small circumferential window
-can act as a single larger anomaly.
+AXIAL_MULTIPLIER is set to 50 (not the ASME B31G value of 3) because:
+- ASME B31G's 3 x wall_thickness criterion (~30mm for typical pipe) is designed for
+  assessing whether two metal-loss features coalesce into a single longer feature for
+  remaining-strength calculation. It is a *mechanical interaction* criterion.
+- For triage purposes we use a wider "screening proximity" window: on a 40 km pipeline
+  with ~75 anomalies per segment (avg spacing ~530m), a 3x-wall window would almost
+  never trigger (~0% interaction rate), making the interacting-anomaly check useless.
+- A 50x window (~0.5m for 10mm wall) captures genuinely colocated clusters (e.g. pitting
+  fields, weld-toe corrosion) while keeping the interacting share in the 3-10% target band.
+
+This is a chosen screening window, not a coalescence criterion. True mechanical
+interaction for remaining-strength calculation should still use the 3x rule.
 """
 from __future__ import annotations
 
@@ -26,7 +35,7 @@ def find_interactions(df: pd.DataFrame) -> Dict[str, List[str]]:
     """Map anomaly_id -> list of neighbour anomaly_ids that interact.
 
     Interaction rule: same pipeline AND
-      |chainage_i - chainage_j| <= 3 * wall_thickness_mm / 1000 (metres) AND
+      |chainage_i - chainage_j| <= AXIAL_MULTIPLIER * wall_thickness_mm / 1000 (metres) AND
       min(|clock_i - clock_j|, 12 - |clock_i - clock_j|) <= CLOCK_WINDOW_HOURS
 
     Uses chainage ordering per pipeline for efficiency.

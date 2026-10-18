@@ -11,7 +11,9 @@ def test_executor_thresholds():
     assert executor_triage(85, 0.5, 1.0, 60) == "IMMEDIATE"
     assert executor_triage(50, 1.05, 1.0, 60) == "IMMEDIATE"  # ERF>=1
     assert executor_triage(65, 0.5, 1.0, 60) == "60_DAY"
-    assert executor_triage(45, 0.5, 1.0, 50) == "180_DAY"
+    assert executor_triage(62, 0.5, 1.0, 60) == "60_DAY"
+    assert executor_triage(60, 0.5, 1.0, 60) == "60_DAY"
+    assert executor_triage(59, 0.5, 2.5, 60) == "180_DAY"  # growth>=2 triggers 180_DAY after depth>=60 threshold tuning
     assert executor_triage(20, 0.3, 0.5, 25) == "MONITOR"
 
 
@@ -22,7 +24,7 @@ def test_full_screen_note_contradiction():
 
 
 def test_full_screen_interaction_context():
-    cls, _ = full_screen_class(55, 0.7, 1.0, 57, interacting=True)
+    cls, _ = full_screen_class(65, 0.7, 1.0, 67, interacting=True)
     assert cls == "60_DAY"
 
 
