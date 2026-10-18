@@ -18,7 +18,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from src.agents import automation as auto_agent  # noqa: E402
 from src.graph import builder as G  # noqa: E402
 from src.graph.a2a import AGENT_CARDS  # noqa: E402
-from src.graph.runner import df_to_anomalies  # noqa: E402
+from src.graph.builder import _metrics  # noqa: E402
+from src.graph.runner import df_to_anomalies, extract_ground_truth  # noqa: E402
 from src.llm.provider import LLM_BACKEND, get_chat_model  # noqa: E402
 
 st.set_page_config(page_title="CorrosionGuard", layout="wide",
@@ -43,10 +44,10 @@ def severity_class_counts(verdicts, key):
 
 
 # ---------- staged run with live trace ----------
-def run_with_trace(anomalies, request: str):
+def run_with_trace(anomalies, request: str, ground_truth: dict | None = None):
     """Drive graph nodes step-by-step so the UI shows planning, tools, critic loop-back."""
     state: dict = {"request": request, "trace_id": __import__("uuid").uuid4().hex[:8],
-                   "anomalies": anomalies, "human_decisions": {}}
+                   "anomalies": anomalies, "human_decisions": {}, "ground_truth": ground_truth or {}}
     trace_log: list[str] = []
     with st.status("🤖 Agents working…", expanded=True) as status:
         st.write("**Planner:** drafting task plan…")
@@ -162,7 +163,7 @@ elif page.startswith("3"):
     if st.button("▶ Run Triage", type="primary"):
         sub = df if sel == "ALL" else df[df.pipeline_id == sel]
         req = f"Triage run {st.session_state.run_label} for pipeline {sel} ({len(sub)} anomalies)"
-        state = run_with_trace(df_to_anomalies(sub), req)
+        state = run_with_trace(df_to_anomalies(sub), req, ground_truth=extract_ground_truth(df))
         st.session_state.result = state
         st.session_state.approvals = {}
     res = st.session_state.result
