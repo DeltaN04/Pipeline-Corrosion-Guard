@@ -8,9 +8,9 @@ import pandas as pd
 from src.tools import clustering, lookup, quality
 
 
-def enrich(anomalies: List[Dict[str, Any]], spacing_m: float = 1.0) -> List[Dict[str, Any]]:
+def enrich(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     df = pd.DataFrame(anomalies)
-    interactions = clustering.find_interactions(df, spacing_m=spacing_m) if not df.empty else {}
+    interactions = clustering.find_interactions(df) if not df.empty else {}
     enriched: List[Dict[str, Any]] = []
     for rec in anomalies:
         r = dict(rec)

@@ -3,12 +3,13 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 
-# Static pipeline metadata (matches data/generate_data.py PIPELINES).
+# Static pipeline metadata (matches data/ground_truth.py PIPELINES).
+# Chainage values in METRES. HCA segments in METRES.
 PIPELINES: Dict[str, Dict] = {
-    "P-14": {"diameter_mm": 610.0, "wall_mm": 9.5, "smys_mpa": 359.0, "maop_mpa": 6.9, "hca_segments": [(8.0, 14.0)]},
-    "P-21": {"diameter_mm": 457.0, "wall_mm": 8.0, "smys_mpa": 414.0, "maop_mpa": 7.5, "hca_segments": [(20.0, 26.0)]},
-    "P-07": {"diameter_mm": 762.0, "wall_mm": 12.7, "smys_mpa": 317.0, "maop_mpa": 5.2, "hca_segments": [(2.0, 6.0)]},
-    "P-33": {"diameter_mm": 323.0, "wall_mm": 6.4, "smys_mpa": 448.0, "maop_mpa": 8.0, "hca_segments": [(30.0, 38.0)]},
+    "P-14": {"diameter_mm": 610.0, "wall_mm": 9.5, "smys_mpa": 359.0, "maop_mpa": 6.9, "hca_segments": [(8000.0, 14000.0)]},
+    "P-21": {"diameter_mm": 457.0, "wall_mm": 8.0, "smys_mpa": 414.0, "maop_mpa": 7.5, "hca_segments": [(20000.0, 26000.0)]},
+    "P-07": {"diameter_mm": 762.0, "wall_mm": 12.7, "smys_mpa": 317.0, "maop_mpa": 5.2, "hca_segments": [(2000.0, 6000.0)]},
+    "P-33": {"diameter_mm": 323.0, "wall_mm": 6.4, "smys_mpa": 448.0, "maop_mpa": 8.0, "hca_segments": [(30000.0, 38000.0)]},
 }
 
 SEVERE_KEYWORDS = ["severe", "sharp", "undercut", "leak", "crack", "deep", "active", "gouge"]
@@ -34,7 +35,10 @@ def growth_rate(prior_depth: Optional[float], depth: Optional[float], years: Opt
 
 
 def hca_lookup(pipeline_id: str, chainage_m: float, record_hca: Optional[bool] = None) -> Tuple[bool, str]:
-    """Confirm HCA from pipeline segment table; note disagreement with record flag."""
+    """Confirm HCA from pipeline segment table; note disagreement with record flag.
+
+    Chainage is in METRES. HCA segments are defined in metres.
+    """
     meta = pipeline_metadata(pipeline_id)
     confirmed = False
     try:
@@ -44,7 +48,7 @@ def hca_lookup(pipeline_id: str, chainage_m: float, record_hca: Optional[bool] =
                 break
     except (TypeError, ValueError):
         pass
-    note = "confirmed" if confirmed == bool(record_hca) else "HCA_MISMATCH(record=%s,map=%s)" % (record_hca, confirmed)
+    note = "confirmed" if confirmed == bool(record_hca) else f"HCA_MISMATCH(record={record_hca},map={confirmed})"
     return confirmed, note
 
 

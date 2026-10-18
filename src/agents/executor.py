@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from src.tools import b31g, risk
+from src.llm.provider import llm_text
 
 
 def _clean_depth(depth: Any, constraints: Optional[Dict[str, Any]] = None) -> Any:
@@ -21,7 +22,12 @@ def _clean_depth(depth: Any, constraints: Optional[Dict[str, Any]] = None) -> An
     return d
 
 
-def execute(enriched: List[Dict[str, Any]], llm, constraints: Optional[Dict[str, Dict[str, Any]]] = None) -> List[Dict[str, Any]]:
+def execute(
+    enriched: List[Dict[str, Any]],
+    llm,
+    constraints: Optional[Dict[str, Dict[str, Any]]] = None,
+    is_rework: bool = False,
+) -> List[Dict[str, Any]]:
     constraints = constraints or {}
     results: List[Dict[str, Any]] = []
     for r in enriched:
@@ -36,13 +42,34 @@ def execute(enriched: List[Dict[str, Any]], llm, constraints: Optional[Dict[str,
                 pass
         trace: Dict[str, Any] = {}
         if depth is None or depth < 0:
-            # Dirty record: cannot compute strength; quarantine to 60_DAY for review (conservative),
-            # critic will confirm/upgrade. Trace records why.
             trace = {"quarantined": True, "reason": f"invalid depth {r.get('depth_pct')}", "quality_flags": r.get("quality_flags", [])}
-            cls = "60_DAY"
-            score, factors = risk.risk_score(50, 0.7, growth, bool(r.get("hca")))
-            score, factors = 65.0, ["quarantined_dirty_record"] + factors
-            rationale = llm.render(
+            # On rework with constraints, use conservative triage with assumed depth
+            if is_rework and con:
+                # Use conservative assumptions: assume depth from context
+                assumed_depth = float(con.get("assumed_depth", 60.0))
+                sp = b31g.safe_pressure_mpa(assumed_depth, r.get("length_mm") or 0, r.get("wall_thickness_mm") or 0,
+                                            r.get("diameter_mm") or 0, r.get("smys_mpa") or 0)
+                e = b31g.erf(r.get("maop_mpa"), sp)
+                proj = risk.project_depth(assumed_depth, growth, 2.0)
+                interacting = bool(con.get("force_interaction", False) or r.get("interacting"))
+                hca = bool(con.get("force_hca", False) or r.get("hca"))
+                near_road = bool(r.get("near_road"))
+                near_water = bool(r.get("near_water"))
+                near_weld = bool(r.get("near_weld"))
+                note_severe = bool(con.get("force_note_severe", False) or r.get("note_severe"))
+                score, factors = risk.risk_score(assumed_depth, e, growth, hca, int(r.get("location_class") or 1),
+                                                 near_road, near_water, interacting, near_weld, note_severe)
+                cls = risk.executor_triage_conservative(
+                    assumed_depth, e, growth, proj, hca, near_road, near_water, near_weld, interacting, note_severe
+                )
+                trace["assumed_depth"] = assumed_depth
+                trace["conservative_triage"] = True
+            else:
+                cls = "60_DAY"
+                score, factors = risk.risk_score(50, 0.7, growth, bool(r.get("hca")))
+                score, factors = 65.0, ["quarantined_dirty_record"] + factors
+            rationale = llm_text(
+                llm,
                 f"[RISK_RATIONALE]\nanomaly_id={aid}\ndepth_pct={r.get('depth_pct')}\nerf=n/a\nclass={cls}\n"
                 f"factors=quarantined_dirty_record\nsafe_pressure=n/a\nmaop={r.get('maop_mpa')}\nprojected=n/a\ngrowth={growth}"
             )
@@ -55,18 +82,34 @@ def execute(enriched: List[Dict[str, Any]], llm, constraints: Optional[Dict[str,
         e = b31g.erf(r.get("maop_mpa"), sp)
         proj = risk.project_depth(depth, growth, 2.0)
         interacting = bool(con.get("force_interaction", False) or r.get("interacting"))
-        score, factors = risk.risk_score(depth, e, growth, bool(r.get("hca")), int(r.get("location_class") or 1),
-                                         bool(r.get("near_road")), bool(r.get("near_water")), interacting,
-                                         bool(r.get("near_weld")), bool(r.get("note_severe")))
-        cls = risk.executor_triage(depth, e, growth, proj)
-        rationale = llm.render(
+        hca = bool(con.get("force_hca", False) or r.get("hca"))
+        near_road = bool(r.get("near_road"))
+        near_water = bool(r.get("near_water"))
+        near_weld = bool(r.get("near_weld"))
+        note_severe = bool(con.get("force_note_severe", False) or r.get("note_severe"))
+
+        score, factors = risk.risk_score(depth, e, growth, hca, int(r.get("location_class") or 1),
+                                         near_road, near_water, interacting,
+                                         near_weld, note_severe)
+
+        # Use conservative triage on rework (when critic constraints are applied)
+        if is_rework and con:
+            cls = risk.executor_triage_conservative(
+                depth, e, growth, proj, hca, near_road, near_water, near_weld, interacting, note_severe
+            )
+        else:
+            cls = risk.executor_triage(depth, e, growth, proj)
+
+        rationale = llm_text(
+            llm,
             f"[RISK_RATIONALE]\nanomaly_id={aid}\ndepth_pct={depth}\nerf={round(e, 3) if e is not None else 'n/a'}\n"
             f"class={cls}\nfactors={','.join(factors)}\nsafe_pressure={round(sp, 3) if sp else 'n/a'}\n"
             f"maop={r.get('maop_mpa')}\nprojected={round(proj, 1) if proj is not None else 'n/a'}\ngrowth={growth}"
         )
         trace = {"safe_pressure_tool": "b31g.safe_pressure_mpa", "erf_tool": "b31g.erf",
                  "projection_tool": "risk.project_depth", "score_tool": "risk.risk_score",
-                 "triage_tool": "risk.executor_triage", "constraints_applied": con}
+                 "triage_tool": "risk.executor_triage_conservative" if (is_rework and con) else "risk.executor_triage",
+                 "constraints_applied": con}
         results.append({"anomaly_id": aid, "safe_pressure_mpa": round(sp, 3) if sp else None,
                         "erf": round(e, 3) if e is not None else None, "depth_pct_used": round(depth, 1),
                         "projected_depth_pct_2yr": round(proj, 1) if proj is not None else None,

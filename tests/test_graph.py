@@ -27,5 +27,6 @@ def test_graph_terminates_and_upgrades():
     v = {x["anomaly_id"]: x for x in final["verdicts"]}
     assert v["T-1"]["final_class"] == "IMMEDIATE"  # critic must not let executor miss it
     assert v["T-2"]["final_class"] == "MONITOR"
-    assert "outputs" in final and final["outputs"]["n_orders"] == 2
+    assert "outputs" in final and final["outputs"]["n_work_orders"] == 1
+    assert final["outputs"]["n_scheduled"] == 0
     assert len(final.get("messages", [])) >= 5  # A2A trace present

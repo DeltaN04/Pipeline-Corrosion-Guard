@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Tuple
 
 from src.tools import risk
+from src.llm.provider import llm_text
 
 SEV = {"MONITOR": 0, "180_DAY": 1, "60_DAY": 2, "IMMEDIATE": 3}
 
@@ -49,16 +50,21 @@ def review(
         if s_sc > s_ex:
             verdict = "UPGRADE_REQUIRED"
             final = screen
+            constraints = _constraints_for(reasons)
+            # For dirty records with quarantine upgrade, add assumed_depth for conservative triage
+            if "quarantine_upgrade" in " ".join(reasons):
+                constraints["assumed_depth"] = 60.0
             objections.append({"anomaly_id": aid, "executor_class": ex_class, "screen_class": screen,
                                "reasons": reasons,
-                               "constraints": _constraints_for(reasons)})
+                               "constraints": constraints})
         elif s_ex - s_sc >= 2:
             verdict = "DOWNGRADE_RISK"
             final = screen
         else:
             verdict = "AGREE"
             final = ex_class
-        text = llm.render(
+        text = llm_text(
+            llm,
             f"[CRITIC]\nanomaly_id={aid}\nexecutor_class={ex_class}\nscreen_class={screen}\nlegacy={legacy}\n"
             f"verdict={verdict}\nreasons={'; '.join(reasons)}"
         )

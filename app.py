@@ -183,10 +183,10 @@ elif page.startswith("3"):
             st.dataframe(pd.DataFrame(res["risk_results"]).head(10), use_container_width=True)
         with st.expander("🕵️ Critic — objections & loop iterations", expanded=True):
             objs = res.get("critic_objections", []) or []
-            st.metric("Upgrade demands (final pass)", sum(1 for v in res["verdicts"] if v["verdict"] == "UPGRADE_REQUIRED"))
-            for v in [x for x in res["verdicts"] if x["verdict"] == "UPGRADE_REQUIRED"][:8]:
-                st.warning(f"**{v['anomaly_id']}**: executor {v['executor_class']} → critic {v['critic_screen_class']} "
-                           f"(legacy {v['legacy_label']}) — {'; '.join(v['reasons'][:2])}")
+            st.metric("Upgrade demands (final pass)", sum(1 for v in res["verdicts"] if v.get("verdict") == "UPGRADE_REQUIRED"))
+            for v in [x for x in res["verdicts"] if x.get("verdict") == "UPGRADE_REQUIRED"][:8]:
+                st.warning(f"**{v.get('anomaly_id', '?')}**: executor {v.get('executor_class', '?')} → critic {v.get('critic_screen_class', '?')}"
+                           f"(legacy {v.get('legacy_label', '?')}) — {'; '.join(v.get('reasons', [])[:2])}")
             if res.get("escalated_ids"):
                 st.error(f"Escalated (forced severe after max iterations): {res['escalated_ids'][:20]}")
         with st.expander("✉️ A2A message bus — full handoff trace"):
@@ -293,39 +293,76 @@ elif page.startswith("7"):
         st.warning("Run the agents first (page 3). Ground-truth metrics need the built-in synthetic file.")
     else:
         m = res["metrics"]
-        cols = st.columns(3)
-        for i, name in enumerate(["legacy", "executor", "final"]):
-            d = m[name]
-            cols[i].metric(f"{name} — critical recall", d["recall_critical"],
-                           f"prec {d['precision_critical']} (tp {d['tp']}/fp {d['fp']}/fn {d['fn']})")
-        st.plotly_chart(px.bar(pd.DataFrame(
-            [{"system": k, "recall": m[k]["recall_critical"], "precision": m[k]["precision_critical"]}
-             for k in ("legacy", "executor", "final")]).melt(id_vars="system"),
-            x="system", y="value", color="variable", barmode="group",
-            title="Critical-class (IMMEDIATE+60_DAY) recall/precision"), use_container_width=True)
-        st.info(f"Missed criticals caught by Critic guardrail: **{m['missed_caught']}** "
-                f"(legacy false negatives: {m['legacy']['fn']} → final: {m['final']['fn']}). "
-                "Executor-only (numbers without context/notes) scores *below* legacy — automation alone is "
-                "insufficient; the Critic's context re-screen is what recovers the missed defects.")
-        n = len(res["verdicts"])
-        manual_min_per = 20  # stated assumption
-        manual_h = n * manual_min_per / 60
-        auto_h = 0.02 * n + len([v for v in res["verdicts"] if v["final_class"] == "IMMEDIATE"]) * 5 / 60
-        st.success(f"Simulated time saved (assumption: manual review takes {manual_min_per} min/anomaly; "
-                   f"auto triage + targeted review of flagged items only): {manual_h:.1f} h → {auto_h:.1f} h "
-                   f"(≈{(1 - auto_h / manual_h) * 100:.0f}% reduction).")
-        st.caption("Schema/tool-output validation: pydantic schemas gate every agent I/O; malformed outputs are "
-                   "rejected and logged. Unit + e2e suite: `pytest tests/` (all green, deterministic seed 42).")
-        st.json({"confusion_final (true->final)": m.get("confusion_final", {})})
+        # Guard against incomplete metrics
+        required_keys = ["legacy", "executor", "final"]
+        if not all(k in m for k in required_keys):
+            st.warning("Metrics incomplete — run a full triage with ground truth data.")
+            st.json(m)
+        else:
+            # Main recall/precision metrics
+            cols = st.columns(3)
+            for i, name in enumerate(["legacy", "executor", "final"]):
+                d = m[name]
+                cols[i].metric(f"{name} — critical recall", f"{d['recall_critical']:.3f}",
+                               f"prec {d['precision_critical']:.3f} (tp {d['tp']}/fp {d['fp']}/fn {d['fn']})")
+            
+            # Bar chart
+            import plotly.express as px
+            import pandas as pd
+            st.plotly_chart(px.bar(pd.DataFrame(
+                [{"system": k, "recall": m[k]["recall_critical"], "precision": m[k]["precision_critical"]}
+                 for k in ("legacy", "executor", "final")]).melt(id_vars="system"),
+                x="system", y="value", color="variable", barmode="group",
+                title="Critical-class (IMMEDIATE+60_DAY) recall/precision"), use_container_width=True)
+            
+            # Missed criticals
+            st.info(f"Missed criticals caught by Critic guardrail: **{m['missed_caught']}** "
+                    f"(legacy false negatives: {m['legacy']['fn']} → final: {m['final']['fn']}). "
+                    "Executor-only (numbers without context/notes) scores *below* legacy — automation alone is "
+                    "insufficient; the Critic's context re-screen is what recovers the missed defects.")
+            
+            # Rework stats
+            if "rework_stats" in m and m["rework_stats"]:
+                rs = m["rework_stats"]
+                st.subheader("Rework Loop Statistics")
+                if "history" in rs:
+                    for h in rs["history"]:
+                        st.write(f"**Iteration {h['iteration']}**: {h['objected']} objections, "
+                                 f"{h['resolved']} resolved, {h['remaining']} remaining")
+                c1, c2 = st.columns(2)
+                c1.metric("Total resolved on rework", rs.get("resolved_on_rework", 0))
+                c2.metric("Escalated after max iterations", rs.get("escalated", 0))
+            
+            # Validation errors
+            val_errs = len(res.get("validation_errors", []))
+            if val_errs > 0:
+                st.error(f"Validation errors: {val_errs} records quarantined")
+                with st.expander("Validation error details"):
+                    for err in res["validation_errors"][:10]:
+                        st.json(err)
+            else:
+                st.success(f"Validation: **0 errors** (pydantic schemas gated all agent outputs)")
+            
+            # Time saved
+            n = len(res["verdicts"])
+            manual_min_per = 20
+            manual_h = n * manual_min_per / 60
+            auto_h = 0.02 * n + len([v for v in res["verdicts"] if v["final_class"] == "IMMEDIATE"]) * 5 / 60
+            st.success(f"Simulated time saved (assumption: manual review takes {manual_min_per} min/anomaly; "
+                       f"auto triage + targeted review of flagged items only): {manual_h:.1f} h → {auto_h:.1f} h "
+                       f"(≈{(1 - auto_h / manual_h) * 100:.0f}% reduction).")
+            
+            st.caption("Schema/tool-output validation: pydantic schemas gate every agent I/O; malformed outputs are "
+                       "rejected and logged. Unit + e2e suite: `pytest tests/` (all green, deterministic seed 42).")
+            
+            # Confusion matrix
+            with st.expander("Confusion matrix (true → final)"):
+                st.json(m.get("confusion_final", {}))
 
 # ================= 8 ARCH =================
 elif page.startswith("8"):
     st.title("Architecture")
-    png = Path(__file__).resolve().parent / "docs" / "architecture.png"
-    if png.exists():
-        st.image(str(png), caption="CorrosionGuard runtime architecture")
-    else:
-        st.warning("docs/architecture.png not generated yet — run docs/generate_diagram.py")
+    st.info("The architecture diagram is maintained as a draw.io source. See **docs/ARCHITECTURE_EXPLAINED.md** for the complete component table, edge table, decision points, suggested draw.io layout, and a Mermaid flowchart you can paste into draw.io (Arrange → Insert → Advanced → Mermaid).")
     with st.expander("LangGraph flow"):
         st.code("Planner → Research → Executor → Critic → (UPGRADE? loop-back ≤2 : finalize) "
                 "→ human gate (IMMEDIATE) → Business Automation → END", language="text")
@@ -334,4 +371,4 @@ elif page.startswith("8"):
         with st.expander(f"{card['name']} (`{k}`)"):
             st.json(card)
     st.caption("MCP is future scope: tools in src/tools/ are plain functions ready to be exposed via an MCP "
-               "server; see docs/architecture.md.")
+               "server; see docs/ARCHITECTURE_EXPLAINED.md.")

@@ -1,301 +1,301 @@
-anomaly_id,pipeline_id,chainage_m,clock_position,depth_pct,length_mm,width_mm,wall_thickness_mm,diameter_mm,smys_mpa,maop_mpa,location_class,hca,prior_depth_pct,years_between,dist_weld_m,near_road,near_water,inspector_note,true_class,is_planted_miss,legacy_manual_label,is_dirty
-A-0001,P-14,10.2,5.3,71.6,20.0,20.9,9.5,610.0,359.0,6.9,1,False,65.6,5.0,13.1,False,False,"General wall loss, smooth profile.",60_DAY,False,IMMEDIATE,False
-A-0002,P-14,10.6,2.7,58.0,181.5,58.5,9.5,610.0,359.0,6.9,1,False,23.2,5.0,5.0,False,True,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0003,P-14,11.0,8.2,61.0,84.1,35.6,9.5,610.0,359.0,6.9,1,False,40.3,4.0,3.6,False,False,"External corrosion patch, blunt morphology.",IMMEDIATE,False,IMMEDIATE,False
-A-0004,P-14,11.4,3.7,48.5,128.2,66.6,9.5,610.0,359.0,6.9,1,False,38.3,5.0,47.9,False,False,"Severe gouge with undercut edges, active corrosion.",180_DAY,False,60_DAY,False
-A-0005,P-14,22.75,1.7,16.3,187.8,10.0,9.5,610.0,359.0,6.9,1,False,4.8,5.0,0.5,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0006,P-14,16.341,10.2,15.8,154.8,64.3,9.5,610.0,359.0,6.9,2,False,8.2,4.0,1.6,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0007,P-14,3.602,8.7,20.3,120.9,74.4,9.5,610.0,359.0,6.9,2,False,13.6,5.0,3.7,True,True,"General wall loss, smooth profile.",180_DAY,True,MONITOR,False
-A-0008,P-14,38.476,10.9,47.0,210.9,49.3,9.5,610.0,359.0,6.9,1,False,17.2,5.0,2.3,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0009,P-14,7.071,10.3,45.8,136.3,60.7,9.5,610.0,359.0,6.9,1,False,47.5,4.0,11.0,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0010,P-14,4.136,7.1,15.7,92.7,18.7,9.5,610.0,359.0,6.9,3,True,18.2,4.0,2.9,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0011,P-14,37.513,6.9,27.7,63.1,47.5,9.5,610.0,359.0,6.9,1,True,13.8,4.0,40.8,True,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0012,P-14,11.249,7.9,51.0,188.8,45.0,9.5,610.0,359.0,6.9,4,True,54.9,3.0,22.8,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0013,P-14,38.116,3.5,24.6,74.2,73.4,9.5,610.0,359.0,6.9,2,False,28.5,3.0,11.4,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0014,P-14,12.637,9.3,58.9,150.0,106.1,9.5,610.0,359.0,6.9,2,True,62.8,3.0,12.6,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0015,P-14,23.975,10.5,16.1,165.0,48.2,9.5,610.0,359.0,6.9,2,False,7.8,4.0,24.8,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0016,P-14,27.77,7.0,21.7,184.1,20.2,9.5,610.0,359.0,6.9,1,False,14.0,3.0,10.4,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0017,P-14,11.458,11.1,27.4,132.4,27.5,9.5,610.0,359.0,6.9,1,True,24.5,3.0,17.2,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0018,P-14,31.391,0.2,17.7,74.2,10.0,9.5,610.0,359.0,6.9,2,False,17.2,4.0,16.5,False,False,"Minor pitting, monitor.",MONITOR,False,MONITOR,False
-A-0019,P-14,9.914,2.8,64.7,323.4,24.9,9.5,610.0,359.0,6.9,2,True,54.8,4.0,1.4,False,False,"General wall loss, smooth profile.",IMMEDIATE,True,60_DAY,False
-A-0020,P-14,11.389,1.8,22.6,101.4,67.0,9.5,610.0,359.0,6.9,1,True,15.8,3.0,10.4,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0021,P-14,34.045,0.5,53.1,266.5,107.2,9.5,610.0,359.0,6.9,4,True,55.5,4.0,32.1,True,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0022,P-14,36.106,11.8,66.8,123.7,51.2,9.5,610.0,359.0,6.9,1,False,57.7,3.0,4.3,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0023,P-14,5.591,5.7,42.3,20.0,85.9,9.5,610.0,359.0,6.9,1,False,45.4,3.0,4.9,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0024,P-14,21.417,10.2,56.6,99.2,62.0,9.5,610.0,359.0,6.9,1,False,57.8,3.0,13.4,True,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0025,P-14,3.38,11.2,13.3,83.7,105.3,9.5,610.0,359.0,6.9,2,False,13.1,5.0,0.7,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0026,P-14,22.598,6.9,28.0,125.0,72.4,9.5,610.0,359.0,6.9,2,False,14.9,4.0,23.7,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0027,P-14,26.849,4.0,66.6,138.9,34.1,9.5,610.0,359.0,6.9,2,False,58.5,3.0,7.1,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0028,P-14,37.446,9.4,25.1,213.0,85.7,9.5,610.0,359.0,6.9,1,False,2.0,5.0,14.3,False,True,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0029,P-14,18.173,9.9,9.0,64.4,73.2,9.5,610.0,359.0,6.9,2,False,11.6,5.0,5.2,False,True,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0030,P-14,39.964,8.0,56.1,136.0,75.9,9.5,610.0,359.0,6.9,1,False,49.9,3.0,26.1,True,True,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0031,P-14,2.066,7.3,54.6,20.0,39.7,9.5,610.0,359.0,6.9,3,False,47.3,5.0,1.0,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0032,P-14,20.181,8.9,43.3,78.4,15.6,9.5,610.0,359.0,6.9,1,False,32.4,3.0,1.1,False,True,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0033,P-14,35.366,8.5,18.9,82.6,27.9,9.5,610.0,359.0,6.9,3,False,14.9,4.0,38.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0034,P-14,27.991,7.8,82.3,110.8,70.5,9.5,610.0,359.0,6.9,4,False,77.4,4.0,4.4,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0035,P-14,16.472,4.9,5.0,41.8,46.2,9.5,610.0,359.0,6.9,2,False,2.0,4.0,18.1,False,False,"External corrosion patch, blunt morphology.",MONITOR,False,180_DAY,False
-A-0036,P-14,12.649,9.4,850.0,120.4,137.9,9.5,610.0,359.0,6.9,4,True,2.0,4.0,5.2,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,True
-A-0037,P-14,12.578,10.0,31.1,166.6,92.6,9.5,610.0,359.0,6.9,1,True,27.7,3.0,7.3,False,True,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0038,P-14,33.087,10.3,34.0,69.6,14.9,9.5,610.0,359.0,6.9,2,False,9.7,4.0,23.1,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0039,P-14,25.636,0.1,28.4,166.8,39.3,9.5,610.0,359.0,6.9,2,False,31.7,5.0,4.0,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0040,P-14,3.202,9.1,40.6,94.7,31.8,9.5,610.0,359.0,6.9,1,True,42.3,5.0,22.1,False,True,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0041,P-14,9.747,10.1,48.6,102.3,55.2,9.5,610.0,359.0,6.9,3,True,50.5,3.0,9.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0042,P-14,34.081,6.1,59.7,47.7,22.7,9.5,610.0,359.0,6.9,3,False,60.6,4.0,1.9,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0043,P-14,7.664,0.3,68.8,133.2,16.6,9.5,610.0,359.0,6.9,2,False,67.0,3.0,8.1,False,False,"External corrosion patch, blunt morphology.",60_DAY,True,180_DAY,False
-A-0044,P-14,36.133,8.6,78.2,45.0,81.4,9.5,610.0,359.0,6.9,2,False,80.7,5.0,50.4,False,False,"General wall loss, smooth profile.",60_DAY,False,IMMEDIATE,False
-A-0045,P-14,29.999,4.2,12.2,90.3,44.4,9.5,610.0,359.0,6.9,4,False,13.8,5.0,1.2,False,False,"Internal wall loss, general.",MONITOR,False,MONITOR,False
-A-0046,P-14,36.988,9.9,8.1,157.7,29.0,9.5,610.0,359.0,6.9,4,False,2.0,5.0,11.1,True,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0047,P-14,24.876,10.3,27.7,76.6,74.1,9.5,610.0,359.0,6.9,1,False,8.3,4.0,5.0,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0048,P-14,23.613,4.8,23.1,42.1,77.4,9.5,610.0,359.0,6.9,3,False,12.3,4.0,11.2,True,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0049,P-14,39.903,8.4,51.3,92.7,115.4,9.5,610.0,359.0,6.9,2,False,53.3,3.0,4.0,False,False,"Sharp crack-like indication, deep with leak stain nearby.",IMMEDIATE,True,180_DAY,False
-A-0050,P-14,16.815,11.5,42.8,96.0,57.6,9.5,610.0,359.0,6.9,2,False,31.8,3.0,7.3,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0051,P-14,9.655,3.9,48.8,149.4,71.6,9.5,610.0,359.0,6.9,3,True,35.9,5.0,5.8,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0052,P-14,31.504,2.2,62.0,87.9,47.3,9.5,610.0,359.0,6.9,1,False,47.9,4.0,1.3,False,True,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0053,P-14,18.205,6.2,22.5,47.8,58.3,9.5,610.0,359.0,6.9,1,False,22.6,3.0,2.4,True,True,"External corrosion patch, blunt morphology.",MONITOR,False,180_DAY,False
-A-0054,P-14,34.511,0.0,12.8,,80.6,9.5,610.0,359.0,6.9,2,False,2.8,5.0,27.8,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,True
-A-0055,P-14,13.229,11.2,13.8,151.3,61.7,9.5,610.0,359.0,6.9,3,True,,3.0,0.9,True,True,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,True
-A-0056,P-14,24.806,2.9,41.8,20.0,63.0,9.5,610.0,359.0,6.9,1,False,28.3,5.0,8.2,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0057,P-14,24.137,11.8,15.8,179.9,79.2,9.5,610.0,359.0,6.9,1,False,6.2,4.0,0.1,False,True,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0058,P-14,6.62,8.7,63.8,215.1,67.7,9.5,610.0,359.0,6.9,1,False,57.0,4.0,1.4,False,True,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0059,P-14,0.663,11.9,50.1,137.4,61.3,9.5,610.0,359.0,6.9,2,False,29.7,4.0,2.5,False,True,"External corrosion patch, blunt morphology.",60_DAY,True,180_DAY,False
-A-0060,P-14,23.829,2.8,65.3,60.8,27.5,9.5,610.0,359.0,6.9,2,False,49.8,4.0,17.2,False,False,"General wall loss, smooth profile.",60_DAY,True,MONITOR,False
-A-0061,P-14,0.499,9.6,20.0,76.0,69.3,9.5,610.0,359.0,6.9,3,False,11.3,4.0,1.3,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0062,P-14,8.486,5.6,50.2,122.2,56.5,9.5,610.0,359.0,6.9,1,True,55.1,5.0,1.8,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0063,P-14,31.924,1.2,43.4,96.5,117.2,9.5,610.0,359.0,6.9,4,False,38.6,4.0,26.1,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0064,P-14,24.071,11.2,34.1,122.2,68.4,9.5,610.0,359.0,6.9,1,False,28.3,3.0,6.5,True,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0065,P-14,35.241,3.3,11.6,91.5,42.5,9.5,610.0,359.0,6.9,2,True,12.6,3.0,5.1,True,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0066,P-14,11.791,9.2,66.6,186.3,26.7,9.5,610.0,359.0,6.9,2,True,70.8,5.0,4.4,True,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0067,P-14,24.67,6.5,25.4,98.2,91.5,9.5,610.0,359.0,6.9,2,False,,4.0,16.5,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,True
-A-0068,P-14,37.662,1.4,56.1,124.9,27.7,9.5,610.0,359.0,6.9,3,False,50.0,3.0,3.6,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0069,P-14,21.234,3.0,21.8,59.3,63.6,9.5,610.0,359.0,6.9,1,False,2.0,5.0,11.1,True,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0070,P-14,38.09,5.8,81.9,161.3,25.5,9.5,610.0,359.0,6.9,1,True,66.1,3.0,7.0,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,180_DAY,False
-A-0071,P-14,21.275,2.2,82.3,20.0,10.0,9.5,610.0,359.0,6.9,1,False,68.0,3.0,15.2,False,False,"External corrosion patch, blunt morphology.",IMMEDIATE,False,IMMEDIATE,False
-A-0072,P-14,8.478,11.1,23.9,117.5,19.1,9.5,610.0,359.0,6.9,1,True,23.5,3.0,2.6,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0073,P-14,36.874,3.8,58.8,91.1,17.5,9.5,610.0,359.0,6.9,1,False,61.9,4.0,27.5,True,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0074,P-14,35.7,9.0,78.2,86.2,86.1,9.5,610.0,359.0,6.9,2,False,59.4,5.0,1.8,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0075,P-14,16.772,7.8,20.9,164.4,60.1,9.5,610.0,359.0,6.9,1,False,18.9,3.0,6.1,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0076,P-21,22.5,3.0,55.0,100.8,49.9,8.0,457.0,414.0,7.5,1,False,45.1,3.0,22.5,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0077,P-21,22.9,7.5,58.0,134.2,45.0,8.0,457.0,414.0,7.5,2,False,31.5,3.0,35.2,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0078,P-21,23.3,5.9,61.0,59.9,43.9,8.0,457.0,414.0,7.5,4,True,43.1,5.0,7.4,False,False,"Internal wall loss, general.",60_DAY,True,180_DAY,False
-A-0079,P-21,23.7,2.9,64.0,128.3,73.3,8.0,457.0,414.0,7.5,2,False,49.6,4.0,0.2,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0080,P-21,33.567,1.7,41.1,103.9,12.2,8.0,457.0,414.0,7.5,2,False,28.6,3.0,36.9,True,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0081,P-21,31.63,3.2,62.1,22.1,13.7,8.0,457.0,414.0,7.5,3,False,62.1,3.0,7.7,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0082,P-21,20.658,1.1,57.8,206.9,93.9,8.0,457.0,414.0,7.5,1,True,45.8,4.0,5.1,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0083,P-21,16.667,3.9,47.8,39.3,52.8,8.0,457.0,414.0,7.5,1,False,37.7,3.0,2.0,True,True,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0084,P-21,17.453,9.3,22.3,244.0,57.0,8.0,457.0,414.0,7.5,1,False,21.6,3.0,1.3,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0085,P-21,10.298,9.0,25.0,240.3,10.0,8.0,457.0,414.0,7.5,2,False,13.2,3.0,4.3,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0086,P-21,39.616,1.6,55.6,127.7,60.0,8.0,457.0,414.0,7.5,4,False,57.5,5.0,13.0,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0087,P-21,22.036,9.9,46.7,94.5,25.5,8.0,457.0,414.0,7.5,2,True,41.4,4.0,26.0,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0088,P-21,10.828,6.3,33.5,64.0,79.0,8.0,457.0,414.0,7.5,2,False,31.7,3.0,7.5,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0089,P-21,37.422,0.7,44.6,34.0,32.2,8.0,457.0,414.0,7.5,1,False,46.7,3.0,6.8,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0090,P-21,14.43,0.7,28.0,182.1,45.3,8.0,457.0,414.0,7.5,1,False,5.4,5.0,1.0,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0091,P-21,32.792,6.3,74.6,156.7,81.9,8.0,457.0,414.0,7.5,2,False,60.3,5.0,4.2,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0092,P-21,15.229,4.8,50.2,159.9,78.5,8.0,457.0,414.0,7.5,4,False,50.3,3.0,2.8,False,False,"Minor pitting, monitor.",60_DAY,True,180_DAY,False
-A-0093,P-21,37.311,4.7,34.7,226.2,36.1,8.0,457.0,414.0,7.5,2,False,33.1,4.0,3.9,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0094,P-21,15.564,2.6,49.6,111.9,34.9,8.0,457.0,414.0,7.5,4,False,17.4,5.0,2.1,True,True,"Moderate pitting cluster, no sharp edges.",60_DAY,False,60_DAY,False
-A-0095,P-21,27.217,6.8,36.9,20.0,10.0,8.0,457.0,414.0,7.5,1,True,29.1,4.0,14.9,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0096,P-21,6.424,9.3,27.6,179.2,12.7,8.0,457.0,414.0,7.5,1,False,25.6,5.0,10.3,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0097,P-21,39.286,7.3,-5.0,95.7,24.6,8.0,457.0,414.0,7.5,4,False,2.0,5.0,0.4,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,True
-A-0098,P-21,27.605,2.0,49.8,20.0,66.9,8.0,457.0,414.0,7.5,3,False,52.9,4.0,6.7,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0099,P-21,16.2,9.7,82.8,166.1,141.3,8.0,457.0,414.0,7.5,4,False,60.8,4.0,14.8,True,False,"External corrosion patch, blunt morphology.",IMMEDIATE,False,IMMEDIATE,False
-A-0100,P-21,12.071,10.8,30.6,29.6,70.6,8.0,457.0,414.0,7.5,1,False,25.9,5.0,11.2,False,True,"Moderate pitting cluster, no sharp edges.",MONITOR,False,MONITOR,False
-A-0101,P-21,38.75,3.7,28.8,41.1,99.9,8.0,457.0,414.0,7.5,3,False,31.9,5.0,30.0,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0102,P-21,21.827,6.5,75.3,205.8,10.0,8.0,457.0,414.0,7.5,2,True,70.6,4.0,3.4,True,False,"Minor pitting, monitor.",IMMEDIATE,False,IMMEDIATE,False
-A-0103,P-21,17.843,11.2,45.7,152.4,10.0,8.0,457.0,414.0,7.5,1,False,37.7,5.0,5.2,True,False,"Minor pitting, monitor.",180_DAY,True,MONITOR,False
-A-0104,P-21,2.533,2.3,52.0,165.6,59.7,8.0,457.0,414.0,7.5,1,True,33.2,3.0,8.0,True,False,"External corrosion patch, blunt morphology.",60_DAY,True,180_DAY,False
-A-0105,P-21,17.514,11.3,22.8,105.3,71.7,8.0,457.0,414.0,7.5,3,False,24.6,3.0,8.6,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0106,P-21,7.516,1.3,27.4,114.2,46.8,8.0,457.0,414.0,7.5,1,False,10.3,5.0,35.1,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0107,P-21,2.033,11.8,21.9,78.5,50.2,8.0,457.0,414.0,7.5,1,False,17.8,5.0,21.4,False,False,"Minor pitting, monitor.",MONITOR,False,MONITOR,False
-A-0108,P-21,26.501,8.1,74.9,152.2,89.7,8.0,457.0,414.0,7.5,2,False,74.2,4.0,0.8,False,False,"Internal wall loss, general.",60_DAY,False,IMMEDIATE,False
-A-0109,P-21,29.891,10.7,46.0,20.0,48.3,8.0,457.0,414.0,7.5,1,False,38.9,3.0,15.2,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0110,P-21,19.136,1.8,18.8,118.4,41.3,8.0,457.0,414.0,7.5,1,True,19.5,5.0,17.9,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0111,P-21,9.63,4.3,22.9,154.9,10.0,8.0,457.0,414.0,7.5,4,False,15.0,5.0,12.2,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0112,P-21,30.526,11.2,21.8,20.0,22.0,8.0,457.0,414.0,7.5,2,False,18.8,4.0,1.9,True,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0113,P-21,19.773,4.9,57.9,38.5,120.3,8.0,457.0,414.0,7.5,3,False,61.6,3.0,17.0,False,False,"Internal wall loss, general.",180_DAY,False,60_DAY,False
-A-0114,P-21,10.723,7.3,69.3,63.8,76.5,8.0,457.0,414.0,7.5,1,False,68.2,3.0,8.6,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0115,P-21,7.018,9.7,21.1,129.8,35.5,8.0,457.0,414.0,7.5,4,False,19.5,5.0,5.9,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0116,P-21,31.032,9.3,10.5,31.6,60.9,8.0,457.0,414.0,7.5,3,False,2.0,4.0,2.5,True,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0117,P-21,29.883,4.5,15.2,88.1,18.4,8.0,457.0,414.0,7.5,1,False,14.9,5.0,8.9,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0118,P-21,29.193,9.1,37.6,20.5,50.6,8.0,457.0,414.0,7.5,2,False,29.7,4.0,10.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,MONITOR,False
-A-0119,P-21,5.402,11.3,54.1,20.0,69.7,8.0,457.0,414.0,7.5,1,False,51.2,3.0,9.6,False,True,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0120,P-21,34.697,3.7,51.2,118.8,68.5,8.0,457.0,414.0,7.5,1,False,34.6,5.0,13.2,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0121,P-21,11.514,1.4,25.5,111.7,95.1,8.0,457.0,414.0,7.5,4,False,24.0,4.0,17.8,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0122,P-21,31.809,11.5,36.4,287.1,27.0,8.0,457.0,414.0,7.5,2,False,32.1,4.0,6.0,False,False,"Internal wall loss, general.",180_DAY,True,MONITOR,False
-A-0123,P-21,39.199,10.6,22.7,20.0,89.7,8.0,457.0,414.0,7.5,2,False,17.2,4.0,4.6,False,True,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0124,P-21,13.931,10.4,23.6,181.1,44.0,8.0,457.0,414.0,7.5,2,False,26.4,5.0,6.3,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0125,P-21,9.828,2.8,13.7,85.5,64.2,8.0,457.0,414.0,7.5,2,False,2.0,5.0,1.0,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0126,P-21,13.983,6.9,14.9,128.9,42.5,8.0,457.0,414.0,7.5,1,False,2.3,3.0,23.7,True,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0127,P-21,33.09,7.0,50.3,113.6,59.1,8.0,457.0,414.0,7.5,2,False,46.0,4.0,2.7,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0128,P-21,6.141,3.0,55.8,167.0,36.8,8.0,457.0,414.0,7.5,4,False,52.8,3.0,17.4,False,False,"Minor pitting, monitor.",180_DAY,False,60_DAY,False
-A-0129,P-21,11.593,6.7,850.0,47.8,62.1,8.0,457.0,414.0,7.5,2,False,43.7,5.0,4.9,False,False,"General wall loss, smooth profile.",IMMEDIATE,True,60_DAY,True
-A-0130,P-21,29.716,2.8,61.8,125.0,21.1,8.0,457.0,414.0,7.5,2,False,54.0,4.0,10.4,False,True,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0131,P-21,20.627,5.8,69.8,204.9,93.3,8.0,457.0,414.0,7.5,2,True,59.2,4.0,0.0,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0132,P-21,29.339,0.4,48.8,80.6,46.7,8.0,457.0,414.0,7.5,2,False,45.1,4.0,4.4,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0133,P-21,30.244,10.2,68.2,139.2,59.8,8.0,457.0,414.0,7.5,3,False,60.8,3.0,19.8,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0134,P-21,8.154,6.3,53.2,180.2,106.8,8.0,457.0,414.0,7.5,2,False,53.8,5.0,18.9,False,False,"Severe gouge with undercut edges, active corrosion.",IMMEDIATE,True,MONITOR,False
-A-0135,P-21,25.467,4.9,850.0,78.9,60.3,8.0,457.0,414.0,7.5,2,True,41.2,3.0,79.2,False,True,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,True
-A-0136,P-21,12.654,2.1,47.6,167.0,74.3,8.0,457.0,414.0,7.5,4,True,32.0,4.0,15.5,False,True,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0137,P-21,32.11,10.7,22.9,167.5,48.9,8.0,457.0,414.0,7.5,3,False,19.7,3.0,17.3,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0138,P-21,19.089,4.3,32.2,219.5,46.3,8.0,457.0,414.0,7.5,2,False,26.6,3.0,74.9,False,True,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0139,P-21,19.001,7.2,22.3,79.3,13.5,8.0,457.0,414.0,7.5,1,False,25.7,4.0,3.8,True,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0140,P-21,38.077,0.1,46.2,150.5,36.6,8.0,457.0,414.0,7.5,1,True,43.7,4.0,7.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0141,P-21,29.591,0.9,34.6,199.0,58.3,8.0,457.0,414.0,7.5,2,False,36.7,3.0,2.3,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0142,P-21,29.366,2.6,46.5,38.7,39.7,8.0,457.0,414.0,7.5,3,False,54.8,4.0,8.9,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0143,P-21,13.589,0.9,850.0,137.2,10.0,8.0,457.0,414.0,7.5,1,False,25.5,5.0,33.3,True,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,True
-A-0144,P-21,19.571,1.7,17.7,154.0,67.2,8.0,457.0,414.0,7.5,2,False,8.4,3.0,3.3,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0145,P-21,26.053,1.3,40.8,154.2,65.1,8.0,457.0,414.0,7.5,1,False,35.1,5.0,11.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0146,P-21,4.011,9.4,-5.0,187.6,62.6,8.0,457.0,414.0,7.5,4,False,80.7,3.0,0.4,False,False,"Minor pitting, monitor.",IMMEDIATE,True,60_DAY,True
-A-0147,P-21,5.87,4.0,79.4,42.2,95.7,8.0,457.0,414.0,7.5,2,False,65.3,3.0,6.5,False,False,"Minor pitting, monitor.",IMMEDIATE,False,IMMEDIATE,False
-A-0148,P-21,3.628,5.1,80.1,64.7,63.9,8.0,457.0,414.0,7.5,4,False,78.2,4.0,5.4,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0149,P-21,7.459,3.6,26.1,171.6,46.1,8.0,457.0,414.0,7.5,2,False,21.0,3.0,4.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0150,P-21,34.105,6.9,26.0,41.4,83.0,8.0,457.0,414.0,7.5,2,False,2.0,4.0,10.3,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0151,P-07,4.0,8.6,72.9,139.1,71.4,12.7,762.0,317.0,5.2,1,False,64.9,4.0,1.1,True,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0152,P-07,4.4,0.4,58.0,117.6,61.6,12.7,762.0,317.0,5.2,4,False,2.0,4.0,42.0,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0153,P-07,4.8,9.2,65.9,177.3,62.8,12.7,762.0,317.0,5.2,3,False,33.9,5.0,1.8,False,True,"Minor pitting, monitor.",IMMEDIATE,False,IMMEDIATE,False
-A-0154,P-07,5.2,9.6,64.0,64.1,66.3,12.7,762.0,317.0,5.2,4,True,29.8,4.0,6.7,False,False,"General wall loss, smooth profile.",IMMEDIATE,False,IMMEDIATE,False
-A-0155,P-07,35.75,5.1,25.4,63.4,62.0,12.7,762.0,317.0,5.2,2,False,4.2,4.0,4.4,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0156,P-07,31.389,11.6,62.5,137.4,85.4,12.7,762.0,317.0,5.2,1,False,59.9,5.0,6.6,False,True,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0157,P-07,23.914,9.8,26.3,115.6,81.9,12.7,762.0,317.0,5.2,2,False,21.1,3.0,15.9,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0158,P-07,6.252,1.2,83.5,211.1,79.0,12.7,762.0,317.0,5.2,1,True,58.0,5.0,15.2,False,False,"General wall loss, smooth profile.",IMMEDIATE,True,60_DAY,False
-A-0159,P-07,16.646,2.3,65.4,153.7,75.2,12.7,762.0,317.0,5.2,3,False,46.6,3.0,27.5,False,False,"General wall loss, smooth profile.",IMMEDIATE,False,IMMEDIATE,False
-A-0160,P-07,5.459,3.8,30.5,170.8,32.1,12.7,762.0,317.0,5.2,2,True,21.4,4.0,4.9,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0161,P-07,13.815,6.4,35.2,162.3,92.4,12.7,762.0,317.0,5.2,2,False,32.8,4.0,21.0,False,True,"External corrosion patch, blunt morphology.",MONITOR,False,180_DAY,False
-A-0162,P-07,22.48,1.5,49.2,74.6,15.4,12.7,762.0,317.0,5.2,3,False,40.9,4.0,0.1,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0163,P-07,34.414,7.8,14.2,29.9,107.5,12.7,762.0,317.0,5.2,2,False,8.6,3.0,7.7,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0164,P-07,24.421,3.7,18.8,20.0,37.7,12.7,762.0,317.0,5.2,4,False,20.9,3.0,5.4,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0165,P-07,20.869,5.2,54.4,20.0,36.5,12.7,762.0,317.0,5.2,2,False,45.9,4.0,46.3,False,False,"Minor pitting, monitor.",180_DAY,True,MONITOR,False
-A-0166,P-07,1.304,0.8,34.1,128.9,10.0,12.7,762.0,317.0,5.2,2,False,34.4,3.0,4.5,False,False,"General wall loss, smooth profile.",MONITOR,False,MONITOR,False
-A-0167,P-07,17.136,8.3,80.9,188.0,12.6,12.7,762.0,317.0,5.2,2,True,71.7,3.0,1.5,False,False,"General wall loss, smooth profile.",IMMEDIATE,True,60_DAY,False
-A-0168,P-07,3.557,0.3,16.1,20.0,47.0,12.7,762.0,317.0,5.2,1,True,13.7,4.0,12.9,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0169,P-07,2.07,5.7,68.5,145.6,51.4,12.7,762.0,317.0,5.2,1,True,47.0,4.0,4.7,False,False,"General wall loss, smooth profile.",IMMEDIATE,False,IMMEDIATE,False
-A-0170,P-07,14.602,1.8,75.3,131.9,90.0,12.7,762.0,317.0,5.2,4,False,57.2,5.0,42.3,True,False,"Minor pitting, monitor.",60_DAY,False,IMMEDIATE,False
-A-0171,P-07,2.874,7.1,33.6,106.8,84.4,12.7,762.0,317.0,5.2,1,True,29.9,5.0,12.7,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0172,P-07,30.123,10.7,49.7,130.5,69.7,12.7,762.0,317.0,5.2,4,False,36.2,3.0,20.0,False,True,"Moderate pitting cluster, no sharp edges.",60_DAY,False,60_DAY,False
-A-0173,P-07,9.468,6.3,32.9,43.0,52.8,12.7,762.0,317.0,5.2,1,False,29.3,5.0,11.8,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0174,P-07,33.128,8.6,45.9,167.9,41.6,12.7,762.0,317.0,5.2,1,False,28.8,4.0,1.1,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0175,P-07,19.255,6.9,23.2,74.9,77.7,12.7,762.0,317.0,5.2,2,False,13.8,4.0,6.5,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0176,P-07,34.919,8.1,40.8,20.0,16.8,12.7,762.0,317.0,5.2,4,False,40.9,5.0,9.5,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0177,P-07,14.729,0.6,36.3,267.5,42.7,12.7,762.0,317.0,5.2,2,False,36.8,4.0,5.2,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0178,P-07,4.433,7.3,81.7,189.7,56.1,12.7,762.0,317.0,5.2,4,True,70.1,5.0,18.2,False,True,"Minor pitting, monitor.",IMMEDIATE,False,IMMEDIATE,False
-A-0179,P-07,27.321,11.4,61.3,91.8,76.2,12.7,762.0,317.0,5.2,3,False,52.0,5.0,3.6,True,False,"Sharp crack-like indication, deep with leak stain nearby.",IMMEDIATE,True,180_DAY,False
-A-0180,P-07,33.466,1.7,18.0,65.8,46.8,12.7,762.0,317.0,5.2,2,False,11.2,4.0,2.6,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0181,P-07,24.806,7.7,47.8,247.2,33.6,12.7,762.0,317.0,5.2,1,False,41.3,5.0,16.6,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0182,P-07,21.102,4.5,75.8,,37.1,12.7,762.0,317.0,5.2,2,False,69.8,4.0,4.3,True,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,True
-A-0183,P-07,18.549,0.4,57.4,226.5,70.8,12.7,762.0,317.0,5.2,3,False,36.7,4.0,0.3,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0184,P-07,33.071,6.5,48.3,244.8,53.6,12.7,762.0,317.0,5.2,2,True,25.7,5.0,1.6,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0185,P-07,30.706,10.7,58.4,59.4,11.3,12.7,762.0,317.0,5.2,2,False,48.4,4.0,1.5,False,True,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0186,P-07,5.766,7.4,30.0,20.0,56.8,12.7,762.0,317.0,5.2,4,True,31.9,5.0,9.5,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0187,P-07,32.923,10.8,74.3,237.8,94.0,12.7,762.0,317.0,5.2,4,False,65.8,4.0,1.6,True,False,"Minor pitting, monitor.",60_DAY,False,IMMEDIATE,False
-A-0188,P-07,35.51,7.6,16.8,52.5,98.0,12.7,762.0,317.0,5.2,1,False,2.0,5.0,9.9,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0189,P-07,29.176,9.6,43.3,271.1,74.1,12.7,762.0,317.0,5.2,1,False,43.7,5.0,11.2,True,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0190,P-07,33.628,4.8,36.8,57.2,30.2,12.7,762.0,317.0,5.2,2,True,40.5,5.0,7.4,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0191,P-07,23.28,6.0,17.3,236.0,39.5,12.7,762.0,317.0,5.2,3,False,7.7,5.0,9.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,MONITOR,False
-A-0192,P-07,10.205,6.1,79.7,120.4,94.2,12.7,762.0,317.0,5.2,2,False,57.3,5.0,32.9,False,False,"General wall loss, smooth profile.",IMMEDIATE,False,IMMEDIATE,False
-A-0193,P-07,32.492,8.5,23.4,234.8,44.6,12.7,762.0,317.0,5.2,2,False,25.3,4.0,3.7,False,False,"External corrosion patch, blunt morphology.",MONITOR,False,MONITOR,False
-A-0194,P-07,39.635,0.1,48.6,151.5,29.8,12.7,762.0,317.0,5.2,3,False,50.7,4.0,32.8,False,True,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0195,P-07,11.95,6.7,20.4,154.0,52.8,12.7,762.0,317.0,5.2,1,False,2.0,4.0,22.6,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0196,P-07,8.251,2.2,22.6,210.1,10.0,12.7,762.0,317.0,5.2,2,False,17.8,5.0,9.5,False,False,"Minor pitting, monitor.",MONITOR,False,MONITOR,False
-A-0197,P-07,26.111,11.0,13.9,178.5,95.6,12.7,762.0,317.0,5.2,2,False,5.5,4.0,5.7,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0198,P-07,30.164,4.3,50.5,128.0,64.9,12.7,762.0,317.0,5.2,2,False,42.5,3.0,13.9,False,False,"Minor pitting, monitor.",180_DAY,False,60_DAY,False
-A-0199,P-07,37.398,4.6,56.1,38.1,20.9,12.7,762.0,317.0,5.2,1,False,47.5,5.0,7.0,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0200,P-07,2.452,7.2,7.2,191.4,94.8,12.7,762.0,317.0,5.2,1,True,2.0,3.0,0.5,True,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0201,P-07,11.301,7.2,31.4,143.2,82.5,12.7,762.0,317.0,5.2,3,False,34.2,3.0,9.7,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0202,P-07,8.878,5.4,34.7,160.4,52.7,12.7,762.0,317.0,5.2,4,True,11.9,4.0,27.2,False,False,"General wall loss, smooth profile.",60_DAY,True,180_DAY,False
-A-0203,P-07,23.513,2.8,25.9,120.8,58.3,12.7,762.0,317.0,5.2,1,False,8.1,4.0,38.3,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,False,60_DAY,False
-A-0204,P-07,18.316,5.0,30.7,75.0,52.2,12.7,762.0,317.0,5.2,1,False,31.7,3.0,8.7,False,True,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0205,P-07,9.982,1.4,21.4,90.6,44.0,12.7,762.0,317.0,5.2,2,False,24.0,3.0,13.2,False,True,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0206,P-07,37.655,1.3,23.8,249.0,117.7,12.7,762.0,317.0,5.2,3,False,25.9,4.0,16.5,False,False,"External corrosion patch, blunt morphology.",MONITOR,False,180_DAY,False
-A-0207,P-07,37.25,1.8,63.1,108.2,92.9,12.7,762.0,317.0,5.2,3,False,78.7,3.0,10.3,False,False,"General wall loss, smooth profile.",60_DAY,True,180_DAY,False
-A-0208,P-07,6.199,2.9,48.4,62.5,107.3,12.7,762.0,317.0,5.2,2,False,51.8,3.0,15.8,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0209,P-07,23.772,2.5,50.5,160.1,10.0,12.7,762.0,317.0,5.2,1,False,29.2,3.0,38.4,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0210,P-07,16.731,3.9,59.1,119.9,69.1,12.7,762.0,317.0,5.2,1,False,54.0,5.0,5.9,True,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0211,P-07,36.561,9.6,72.7,188.5,62.4,12.7,762.0,317.0,5.2,4,False,72.3,4.0,12.1,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0212,P-07,37.224,6.1,51.9,86.1,116.6,12.7,762.0,317.0,5.2,3,False,45.0,5.0,11.5,True,False,"Deep sharp anomaly, severe profile per analyst.",IMMEDIATE,True,60_DAY,False
-A-0213,P-07,6.414,7.3,44.6,182.9,84.0,12.7,762.0,317.0,5.2,4,False,42.1,4.0,2.2,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0214,P-07,9.794,8.9,21.0,67.4,109.3,12.7,762.0,317.0,5.2,2,False,18.4,3.0,4.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0215,P-07,37.926,1.1,22.1,20.0,10.0,12.7,762.0,317.0,5.2,1,False,18.2,4.0,17.2,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0216,P-07,2.578,3.0,39.1,72.3,120.9,12.7,762.0,317.0,5.2,4,True,29.0,3.0,16.3,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0217,P-07,29.981,11.7,23.7,77.3,129.0,12.7,762.0,317.0,5.2,1,False,16.0,5.0,3.5,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0218,P-07,8.623,3.2,55.1,233.9,58.2,12.7,762.0,317.0,5.2,2,False,58.1,4.0,1.8,True,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,180_DAY,False
-A-0219,P-07,32.631,8.7,63.1,87.6,10.0,12.7,762.0,317.0,5.2,1,False,40.6,4.0,9.8,False,False,"Internal wall loss, general.",IMMEDIATE,False,IMMEDIATE,False
-A-0220,P-07,18.145,6.6,50.7,34.2,105.0,12.7,762.0,317.0,5.2,4,False,46.3,3.0,3.1,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0221,P-07,25.638,8.1,28.6,196.4,74.6,12.7,762.0,317.0,5.2,1,False,30.5,3.0,6.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0222,P-07,10.824,3.3,30.2,182.2,102.7,12.7,762.0,317.0,5.2,1,False,29.9,3.0,28.6,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0223,P-07,3.933,0.5,51.6,293.0,65.1,12.7,762.0,317.0,5.2,1,True,44.7,5.0,6.1,False,False,"Severe gouge with undercut edges, active corrosion.",IMMEDIATE,True,180_DAY,False
-A-0224,P-07,29.403,8.5,59.0,119.4,10.0,12.7,762.0,317.0,5.2,2,False,56.7,4.0,0.9,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0225,P-07,39.289,11.6,34.7,206.7,40.0,12.7,762.0,317.0,5.2,1,False,22.3,3.0,38.2,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0226,P-33,27.12,0.5,72.4,115.0,61.3,6.4,323.0,448.0,8.0,3,False,75.2,5.0,0.5,False,False,"Internal wall loss, general.",60_DAY,False,IMMEDIATE,False
-A-0227,P-33,5.732,3.5,23.5,62.3,22.5,6.4,323.0,448.0,8.0,1,False,8.5,4.0,5.4,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0228,P-33,25.976,11.1,25.5,76.3,44.2,6.4,323.0,448.0,8.0,4,False,18.2,3.0,2.4,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0229,P-33,0.52,3.4,28.7,178.5,56.6,6.4,323.0,448.0,8.0,2,False,19.4,5.0,28.7,False,False,"General wall loss, smooth profile.",MONITOR,False,MONITOR,False
-A-0230,P-33,4.485,6.2,18.0,116.4,76.4,6.4,323.0,448.0,8.0,1,False,15.7,3.0,8.9,False,True,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0231,P-33,22.249,4.1,65.3,174.4,10.0,6.4,323.0,448.0,8.0,2,False,39.4,4.0,16.3,False,True,"General wall loss, smooth profile.",IMMEDIATE,False,IMMEDIATE,False
-A-0232,P-33,3.173,8.4,21.4,24.7,17.3,6.4,323.0,448.0,8.0,2,False,24.5,3.0,5.8,False,False,"Internal wall loss, general.",MONITOR,False,MONITOR,False
-A-0233,P-33,28.165,9.8,21.9,197.3,72.9,6.4,323.0,448.0,8.0,3,True,5.7,4.0,42.7,False,True,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0234,P-33,17.335,4.2,59.7,276.4,90.1,6.4,323.0,448.0,8.0,1,False,62.5,5.0,45.0,False,False,"General wall loss, smooth profile.",180_DAY,False,60_DAY,False
-A-0235,P-33,39.976,8.6,10.5,88.6,105.3,6.4,323.0,448.0,8.0,2,False,10.2,3.0,7.1,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,180_DAY,False
-A-0236,P-33,4.071,1.0,-5.0,154.0,70.1,6.4,323.0,448.0,8.0,1,False,14.0,5.0,3.9,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,True
-A-0237,P-33,10.999,0.3,41.4,58.6,49.9,6.4,323.0,448.0,8.0,2,False,30.2,5.0,5.8,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0238,P-33,26.876,9.5,47.4,107.6,48.7,6.4,323.0,448.0,8.0,2,True,36.6,3.0,14.6,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0239,P-33,26.678,3.8,35.1,24.9,92.2,6.4,323.0,448.0,8.0,3,False,31.0,3.0,92.8,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0240,P-33,20.29,5.1,30.5,264.3,88.2,6.4,323.0,448.0,8.0,1,False,24.3,3.0,12.9,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0241,P-33,17.571,3.2,35.9,180.4,55.1,6.4,323.0,448.0,8.0,1,False,8.2,5.0,0.9,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0242,P-33,36.288,10.5,63.2,121.3,59.0,6.4,323.0,448.0,8.0,1,True,60.4,3.0,2.4,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0243,P-33,24.801,9.4,41.9,174.7,16.0,6.4,323.0,448.0,8.0,1,False,33.2,4.0,13.1,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0244,P-33,22.501,6.7,76.3,83.3,29.4,6.4,323.0,448.0,8.0,2,True,76.4,3.0,1.5,False,False,"Internal wall loss, general.",IMMEDIATE,True,180_DAY,False
-A-0245,P-33,13.467,8.1,48.0,20.0,15.7,6.4,323.0,448.0,8.0,1,True,,4.0,28.0,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,True
-A-0246,P-33,31.674,5.4,49.4,149.8,59.3,6.4,323.0,448.0,8.0,1,True,50.3,5.0,30.0,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0247,P-33,22.093,4.9,47.9,20.0,45.2,6.4,323.0,448.0,8.0,1,False,44.6,5.0,6.1,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0248,P-33,27.056,9.0,24.6,20.0,10.0,6.4,323.0,448.0,8.0,2,False,26.2,3.0,10.6,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0249,P-33,0.026,7.7,42.2,317.0,71.3,6.4,323.0,448.0,8.0,3,False,15.4,5.0,22.7,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0250,P-33,24.377,2.1,26.0,100.1,117.8,6.4,323.0,448.0,8.0,1,False,22.8,3.0,8.0,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0251,P-33,1.949,0.2,32.0,255.9,81.6,6.4,323.0,448.0,8.0,3,False,25.9,3.0,22.1,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0252,P-33,13.201,5.7,45.6,215.4,10.0,6.4,323.0,448.0,8.0,2,False,49.8,5.0,28.7,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0253,P-33,24.908,6.2,50.1,85.1,86.7,6.4,323.0,448.0,8.0,2,False,35.9,5.0,10.0,False,False,"General wall loss, smooth profile.",180_DAY,False,60_DAY,False
-A-0254,P-33,12.282,5.3,27.4,220.9,58.7,6.4,323.0,448.0,8.0,1,True,21.6,5.0,27.2,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,False,MONITOR,False
-A-0255,P-33,15.618,5.8,53.6,158.2,28.9,6.4,323.0,448.0,8.0,1,True,23.9,5.0,11.2,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,True,60_DAY,False
-A-0256,P-33,20.048,2.6,80.2,98.1,12.4,6.4,323.0,448.0,8.0,3,False,71.4,3.0,7.0,False,False,"Internal wall loss, general.",IMMEDIATE,False,IMMEDIATE,False
-A-0257,P-33,14.62,1.9,11.6,185.6,50.0,6.4,323.0,448.0,8.0,1,False,4.1,4.0,1.9,False,False,"Internal wall loss, general.",MONITOR,False,MONITOR,False
-A-0258,P-33,4.256,11.6,54.5,68.0,24.5,6.4,323.0,448.0,8.0,2,False,38.4,5.0,0.7,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0259,P-33,2.072,9.1,23.3,216.7,110.3,6.4,323.0,448.0,8.0,1,False,17.2,3.0,2.9,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0260,P-33,35.179,0.7,28.4,133.0,76.7,6.4,323.0,448.0,8.0,2,True,20.5,3.0,20.4,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0261,P-33,24.433,3.6,19.5,116.5,100.4,6.4,323.0,448.0,8.0,4,False,15.6,4.0,11.9,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0262,P-33,3.782,4.2,51.4,124.9,84.2,6.4,323.0,448.0,8.0,1,False,78.1,4.0,5.6,True,True,"Severe sharp undercut at weld toe, active.",IMMEDIATE,True,180_DAY,False
-A-0263,P-33,17.201,10.6,33.6,203.4,39.0,6.4,323.0,448.0,8.0,1,False,26.0,3.0,29.9,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0264,P-33,30.174,10.2,850.0,170.9,95.7,6.4,323.0,448.0,8.0,3,True,62.4,4.0,18.9,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,True
-A-0265,P-33,38.475,3.0,49.3,74.7,51.8,6.4,323.0,448.0,8.0,2,False,46.2,4.0,3.9,False,False,"Internal wall loss, general.",180_DAY,False,180_DAY,False
-A-0266,P-33,8.448,2.3,63.4,254.1,32.8,6.4,323.0,448.0,8.0,1,False,57.2,3.0,9.4,False,False,"External corrosion patch, blunt morphology.",60_DAY,False,60_DAY,False
-A-0267,P-33,18.584,4.1,29.9,156.9,77.0,6.4,323.0,448.0,8.0,1,False,5.5,5.0,8.3,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0268,P-33,26.482,7.6,73.7,138.7,23.6,6.4,323.0,448.0,8.0,2,False,41.9,5.0,0.9,False,False,"External corrosion patch, blunt morphology.",IMMEDIATE,False,IMMEDIATE,False
-A-0269,P-33,9.048,6.3,56.4,116.5,33.3,6.4,323.0,448.0,8.0,3,False,37.5,5.0,4.9,False,False,"Internal wall loss, general.",60_DAY,False,60_DAY,False
-A-0270,P-33,16.611,3.3,17.2,59.8,83.1,6.4,323.0,448.0,8.0,1,False,12.2,3.0,5.2,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0271,P-33,22.563,0.7,27.8,137.3,37.9,6.4,323.0,448.0,8.0,1,False,23.0,5.0,0.3,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0272,P-33,10.83,3.9,69.7,164.2,144.0,6.4,323.0,448.0,8.0,1,False,59.2,4.0,0.3,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0273,P-33,27.302,7.7,48.4,31.0,71.9,6.4,323.0,448.0,8.0,2,False,40.7,3.0,6.1,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0274,P-33,32.172,5.3,46.5,25.9,72.6,6.4,323.0,448.0,8.0,4,True,27.8,5.0,11.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,False,180_DAY,False
-A-0275,P-33,18.682,4.4,38.5,247.7,23.5,6.4,323.0,448.0,8.0,3,True,21.8,4.0,7.7,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,True,180_DAY,False
-A-0276,P-33,38.978,0.5,73.7,178.7,58.5,6.4,323.0,448.0,8.0,2,False,71.8,3.0,6.9,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,False
-A-0277,P-33,5.34,2.3,22.0,83.1,52.6,6.4,323.0,448.0,8.0,1,False,21.5,4.0,5.6,False,False,"Minor pitting, monitor.",MONITOR,False,MONITOR,False
-A-0278,P-33,34.617,4.6,21.7,102.1,85.6,6.4,323.0,448.0,8.0,2,True,12.6,4.0,14.7,False,False,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0279,P-33,22.402,6.4,64.0,97.7,54.9,6.4,323.0,448.0,8.0,1,True,41.8,4.0,3.9,False,False,"General wall loss, smooth profile.",IMMEDIATE,True,MONITOR,False
-A-0280,P-33,3.729,0.9,17.6,25.2,49.5,6.4,323.0,448.0,8.0,1,False,19.5,5.0,14.4,False,False,"External corrosion patch, blunt morphology.",MONITOR,False,180_DAY,False
-A-0281,P-33,28.597,0.8,41.3,149.2,109.9,6.4,323.0,448.0,8.0,1,False,34.4,4.0,18.9,True,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0282,P-33,6.327,5.2,12.0,140.7,45.3,6.4,323.0,448.0,8.0,1,True,2.0,3.0,39.5,True,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0283,P-33,23.25,2.8,14.4,163.9,12.0,6.4,323.0,448.0,8.0,1,False,13.6,5.0,6.9,False,True,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0284,P-33,3.809,5.4,14.5,47.2,15.1,6.4,323.0,448.0,8.0,4,False,7.9,5.0,1.3,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0285,P-33,10.551,2.1,62.8,42.9,80.0,6.4,323.0,448.0,8.0,3,False,51.9,3.0,9.9,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0286,P-33,31.859,11.4,51.7,204.0,74.1,6.4,323.0,448.0,8.0,2,True,34.6,4.0,1.0,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0287,P-33,33.873,4.5,51.2,116.1,58.8,6.4,323.0,448.0,8.0,3,True,21.6,5.0,27.7,False,False,"Moderate pitting cluster, no sharp edges.",IMMEDIATE,False,IMMEDIATE,False
-A-0288,P-33,37.984,8.0,16.7,211.7,100.2,6.4,323.0,448.0,8.0,1,True,13.5,3.0,8.5,False,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0289,P-33,23.445,1.4,51.9,239.1,39.9,6.4,323.0,448.0,8.0,4,False,49.9,3.0,1.0,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
-A-0290,P-33,22.959,1.9,850.0,150.8,95.9,6.4,323.0,448.0,8.0,1,False,13.8,3.0,2.5,False,True,"General wall loss, smooth profile.",MONITOR,False,180_DAY,True
-A-0291,P-33,30.593,10.0,27.5,182.7,68.2,6.4,323.0,448.0,8.0,1,True,10.8,4.0,25.0,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,False,60_DAY,False
-A-0292,P-33,36.297,1.1,-5.0,132.0,56.6,6.4,323.0,448.0,8.0,2,True,54.1,3.0,9.9,False,False,"General wall loss, smooth profile.",60_DAY,False,60_DAY,True
-A-0293,P-33,34.607,3.8,18.6,164.4,54.9,6.4,323.0,448.0,8.0,2,True,21.4,4.0,5.6,False,False,"Minor pitting, monitor.",MONITOR,False,180_DAY,False
-A-0294,P-33,29.246,7.5,23.3,126.5,55.5,6.4,323.0,448.0,8.0,1,False,23.9,4.0,10.3,True,False,"General wall loss, smooth profile.",MONITOR,False,180_DAY,False
-A-0295,P-33,18.977,3.1,19.6,160.0,71.3,6.4,323.0,448.0,8.0,4,False,11.3,3.0,0.2,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0296,P-33,18.037,2.5,29.2,62.3,57.8,6.4,323.0,448.0,8.0,1,False,24.5,4.0,11.0,False,False,"Internal wall loss, general.",MONITOR,False,180_DAY,False
-A-0297,P-33,39.827,3.5,45.9,197.5,85.8,6.4,323.0,448.0,8.0,4,False,31.3,4.0,14.6,False,False,"General wall loss, smooth profile.",180_DAY,False,180_DAY,False
-A-0298,P-33,4.165,1.6,13.2,158.6,10.0,6.4,323.0,448.0,8.0,4,False,4.9,4.0,13.1,False,True,"Minor pitting, monitor.",180_DAY,False,180_DAY,False
-A-0299,P-33,8.202,9.7,37.8,222.8,60.9,6.4,323.0,448.0,8.0,1,True,35.5,3.0,15.8,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,False,180_DAY,False
-A-0300,P-33,22.702,2.2,55.9,50.0,70.7,6.4,323.0,448.0,8.0,2,True,45.6,3.0,23.1,False,False,"Minor pitting, monitor.",60_DAY,False,60_DAY,False
+anomaly_id,pipeline_id,chainage_m,clock_position,depth_pct,length_mm,width_mm,wall_thickness_mm,diameter_mm,smys_mpa,maop_mpa,location_class,hca,prior_depth_pct,years_between,dist_weld_m,near_road,near_water,inspector_note,legacy_manual_label,truth_class,is_planted_miss,is_dirty
+A-0001,P-14,10200.0,3.0,71.3,20.0,20.9,9.5,610.0,359.0,6.9,3,False,72.6,4.0,20.8,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0002,P-14,10200.4,3.0,59.3,116.5,54.5,9.5,610.0,359.0,6.9,1,True,21.5,3.0,5.0,False,True,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0003,P-14,10200.8,3.0,60.5,84.1,35.6,9.5,610.0,359.0,6.9,2,False,47.7,4.0,16.0,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0004,P-14,10201.2,3.0,66.1,135.3,86.1,9.5,610.0,359.0,6.9,1,True,48.9,3.0,47.9,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,60_DAY,True,False
+A-0005,P-14,22749.6,1.7,15.1,187.8,10.0,9.5,610.0,359.0,6.9,3,False,4.1,4.0,11.5,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0006,P-14,34136.1,2.8,31.0,130.0,80.7,9.5,610.0,359.0,6.9,2,False,20.3,4.0,1.7,True,True,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0007,P-14,28894.4,5.5,25.4,153.7,73.4,9.5,610.0,359.0,6.9,2,False,18.7,3.0,6.0,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0008,P-14,27988.3,3.2,77.4,171.6,32.0,9.5,610.0,359.0,6.9,1,False,73.8,3.0,3.7,False,False,"Minor pitting, monitor.",180_DAY,IMMEDIATE,True,False
+A-0009,P-14,34264.6,9.1,51.8,121.5,108.1,9.5,610.0,359.0,6.9,2,False,43.3,5.0,3.5,True,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0010,P-14,6823.7,11.1,39.8,164.5,53.3,9.5,610.0,359.0,6.9,4,False,23.0,4.0,19.4,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0011,P-14,10679.0,4.0,18.5,110.1,92.0,9.5,610.0,359.0,6.9,3,True,2.0,4.0,29.2,False,True,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0012,P-14,36640.5,2.8,17.7,269.0,35.4,9.5,610.0,359.0,6.9,3,False,8.2,3.0,6.7,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0013,P-14,1796.4,5.2,82.6,230.5,64.8,9.5,610.0,359.0,6.9,3,True,57.4,4.0,1.1,False,False,"General wall loss, smooth profile.",60_DAY,IMMEDIATE,True,False
+A-0014,P-14,37472.5,2.9,40.4,107.4,48.5,9.5,610.0,359.0,6.9,2,False,31.3,3.0,24.8,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0015,P-14,557.5,2.8,31.4,20.0,58.5,9.5,610.0,359.0,6.9,2,False,25.9,4.0,4.3,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0016,P-14,15903.1,3.6,30.6,213.6,55.4,9.5,610.0,359.0,6.9,4,True,22.9,3.0,2.9,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0017,P-14,23841.7,11.2,54.8,78.7,69.5,9.5,610.0,359.0,6.9,1,False,55.2,3.0,9.9,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0018,P-14,14967.4,5.1,35.5,20.0,123.9,9.5,610.0,359.0,6.9,1,False,16.2,5.0,0.8,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0019,P-14,5754.9,11.1,23.4,110.6,18.8,9.5,610.0,359.0,6.9,1,True,20.8,3.0,8.3,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0020,P-14,35000.2,10.2,24.1,266.5,107.2,9.5,610.0,359.0,6.9,2,True,24.8,3.0,32.1,True,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0021,P-14,36106.1,11.8,66.9,123.7,51.2,9.5,610.0,359.0,6.9,1,False,53.3,3.0,8.5,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0022,P-14,19115.1,5.0,9.4,180.5,50.1,9.5,610.0,359.0,6.9,1,False,7.7,4.0,11.5,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0023,P-14,33942.4,7.8,63.3,124.7,39.1,9.5,610.0,359.0,6.9,3,False,59.8,4.0,29.5,True,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0024,P-14,5496.3,11.5,74.3,164.6,39.0,9.5,610.0,359.0,6.9,4,True,45.1,5.0,3.5,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,IMMEDIATE,True,False
+A-0025,P-14,20905.3,9.2,62.0,20.0,42.3,9.5,610.0,359.0,6.9,1,False,52.4,5.0,27.3,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0026,P-14,30501.3,3.2,24.3,109.3,71.5,9.5,610.0,359.0,6.9,4,False,19.0,3.0,52.2,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0027,P-14,15054.4,11.8,56.1,158.8,129.8,9.5,610.0,359.0,6.9,2,False,35.0,4.0,27.3,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0028,P-14,12077.1,11.0,38.4,20.0,61.6,9.5,610.0,359.0,6.9,1,True,11.7,4.0,21.3,True,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0029,P-14,1160.0,2.9,26.8,177.4,48.2,9.5,610.0,359.0,6.9,2,True,14.5,3.0,4.3,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0030,P-14,32038.6,11.1,59.5,212.9,57.9,9.5,610.0,359.0,6.9,1,False,45.5,3.0,3.0,False,False,"Severe gouge with undercut edges, active corrosion.",180_DAY,60_DAY,True,False
+A-0031,P-14,10830.4,8.5,49.4,147.5,28.8,9.5,610.0,359.0,6.9,1,True,71.9,3.0,8.8,False,False,"Severe gouge with undercut edges, active corrosion.",180_DAY,60_DAY,True,False
+A-0032,P-14,31363.2,7.6,53.2,212.4,49.7,9.5,610.0,359.0,6.9,2,False,48.3,5.0,31.6,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0033,P-14,4768.7,1.6,34.1,60.8,70.0,9.5,610.0,359.0,6.9,2,False,35.9,3.0,0.6,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0034,P-14,9023.7,6.9,47.1,100.1,65.6,9.5,610.0,359.0,6.9,1,True,41.4,4.0,7.4,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0035,P-14,29468.2,10.6,63.7,108.1,36.6,9.5,610.0,359.0,6.9,1,False,41.1,4.0,2.4,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0036,P-14,12555.7,8.9,4.0,20.0,100.9,9.5,610.0,359.0,6.9,1,True,1.2,4.0,5.2,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0037,P-14,15513.7,7.7,32.3,144.1,80.0,9.5,610.0,359.0,6.9,1,False,36.7,5.0,4.0,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0038,P-14,3202.0,9.1,40.3,94.7,31.8,9.5,610.0,359.0,6.9,4,True,42.0,5.0,22.1,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0039,P-14,9746.7,10.1,50.1,102.3,55.2,9.5,610.0,359.0,6.9,1,True,35.6,5.0,15.8,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0040,P-14,20191.7,10.9,42.0,32.9,33.3,9.5,610.0,359.0,6.9,1,False,36.4,4.0,6.9,True,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0041,P-14,17928.3,3.7,49.1,138.3,33.0,9.5,610.0,359.0,6.9,2,False,29.7,5.0,23.1,False,False,"External corrosion patch, blunt morphology.",MONITOR,180_DAY,False,False
+A-0042,P-14,34672.1,1.4,41.3,61.4,67.1,9.5,610.0,359.0,6.9,4,False,30.6,4.0,0.3,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0043,P-14,39421.6,5.6,49.9,79.6,98.2,9.5,610.0,359.0,6.9,2,False,69.9,3.0,0.9,False,False,"Severe gouge with undercut edges, active corrosion.",60_DAY,IMMEDIATE,True,False
+A-0044,P-14,30948.8,10.4,56.2,136.9,41.6,9.5,610.0,359.0,6.9,2,False,45.8,5.0,1.2,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0045,P-14,26864.5,2.9,57.3,298.5,47.8,9.5,610.0,359.0,6.9,2,False,72.9,3.0,0.4,False,False,"Internal wall loss, general.",60_DAY,IMMEDIATE,True,False
+A-0046,P-14,39949.7,3.6,24.9,163.1,10.0,9.5,610.0,359.0,6.9,1,False,,3.0,4.3,False,True,"Minor pitting, monitor.",180_DAY,180_DAY,False,True
+A-0047,P-14,18131.2,7.6,20.2,20.0,59.5,9.5,610.0,359.0,6.9,2,False,23.4,4.0,16.3,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0048,P-14,26137.6,3.6,33.3,144.5,131.5,9.5,610.0,359.0,6.9,2,False,27.9,5.0,9.3,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0049,P-14,7407.2,6.7,19.4,90.3,69.4,9.5,610.0,359.0,6.9,2,True,3.4,5.0,4.1,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0050,P-14,2038.4,1.3,35.7,51.7,32.7,9.5,610.0,359.0,6.9,1,False,15.2,5.0,0.0,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0051,P-14,13323.8,5.2,41.3,113.3,93.8,9.5,610.0,359.0,6.9,1,True,43.6,5.0,4.8,True,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0052,P-14,28462.3,1.8,850.0,139.5,64.7,9.5,610.0,359.0,6.9,1,True,26.4,4.0,22.9,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,True
+A-0053,P-14,189.7,10.2,54.6,94.0,33.2,9.5,610.0,359.0,6.9,1,False,33.9,4.0,24.1,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0054,P-14,24029.4,2.6,33.6,164.6,70.2,9.5,610.0,359.0,6.9,1,True,33.0,4.0,28.8,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0055,P-14,23753.2,1.5,15.1,147.8,61.8,9.5,610.0,359.0,6.9,4,True,1.2,5.0,32.3,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0056,P-14,24871.7,3.3,11.8,155.8,71.7,9.5,610.0,359.0,6.9,3,True,3.3,3.0,1.0,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0057,P-14,15846.7,8.1,59.0,110.7,22.7,9.5,610.0,359.0,6.9,2,False,55.7,5.0,1.5,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0058,P-14,27303.3,1.8,60.4,220.6,25.1,9.5,610.0,359.0,6.9,2,False,71.5,3.0,26.2,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,IMMEDIATE,True,False
+A-0059,P-14,22797.4,1.3,58.8,57.4,50.2,9.5,610.0,359.0,6.9,1,False,42.6,4.0,23.3,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0060,P-14,24349.6,7.0,34.4,94.7,45.3,9.5,610.0,359.0,6.9,1,False,28.7,3.0,1.4,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0061,P-14,9743.9,1.2,51.8,71.5,84.9,9.5,610.0,359.0,6.9,1,True,49.2,4.0,4.0,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0062,P-14,19820.3,1.3,23.7,112.8,59.2,9.5,610.0,359.0,6.9,4,False,22.8,4.0,2.1,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0063,P-14,3879.1,10.1,45.7,91.4,61.2,9.5,610.0,359.0,6.9,1,False,43.4,4.0,9.2,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0064,P-14,8272.5,11.3,21.4,30.6,62.1,9.5,610.0,359.0,6.9,3,True,24.1,4.0,3.9,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0065,P-14,34983.0,4.1,38.5,20.0,50.5,9.5,610.0,359.0,6.9,4,False,35.4,3.0,19.3,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0066,P-14,5026.6,11.4,40.9,141.7,77.7,9.5,610.0,359.0,6.9,1,False,11.5,5.0,7.0,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0067,P-14,21275.4,2.2,850.0,20.0,10.0,9.5,610.0,359.0,6.9,1,False,81.4,5.0,15.2,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,IMMEDIATE,True,True
+A-0068,P-14,8478.2,11.1,24.1,117.5,19.1,9.5,610.0,359.0,6.9,1,True,23.6,4.0,2.6,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0069,P-14,36874.1,3.8,59.8,91.1,17.5,9.5,610.0,359.0,6.9,2,False,52.6,4.0,1.0,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0070,P-14,29984.7,11.9,20.8,180.9,104.4,9.5,610.0,359.0,6.9,1,False,15.0,4.0,19.1,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0071,P-14,25882.9,4.1,30.8,120.2,70.2,9.5,610.0,359.0,6.9,2,False,21.9,5.0,14.9,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0072,P-14,26714.0,1.6,22.1,163.4,70.2,9.5,610.0,359.0,6.9,4,False,10.7,4.0,11.9,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0073,P-14,12819.6,11.7,19.0,154.0,44.2,9.5,610.0,359.0,6.9,3,True,18.4,5.0,9.3,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0074,P-14,25288.1,4.0,18.5,158.0,31.3,9.5,610.0,359.0,6.9,4,False,18.8,4.0,8.7,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0075,P-14,11572.8,3.1,47.6,221.8,46.3,9.5,610.0,359.0,6.9,3,True,44.3,4.0,20.1,True,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0076,P-21,22500.0,3.0,58.2,135.9,99.6,8.0,457.0,414.0,7.5,2,False,64.6,3.0,8.7,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,60_DAY,True,False
+A-0077,P-21,22500.4,3.0,58.5,78.3,60.3,8.0,457.0,414.0,7.5,2,False,6.3,3.0,4.7,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0078,P-21,22500.8,3.0,61.5,25.1,36.2,8.0,457.0,414.0,7.5,2,False,8.5,5.0,25.9,True,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0079,P-21,22501.2,3.0,63.4,151.5,60.1,8.0,457.0,414.0,7.5,2,False,12.1,3.0,4.1,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0080,P-21,21557.7,9.8,22.1,210.2,61.9,8.0,457.0,414.0,7.5,3,True,21.9,3.0,27.1,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0081,P-21,30059.6,1.4,20.6,191.3,90.9,8.0,457.0,414.0,7.5,1,False,19.0,5.0,12.6,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0082,P-21,7692.0,2.6,-5.0,20.0,30.4,8.0,457.0,414.0,7.5,2,False,35.6,3.0,5.1,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,True
+A-0083,P-21,30316.4,9.9,51.2,145.6,72.5,8.0,457.0,414.0,7.5,1,False,35.1,4.0,15.6,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0084,P-21,18798.2,5.7,84.5,255.4,118.8,8.0,457.0,414.0,7.5,1,False,62.7,5.0,2.1,True,False,"General wall loss, smooth profile.",60_DAY,IMMEDIATE,True,False
+A-0085,P-21,12815.9,4.3,47.6,140.8,86.6,8.0,457.0,414.0,7.5,1,False,32.1,3.0,1.0,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0086,P-21,32792.4,6.3,74.9,156.7,81.9,8.0,457.0,414.0,7.5,4,False,60.7,5.0,4.2,False,False,"General wall loss, smooth profile.",MONITOR,60_DAY,True,False
+A-0087,P-21,15229.3,4.8,51.7,159.9,78.5,8.0,457.0,414.0,7.5,1,False,37.8,3.0,21.6,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0088,P-21,15659.7,4.0,40.0,64.2,69.1,8.0,457.0,414.0,7.5,2,False,30.8,4.0,4.7,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0089,P-21,8581.6,6.8,49.2,61.5,79.9,8.0,457.0,414.0,7.5,2,False,29.3,5.0,9.5,True,True,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0090,P-21,27216.8,6.8,36.9,20.0,10.0,8.0,457.0,414.0,7.5,2,True,31.7,3.0,14.9,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0091,P-21,6423.5,9.3,27.2,179.2,12.7,8.0,457.0,414.0,7.5,3,False,16.4,5.0,10.3,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0092,P-21,39285.8,7.3,5.3,95.7,24.6,8.0,457.0,414.0,7.5,3,False,2.0,4.0,0.4,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0093,P-21,27605.1,2.0,49.6,20.0,66.9,8.0,457.0,414.0,7.5,2,False,42.1,5.0,1.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0094,P-21,32358.8,11.7,31.1,309.8,53.6,8.0,457.0,414.0,7.5,2,False,23.4,3.0,14.8,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0095,P-21,12070.6,10.8,30.1,29.6,70.6,8.0,457.0,414.0,7.5,3,False,28.4,5.0,19.7,True,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0096,P-21,12426.2,2.3,14.3,213.0,97.4,8.0,457.0,414.0,7.5,3,False,1.6,4.0,6.8,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0097,P-21,21739.8,10.8,87.7,20.0,50.5,8.0,457.0,414.0,7.5,1,True,76.9,3.0,24.4,False,False,"Internal wall loss, general.",180_DAY,IMMEDIATE,True,False
+A-0098,P-21,1407.0,1.9,43.3,162.2,54.5,8.0,457.0,414.0,7.5,4,False,27.5,4.0,3.2,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0099,P-21,21488.8,7.5,21.0,276.1,13.0,8.0,457.0,414.0,7.5,4,True,22.5,3.0,4.9,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0100,P-21,21619.1,2.2,26.8,,84.7,8.0,457.0,414.0,7.5,1,True,16.0,4.0,1.9,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,True
+A-0101,P-21,20782.0,6.1,5.1,32.7,93.6,8.0,457.0,414.0,7.5,2,True,7.3,5.0,0.6,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0102,P-21,35870.2,5.7,29.7,112.6,48.1,8.0,457.0,414.0,7.5,2,False,17.0,3.0,23.0,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0103,P-21,14836.5,5.1,64.6,30.0,19.2,8.0,457.0,414.0,7.5,1,False,48.1,4.0,43.8,False,True,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0104,P-21,38241.9,1.9,29.3,159.4,63.4,8.0,457.0,414.0,7.5,3,False,28.4,3.0,3.4,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0105,P-21,5091.0,6.6,46.6,42.7,69.7,8.0,457.0,414.0,7.5,3,False,47.2,3.0,2.1,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0106,P-21,9637.1,9.0,25.7,124.8,76.4,8.0,457.0,414.0,7.5,1,False,27.5,4.0,10.9,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0107,P-21,39953.2,7.4,62.8,90.3,92.4,8.0,457.0,414.0,7.5,1,True,53.4,4.0,22.7,False,True,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0108,P-21,9007.1,9.5,57.2,226.1,52.2,8.0,457.0,414.0,7.5,1,False,53.1,4.0,3.7,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0109,P-21,6792.0,2.3,18.9,94.4,18.7,8.0,457.0,414.0,7.5,2,False,2.9,5.0,4.9,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0110,P-21,9410.3,3.3,63.0,171.1,12.4,8.0,457.0,414.0,7.5,1,False,71.6,3.0,3.9,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,IMMEDIATE,True,False
+A-0111,P-21,39763.1,0.5,24.0,158.5,38.9,8.0,457.0,414.0,7.5,1,False,12.8,3.0,8.6,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0112,P-21,27616.1,11.8,29.2,136.7,107.3,8.0,457.0,414.0,7.5,3,False,12.4,4.0,4.8,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0113,P-21,31842.4,10.9,51.4,102.3,58.7,8.0,457.0,414.0,7.5,1,False,39.9,4.0,1.1,False,False,"Severe gouge with undercut edges, active corrosion.",180_DAY,60_DAY,True,False
+A-0114,P-21,31316.2,2.5,73.3,20.0,107.7,8.0,457.0,414.0,7.5,1,False,74.9,4.0,1.0,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0115,P-21,29135.0,5.3,63.5,20.0,75.1,8.0,457.0,414.0,7.5,3,False,66.2,4.0,13.5,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0116,P-21,36526.2,3.0,46.4,103.4,13.0,8.0,457.0,414.0,7.5,3,False,42.0,3.0,17.8,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0117,P-21,39465.1,1.1,25.6,139.7,39.0,8.0,457.0,414.0,7.5,1,False,13.9,4.0,2.0,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0118,P-21,978.0,2.6,45.6,206.0,40.8,8.0,457.0,414.0,7.5,1,False,37.1,5.0,1.4,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0119,P-21,34664.4,9.0,55.2,148.7,46.0,8.0,457.0,414.0,7.5,1,False,57.8,4.0,23.3,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0120,P-21,17981.3,7.7,23.6,79.3,10.0,8.0,457.0,414.0,7.5,2,False,23.4,3.0,5.3,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0121,P-21,3600.1,1.4,44.2,198.9,62.9,8.0,457.0,414.0,7.5,3,False,40.1,3.0,8.8,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0122,P-21,13842.6,5.6,16.1,127.8,48.3,8.0,457.0,414.0,7.5,1,False,18.0,5.0,3.6,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0123,P-21,8664.9,8.3,60.5,80.4,93.0,8.0,457.0,414.0,7.5,2,False,59.7,4.0,42.0,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0124,P-21,17873.6,4.9,34.3,55.8,144.3,8.0,457.0,414.0,7.5,1,False,29.3,4.0,11.5,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0125,P-21,19672.5,6.3,61.9,176.6,62.9,8.0,457.0,414.0,7.5,2,False,45.7,4.0,2.1,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0126,P-21,22.7,5.2,34.3,97.2,50.2,8.0,457.0,414.0,7.5,1,False,33.0,4.0,12.4,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0127,P-21,9227.2,10.9,25.6,187.3,10.0,8.0,457.0,414.0,7.5,1,False,18.6,4.0,20.8,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0128,P-21,34398.8,11.2,31.6,58.4,80.2,8.0,457.0,414.0,7.5,2,False,32.1,3.0,5.4,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0129,P-21,22431.1,6.1,48.3,223.5,33.0,8.0,457.0,414.0,7.5,1,True,34.3,4.0,4.4,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0130,P-21,846.2,3.8,27.5,99.0,80.2,8.0,457.0,414.0,7.5,1,False,23.1,3.0,17.4,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0131,P-21,2871.9,9.6,65.5,105.4,80.4,8.0,457.0,414.0,7.5,2,False,62.3,5.0,17.3,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0132,P-21,19089.3,4.3,32.2,219.5,46.3,8.0,457.0,414.0,7.5,1,False,24.9,3.0,74.9,False,True,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0133,P-21,19000.9,7.2,23.1,79.3,13.5,8.0,457.0,414.0,7.5,2,False,21.8,3.0,0.1,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0134,P-21,482.1,9.2,82.1,65.4,75.3,8.0,457.0,414.0,7.5,1,True,58.8,5.0,3.0,False,False,"General wall loss, smooth profile.",60_DAY,IMMEDIATE,True,False
+A-0135,P-21,3000.7,8.8,72.5,116.1,24.2,8.0,457.0,414.0,7.5,4,False,63.4,3.0,16.8,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0136,P-21,34382.4,4.5,60.5,63.9,21.8,8.0,457.0,414.0,7.5,1,False,60.7,4.0,12.5,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0137,P-21,19012.2,9.0,8.2,74.2,66.5,8.0,457.0,414.0,7.5,3,False,2.2,5.0,1.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0138,P-21,1894.9,3.4,21.0,175.8,52.9,8.0,457.0,414.0,7.5,1,True,2.5,5.0,3.3,True,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0139,P-21,18261.9,4.7,64.4,102.4,36.4,8.0,457.0,414.0,7.5,1,False,37.2,5.0,0.3,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0140,P-21,11392.3,9.5,45.3,275.0,46.4,8.0,457.0,414.0,7.5,2,False,39.8,4.0,0.4,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0141,P-21,12956.1,5.8,50.4,119.3,107.7,8.0,457.0,414.0,7.5,1,False,76.6,3.0,15.9,False,False,"Severe gouge with undercut edges, active corrosion.",60_DAY,IMMEDIATE,True,False
+A-0142,P-21,34381.2,5.4,5.1,134.4,45.7,8.0,457.0,414.0,7.5,4,False,0.1,3.0,5.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0143,P-21,10539.0,4.3,44.3,66.6,18.6,8.0,457.0,414.0,7.5,3,False,40.7,3.0,13.6,True,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0144,P-21,29884.4,1.6,61.8,20.0,41.9,8.0,457.0,414.0,7.5,3,False,48.2,3.0,8.9,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0145,P-21,565.0,11.1,22.6,21.5,10.0,8.0,457.0,414.0,7.5,1,True,23.9,4.0,10.9,False,True,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0146,P-21,1008.2,2.4,58.5,174.4,57.1,8.0,457.0,414.0,7.5,2,False,52.8,3.0,29.6,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0147,P-21,32255.9,3.7,52.5,228.0,67.7,8.0,457.0,414.0,7.5,1,False,50.9,3.0,42.0,True,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0148,P-21,16567.1,0.5,25.5,154.3,52.2,8.0,457.0,414.0,7.5,3,False,21.9,3.0,3.1,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0149,P-21,20107.2,1.8,20.3,149.6,92.1,8.0,457.0,414.0,7.5,1,True,14.3,5.0,4.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0150,P-21,32729.1,7.0,22.2,309.3,71.8,8.0,457.0,414.0,7.5,3,True,22.2,5.0,1.9,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0151,P-07,4000.0,3.0,49.5,143.3,35.7,12.7,762.0,317.0,5.2,3,True,43.8,4.0,11.3,False,False,"Deep sharp anomaly, severe profile per analyst.",MONITOR,60_DAY,True,False
+A-0152,P-07,4000.4,3.0,60.3,76.9,34.5,12.7,762.0,317.0,5.2,2,True,57.0,4.0,1.5,False,True,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0153,P-07,4000.8,3.0,62.5,20.0,29.9,12.7,762.0,317.0,5.2,3,False,23.8,4.0,7.0,True,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0154,P-07,4001.2,3.0,63.5,121.0,53.5,12.7,762.0,317.0,5.2,1,False,21.4,3.0,35.4,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0155,P-07,31746.9,0.7,34.4,188.6,98.8,12.7,762.0,317.0,5.2,1,False,27.6,3.0,24.8,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0156,P-07,30182.8,10.1,66.3,130.6,77.4,12.7,762.0,317.0,5.2,3,False,58.4,3.0,29.2,False,True,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0157,P-07,35521.2,9.2,22.9,206.1,35.8,12.7,762.0,317.0,5.2,2,False,18.9,4.0,0.2,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0158,P-07,30260.1,5.7,35.6,37.2,70.0,12.7,762.0,317.0,5.2,2,False,27.9,3.0,14.7,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0159,P-07,11498.9,2.1,37.1,88.1,72.5,12.7,762.0,317.0,5.2,1,False,,5.0,3.1,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,True
+A-0160,P-07,23217.5,4.5,66.9,152.1,70.9,12.7,762.0,317.0,5.2,3,False,56.5,3.0,16.2,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0161,P-07,2655.9,10.4,62.0,98.6,45.3,12.7,762.0,317.0,5.2,3,True,57.0,5.0,11.8,False,False,"External corrosion patch, blunt morphology.",MONITOR,180_DAY,False,False
+A-0162,P-07,6005.2,10.0,38.9,123.9,74.9,12.7,762.0,317.0,5.2,2,False,30.6,3.0,5.3,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0163,P-07,10034.1,4.4,6.3,222.9,65.1,12.7,762.0,317.0,5.2,2,False,0.9,3.0,42.3,True,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0164,P-07,2874.5,7.1,33.2,106.8,84.4,12.7,762.0,317.0,5.2,4,True,32.4,3.0,12.7,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0165,P-07,30122.9,10.7,51.7,130.5,69.7,12.7,762.0,317.0,5.2,1,False,51.2,4.0,7.4,True,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0166,P-07,21105.5,0.8,52.9,103.3,56.6,12.7,762.0,317.0,5.2,1,False,45.1,5.0,13.2,False,False,"General wall loss, smooth profile.",180_DAY,60_DAY,True,False
+A-0167,P-07,23447.1,3.9,46.7,20.0,80.1,12.7,762.0,317.0,5.2,2,False,31.7,4.0,22.7,False,True,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0168,P-07,16171.1,7.0,45.4,188.6,68.4,12.7,762.0,317.0,5.2,3,False,34.0,5.0,3.7,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0169,P-07,27162.1,1.1,37.0,20.0,93.3,12.7,762.0,317.0,5.2,2,False,24.7,3.0,5.1,False,True,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0170,P-07,5720.3,2.3,19.2,118.8,114.7,12.7,762.0,317.0,5.2,1,True,6.1,4.0,13.3,False,True,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0171,P-07,24346.4,11.5,35.8,110.9,62.1,12.7,762.0,317.0,5.2,2,False,24.3,4.0,31.7,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0172,P-07,11087.9,0.6,75.4,91.3,62.7,12.7,762.0,317.0,5.2,2,True,61.9,3.0,6.7,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,60_DAY,True,False
+A-0173,P-07,8605.2,2.0,56.1,121.1,46.2,12.7,762.0,317.0,5.2,1,False,51.9,3.0,15.0,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0174,P-07,38323.7,7.0,48.7,113.0,56.6,12.7,762.0,317.0,5.2,2,False,28.5,5.0,3.0,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0175,P-07,12786.6,3.5,45.5,111.5,10.0,12.7,762.0,317.0,5.2,1,False,37.2,5.0,21.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0176,P-07,20663.0,7.2,17.8,239.5,66.5,12.7,762.0,317.0,5.2,4,True,20.1,3.0,20.1,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0177,P-07,34358.6,1.5,62.3,20.0,116.8,12.7,762.0,317.0,5.2,1,True,48.3,4.0,6.0,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0178,P-07,26102.7,1.5,15.3,20.0,78.4,12.7,762.0,317.0,5.2,4,False,8.1,4.0,21.8,True,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0179,P-07,24568.0,2.8,36.0,112.4,47.0,12.7,762.0,317.0,5.2,2,False,41.7,3.0,20.4,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0180,P-07,38383.9,2.7,73.8,134.1,73.2,12.7,762.0,317.0,5.2,1,False,60.6,3.0,18.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,60_DAY,True,False
+A-0181,P-07,18576.1,2.5,58.1,187.8,57.4,12.7,762.0,317.0,5.2,2,False,53.6,3.0,3.9,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0182,P-07,16806.5,9.8,-5.0,206.7,68.6,12.7,762.0,317.0,5.2,2,False,41.6,3.0,8.6,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,True
+A-0183,P-07,32232.7,10.7,10.9,20.0,84.7,12.7,762.0,317.0,5.2,2,False,12.2,4.0,14.2,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0184,P-07,32023.1,10.2,19.3,109.1,100.6,12.7,762.0,317.0,5.2,1,False,11.4,4.0,10.2,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0185,P-07,34994.0,2.0,63.7,105.0,79.9,12.7,762.0,317.0,5.2,2,False,66.0,3.0,24.0,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0186,P-07,25712.2,11.7,5.6,210.1,35.2,12.7,762.0,317.0,5.2,2,False,2.1,4.0,9.8,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0187,P-07,6717.5,8.9,50.9,92.0,51.9,12.7,762.0,317.0,5.2,1,False,38.5,3.0,7.9,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0188,P-07,23011.8,1.1,73.7,104.5,89.9,12.7,762.0,317.0,5.2,3,False,65.7,4.0,5.1,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0189,P-07,3231.4,10.6,60.3,186.8,74.9,12.7,762.0,317.0,5.2,2,True,43.1,4.0,13.8,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0190,P-07,33644.8,11.9,23.5,116.5,81.2,12.7,762.0,317.0,5.2,3,False,19.7,4.0,1.9,True,True,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0191,P-07,25511.6,4.2,26.1,79.0,48.9,12.7,762.0,317.0,5.2,4,False,29.3,4.0,20.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0192,P-07,14131.6,8.2,70.6,217.4,34.4,12.7,762.0,317.0,5.2,2,False,75.2,5.0,2.7,False,True,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0193,P-07,34929.6,8.3,850.0,20.0,63.4,12.7,762.0,317.0,5.2,2,False,17.9,3.0,25.5,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,True
+A-0194,P-07,18608.5,2.6,51.5,242.7,84.8,12.7,762.0,317.0,5.2,2,False,36.8,5.0,21.0,False,True,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0195,P-07,31477.6,5.2,39.6,73.7,75.0,12.7,762.0,317.0,5.2,1,True,35.2,3.0,21.3,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0196,P-07,37581.8,7.9,32.0,159.2,52.3,12.7,762.0,317.0,5.2,1,False,28.2,5.0,10.6,False,True,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0197,P-07,24858.3,5.5,12.5,75.6,49.1,12.7,762.0,317.0,5.2,2,False,2.4,4.0,13.2,False,True,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0198,P-07,37654.7,1.3,24.6,249.0,117.7,12.7,762.0,317.0,5.2,2,False,24.8,3.0,16.5,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0199,P-07,37249.7,1.8,79.4,108.2,92.9,12.7,762.0,317.0,5.2,1,False,82.6,4.0,16.1,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0200,P-07,9764.8,10.3,16.9,230.3,58.2,12.7,762.0,317.0,5.2,1,False,17.5,4.0,15.8,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0201,P-07,23771.8,2.5,49.9,160.1,10.0,12.7,762.0,317.0,5.2,1,False,39.4,5.0,38.4,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0202,P-07,16731.1,3.9,58.4,119.9,69.1,12.7,762.0,317.0,5.2,3,False,54.2,3.0,5.9,True,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0203,P-07,36560.8,9.6,71.2,188.5,62.4,12.7,762.0,317.0,5.2,2,False,74.2,5.0,12.2,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0204,P-07,20229.0,9.8,45.5,252.2,60.0,12.7,762.0,317.0,5.2,2,False,35.0,3.0,11.5,True,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0205,P-07,6413.5,7.3,44.9,182.9,84.0,12.7,762.0,317.0,5.2,2,False,45.9,5.0,31.2,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0206,P-07,29827.0,1.0,43.3,235.0,98.0,12.7,762.0,317.0,5.2,3,False,41.2,4.0,1.5,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0207,P-07,3662.4,3.9,22.1,20.0,10.0,12.7,762.0,317.0,5.2,2,True,20.2,3.0,17.2,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0208,P-07,2578.3,3.0,39.0,72.3,120.9,12.7,762.0,317.0,5.2,1,True,30.1,3.0,16.3,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0209,P-07,29980.6,11.7,23.7,77.3,129.0,12.7,762.0,317.0,5.2,3,False,14.0,5.0,1.8,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0210,P-07,23911.2,5.3,23.9,287.3,45.4,12.7,762.0,317.0,5.2,2,False,0.2,4.0,13.3,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0211,P-07,34763.7,10.9,850.0,194.2,51.9,12.7,762.0,317.0,5.2,1,False,5.2,3.0,1.6,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,True
+A-0212,P-07,36763.5,10.5,51.3,34.2,105.0,12.7,762.0,317.0,5.2,1,False,45.5,4.0,3.1,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0213,P-07,25637.8,8.1,28.3,196.4,74.6,12.7,762.0,317.0,5.2,1,False,22.1,4.0,1.8,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0214,P-07,10913.4,1.9,34.4,219.6,89.9,12.7,762.0,317.0,5.2,1,False,25.8,5.0,11.4,False,True,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0215,P-07,1718.3,8.7,55.2,131.9,51.3,12.7,762.0,317.0,5.2,1,False,47.3,4.0,13.4,False,False,"Minor pitting, monitor.",MONITOR,60_DAY,True,False
+A-0216,P-07,7351.7,0.0,39.0,193.4,46.0,12.7,762.0,317.0,5.2,1,True,38.8,3.0,16.9,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0217,P-07,28597.0,7.2,59.1,65.1,114.8,12.7,762.0,317.0,5.2,2,False,36.4,4.0,0.4,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0218,P-07,174.5,6.1,58.0,29.5,35.6,12.7,762.0,317.0,5.2,1,False,59.5,5.0,12.0,False,True,"Severe sharp undercut at weld toe, active.",180_DAY,IMMEDIATE,True,False
+A-0219,P-07,22137.3,8.4,51.7,168.1,76.4,12.7,762.0,317.0,5.2,1,False,40.4,4.0,12.5,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0220,P-07,2502.8,1.3,36.8,194.6,76.1,12.7,762.0,317.0,5.2,2,True,30.6,5.0,0.2,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0221,P-07,10969.8,9.7,63.8,136.7,68.1,12.7,762.0,317.0,5.2,2,False,67.2,3.0,9.5,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0222,P-07,5301.9,11.4,32.9,74.9,70.2,12.7,762.0,317.0,5.2,2,True,28.1,4.0,8.3,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0223,P-07,35176.9,5.7,84.2,132.4,78.8,12.7,762.0,317.0,5.2,1,True,66.2,3.0,5.2,False,True,"General wall loss, smooth profile.",180_DAY,IMMEDIATE,True,False
+A-0224,P-07,19083.3,4.1,16.5,126.0,24.6,12.7,762.0,317.0,5.2,1,False,19.6,3.0,11.1,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0225,P-07,21334.3,3.9,21.3,153.6,69.6,12.7,762.0,317.0,5.2,1,False,15.3,5.0,2.6,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0226,P-33,23161.1,5.9,38.2,126.0,10.2,6.4,323.0,448.0,8.0,2,True,37.2,4.0,1.1,True,True,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0227,P-33,23984.8,0.9,58.6,158.2,92.9,6.4,323.0,448.0,8.0,1,True,63.8,3.0,9.1,False,False,"Severe gouge with undercut edges, active corrosion.",60_DAY,IMMEDIATE,True,False
+A-0228,P-33,24172.3,10.2,36.9,116.9,17.8,6.4,323.0,448.0,8.0,4,False,28.8,5.0,2.9,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0229,P-33,11693.5,6.2,20.1,147.7,10.0,6.4,323.0,448.0,8.0,2,False,2.5,5.0,0.6,True,True,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0230,P-33,13157.7,5.9,20.9,242.1,83.1,6.4,323.0,448.0,8.0,2,False,18.0,5.0,7.5,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0231,P-33,25896.4,1.6,30.5,79.2,78.6,6.4,323.0,448.0,8.0,1,False,24.7,5.0,12.7,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0232,P-33,36895.6,6.7,15.0,88.9,44.8,6.4,323.0,448.0,8.0,2,True,12.2,4.0,33.3,True,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0233,P-33,37077.2,0.9,21.3,131.6,83.4,6.4,323.0,448.0,8.0,3,True,10.1,4.0,33.0,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0234,P-33,4032.5,7.9,21.3,102.7,74.6,6.4,323.0,448.0,8.0,1,False,2.4,4.0,10.3,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0235,P-33,6167.6,6.3,25.7,149.4,84.8,6.4,323.0,448.0,8.0,2,False,22.5,5.0,33.6,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0236,P-33,10561.3,2.3,11.5,122.1,51.5,6.4,323.0,448.0,8.0,2,False,5.7,5.0,27.4,True,True,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0237,P-33,39634.6,9.4,78.0,135.8,69.7,6.4,323.0,448.0,8.0,2,False,68.6,4.0,5.9,False,False,"Moderate pitting cluster, no sharp edges.",60_DAY,IMMEDIATE,True,False
+A-0238,P-33,38670.6,5.3,31.2,162.1,32.9,6.4,323.0,448.0,8.0,2,False,,3.0,7.6,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,True
+A-0239,P-33,22519.3,8.4,46.8,237.0,74.8,6.4,323.0,448.0,8.0,2,False,49.9,5.0,12.9,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0240,P-33,15681.7,10.3,38.7,120.6,56.5,6.4,323.0,448.0,8.0,3,False,18.4,3.0,11.4,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0241,P-33,39517.6,11.7,66.6,30.5,75.8,6.4,323.0,448.0,8.0,2,False,47.9,4.0,6.9,True,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0242,P-33,33504.7,5.8,24.8,20.0,81.1,6.4,323.0,448.0,8.0,3,True,11.7,4.0,3.2,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0243,P-33,21763.9,10.6,12.3,23.3,74.7,6.4,323.0,448.0,8.0,4,False,1.3,3.0,9.7,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0244,P-33,19931.2,11.1,49.0,199.7,60.6,6.4,323.0,448.0,8.0,4,False,33.4,5.0,1.7,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0245,P-33,30477.9,1.7,14.1,100.3,67.2,6.4,323.0,448.0,8.0,3,True,1.8,4.0,19.2,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0246,P-33,32028.5,4.7,23.5,151.3,76.4,6.4,323.0,448.0,8.0,1,True,13.8,3.0,13.5,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0247,P-33,17532.7,3.4,25.5,166.0,38.2,6.4,323.0,448.0,8.0,1,False,25.8,3.0,3.4,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0248,P-33,24102.3,8.3,27.8,153.0,19.9,6.4,323.0,448.0,8.0,2,False,19.6,3.0,18.4,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0249,P-33,25709.2,2.3,35.5,66.7,77.1,6.4,323.0,448.0,8.0,2,True,36.9,4.0,12.9,True,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0250,P-33,7058.4,0.6,40.6,108.1,101.4,6.4,323.0,448.0,8.0,3,False,43.3,5.0,1.2,True,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0251,P-33,16682.1,10.6,6.2,143.8,65.6,6.4,323.0,448.0,8.0,2,False,2.0,3.0,18.7,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0252,P-33,11850.2,4.2,48.8,214.3,114.0,6.4,323.0,448.0,8.0,1,True,24.1,4.0,9.1,False,True,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0253,P-33,13920.5,11.4,50.6,,10.6,6.4,323.0,448.0,8.0,1,False,42.7,3.0,0.5,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,True
+A-0254,P-33,9762.5,6.9,44.7,144.4,52.0,6.4,323.0,448.0,8.0,2,False,43.8,5.0,22.9,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0255,P-33,32072.1,11.2,22.1,108.0,21.3,6.4,323.0,448.0,8.0,2,True,12.2,5.0,17.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0256,P-33,36276.1,6.9,46.9,215.7,61.5,6.4,323.0,448.0,8.0,3,True,38.7,5.0,6.6,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0257,P-33,3605.5,8.6,24.7,148.2,47.1,6.4,323.0,448.0,8.0,1,False,15.2,5.0,9.5,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0258,P-33,6603.1,11.9,45.1,46.7,78.3,6.4,323.0,448.0,8.0,3,False,43.3,4.0,7.2,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0259,P-33,32712.6,9.5,38.3,170.3,57.4,6.4,323.0,448.0,8.0,4,True,22.2,4.0,4.0,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0260,P-33,5115.3,4.2,44.1,156.6,53.0,6.4,323.0,448.0,8.0,1,False,40.7,3.0,9.9,False,True,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0261,P-33,8265.2,3.7,29.9,151.9,68.4,6.4,323.0,448.0,8.0,2,False,21.9,3.0,6.4,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0262,P-33,17112.6,3.4,72.1,93.8,62.1,6.4,323.0,448.0,8.0,2,True,48.7,5.0,10.3,False,False,"Moderate pitting cluster, no sharp edges.",180_DAY,60_DAY,True,False
+A-0263,P-33,19036.5,7.5,8.0,183.0,38.2,6.4,323.0,448.0,8.0,2,True,1.8,5.0,6.9,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0264,P-33,20333.8,8.8,35.7,88.9,82.8,6.4,323.0,448.0,8.0,1,False,,5.0,27.3,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,True
+A-0265,P-33,3257.7,5.6,30.3,196.3,31.9,6.4,323.0,448.0,8.0,1,False,29.2,3.0,1.9,True,True,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0266,P-33,39961.6,4.9,42.8,85.5,45.7,6.4,323.0,448.0,8.0,3,False,34.3,3.0,18.2,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0267,P-33,10190.9,1.7,47.0,141.1,89.5,6.4,323.0,448.0,8.0,2,False,45.6,3.0,12.8,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0268,P-33,14974.7,8.0,64.5,132.8,106.8,6.4,323.0,448.0,8.0,2,False,49.7,4.0,13.7,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0269,P-33,26418.4,5.2,14.6,270.0,54.7,6.4,323.0,448.0,8.0,1,False,7.0,3.0,8.4,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0270,P-33,1441.0,6.0,4.7,113.4,142.2,6.4,323.0,448.0,8.0,1,True,2.7,4.0,4.6,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0271,P-33,3645.3,10.5,28.6,,81.4,6.4,323.0,448.0,8.0,3,True,33.2,3.0,9.3,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,True
+A-0272,P-33,27791.9,3.3,11.9,148.1,26.3,6.4,323.0,448.0,8.0,1,False,6.0,4.0,0.9,False,True,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0273,P-33,5575.9,5.9,47.8,69.2,23.5,6.4,323.0,448.0,8.0,1,False,,3.0,14.1,True,False,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,True
+A-0274,P-33,9508.6,0.2,48.6,20.0,28.6,6.4,323.0,448.0,8.0,3,False,36.2,3.0,2.1,False,False,"External corrosion patch, blunt morphology.",180_DAY,180_DAY,False,False
+A-0275,P-33,6463.1,7.3,28.0,142.6,50.5,6.4,323.0,448.0,8.0,2,False,3.6,4.0,9.9,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0276,P-33,31858.7,11.4,51.3,204.0,74.1,6.4,323.0,448.0,8.0,2,True,37.9,3.0,1.0,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0277,P-33,33873.4,4.5,50.8,116.1,58.8,6.4,323.0,448.0,8.0,4,True,43.3,5.0,8.0,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0278,P-33,21886.7,5.4,73.9,156.2,46.3,6.4,323.0,448.0,8.0,1,True,48.4,4.0,10.3,True,False,"Minor pitting, monitor.",180_DAY,60_DAY,True,False
+A-0279,P-33,11252.6,8.3,67.3,141.9,52.4,6.4,323.0,448.0,8.0,2,False,62.0,3.0,3.1,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0280,P-33,10968.1,8.8,27.3,47.6,50.9,6.4,323.0,448.0,8.0,2,True,8.7,3.0,3.7,False,False,"External corrosion patch, blunt morphology.",MONITOR,MONITOR,False,False
+A-0281,P-33,23643.1,7.5,46.9,97.7,74.1,6.4,323.0,448.0,8.0,2,False,44.2,3.0,29.8,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0282,P-33,33109.6,9.2,27.4,145.3,19.3,6.4,323.0,448.0,8.0,3,True,27.0,5.0,4.0,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0283,P-33,39860.2,1.8,31.2,69.3,64.8,6.4,323.0,448.0,8.0,3,False,26.8,3.0,4.4,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0284,P-33,31828.3,4.7,23.2,124.3,86.7,6.4,323.0,448.0,8.0,1,True,15.0,4.0,5.2,False,False,"Internal wall loss, general.",MONITOR,MONITOR,False,False
+A-0285,P-33,17521.1,5.7,49.1,137.1,91.9,6.4,323.0,448.0,8.0,2,False,41.1,4.0,16.7,False,True,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0286,P-33,16166.2,6.4,11.9,62.3,10.0,6.4,323.0,448.0,8.0,1,False,11.7,4.0,21.1,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0287,P-33,5095.4,8.4,21.2,172.8,128.3,6.4,323.0,448.0,8.0,1,True,8.2,5.0,10.5,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0288,P-33,4699.2,10.6,43.2,95.4,83.3,6.4,323.0,448.0,8.0,1,False,27.5,4.0,0.2,False,False,"General wall loss, smooth profile.",180_DAY,180_DAY,False,False
+A-0289,P-33,27970.8,4.3,34.6,70.6,38.0,6.4,323.0,448.0,8.0,2,True,27.4,3.0,1.5,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0290,P-33,34910.0,7.2,28.8,115.0,28.4,6.4,323.0,448.0,8.0,1,True,7.3,5.0,3.5,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0291,P-33,21480.0,7.9,61.7,20.0,62.8,6.4,323.0,448.0,8.0,3,False,58.4,4.0,5.7,True,False,"Moderate pitting cluster, no sharp edges.",MONITOR,180_DAY,False,False
+A-0292,P-33,21230.3,10.2,29.6,26.8,20.2,6.4,323.0,448.0,8.0,1,False,22.0,5.0,45.1,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0293,P-33,32620.1,9.5,43.8,45.0,44.7,6.4,323.0,448.0,8.0,1,True,48.9,4.0,0.3,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False
+A-0294,P-33,5190.3,10.8,21.3,69.1,123.7,6.4,323.0,448.0,8.0,2,False,1.4,4.0,1.5,False,False,"General wall loss, smooth profile.",MONITOR,MONITOR,False,False
+A-0295,P-33,21321.6,8.3,30.5,268.4,101.7,6.4,323.0,448.0,8.0,1,False,15.7,4.0,20.1,False,False,"Moderate pitting cluster, no sharp edges.",MONITOR,MONITOR,False,False
+A-0296,P-33,32789.5,0.0,59.1,153.4,111.6,6.4,323.0,448.0,8.0,1,True,46.4,4.0,1.2,False,False,"Internal wall loss, general.",180_DAY,180_DAY,False,False
+A-0297,P-33,2352.0,8.9,850.0,201.4,81.1,6.4,323.0,448.0,8.0,1,False,61.0,3.0,10.4,True,False,"Sharp crack-like indication, deep with leak stain nearby.",180_DAY,60_DAY,True,True
+A-0298,P-33,22741.9,2.8,44.3,135.5,59.2,6.4,323.0,448.0,8.0,2,False,16.3,5.0,22.5,False,False,"Minor pitting, monitor.",MONITOR,MONITOR,False,False
+A-0299,P-33,12555.5,5.8,61.6,94.1,68.8,6.4,323.0,448.0,8.0,4,False,48.8,4.0,7.8,False,True,"Moderate pitting cluster, no sharp edges.",180_DAY,180_DAY,False,False
+A-0300,P-33,20481.7,2.0,53.3,249.1,71.8,6.4,323.0,448.0,8.0,3,True,48.2,3.0,11.0,False,False,"Minor pitting, monitor.",180_DAY,180_DAY,False,False

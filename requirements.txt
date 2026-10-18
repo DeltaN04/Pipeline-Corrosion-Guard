@@ -2,6 +2,7 @@
 streamlit==1.40.2
 langgraph==0.2.60
 langchain-core==0.3.34
+langchain-community==0.3.16
 pydantic==2.10.6
 pandas==2.2.3
 numpy==2.1.3

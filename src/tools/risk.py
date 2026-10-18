@@ -97,6 +97,67 @@ def executor_triage(
     return "MONITOR"
 
 
+def executor_triage_conservative(
+    depth_pct: Optional[float],
+    erf_val: Optional[float],
+    growth: Optional[float],
+    projected_2yr: Optional[float],
+    hca: bool = False,
+    near_road: bool = False,
+    near_water: bool = False,
+    near_weld: bool = False,
+    interacting: bool = False,
+    note_severe: bool = False,
+) -> str:
+    """Conservative re-run triage: applies full context when critic demands rework.
+
+    This allows the rework loop to actually raise the class when constraints
+    like force_interaction, depth_bump, growth_bump, hca, note_severe are applied.
+    """
+    # Use full_screen_class logic but with a slightly lower threshold for IMMEDIATE
+    # to avoid over-escalation, then map to triage classes.
+    d = depth_pct if depth_pct is not None else -1
+    e = erf_val if erf_val is not None else -1
+    g = growth if growth is not None else -1
+    p = projected_2yr if projected_2yr is not None else -1
+
+    # IMMEDIATE thresholds (conservative)
+    if d >= 80 or (e is not None and e >= 1.0) or (d >= 60 and (g or -1) >= 4):
+        return "IMMEDIATE"
+    # Note contradiction with moderate depth -> IMMEDIATE
+    if note_severe and d >= 50:
+        return "IMMEDIATE"
+    # Deep defect with interaction/HCA
+    if d >= 70 and (interacting or hca):
+        return "IMMEDIATE"
+
+    # 60_DAY thresholds
+    if d >= 60:
+        return "60_DAY"
+    if e is not None and e >= 0.85:
+        return "60_DAY"
+    if (g or -1) >= 4:
+        return "60_DAY"
+    if d >= 50 and (hca or near_road or near_water or interacting or near_weld):
+        return "60_DAY"
+    if (p or -1) >= 80:
+        return "60_DAY"
+
+    # 180_DAY thresholds
+    if d >= 40:
+        return "180_DAY"
+    if e is not None and e >= 0.6:
+        return "180_DAY"
+    if (g or -1) >= 2:
+        return "180_DAY"
+    if interacting:
+        return "180_DAY"
+    if hca and d >= 30:
+        return "180_DAY"
+
+    return "MONITOR"
+
+
 def full_screen_class(
     depth_pct: Optional[float],
     erf_val: Optional[float],

@@ -21,3 +21,5 @@ class CGState(TypedDict, total=False):
     outputs: Dict[str, Any]
     messages: List[Dict[str, Any]]
     metrics: Dict[str, Any]
+    ground_truth: Dict[str, str]  # anomaly_id -> truth_class (for metrics only)
+    rework_stats: Dict[str, Any]  # per-iteration rework tracking

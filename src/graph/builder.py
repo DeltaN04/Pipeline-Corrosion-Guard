@@ -2,12 +2,16 @@
 
 Router: UPGRADE_REQUIRED/disagreement -> Executor (max 2 iterations, then escalate
 to the more severe class marked ESCALATED) -> else finalize (human gate + automation).
+
+Per-iteration tracking: objected, resolved, remaining.
+Rework only re-executes objected anomalies.
 """
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from langgraph.graph import END, StateGraph
+from pydantic import ValidationError
 
 from src.agents import automation as auto_agent
 from src.agents import critic as critic_agent
@@ -17,10 +21,41 @@ from src.agents import research as research_agent
 from src.graph.a2a import MessageBus
 from src.graph.state import CGState
 from src.llm.provider import get_chat_model
+from src.schemas.models import CriticVerdict, EnrichedAnomaly, RiskResult, TaskPlan, WorkOrder
 from src.tools import risk as risk_tools
 
 MAX_ITERS = 2
 SEV = {"MONITOR": 0, "180_DAY": 1, "60_DAY": 2, "IMMEDIATE": 3}
+
+
+def _validate_outputs(model_class, items: List[Dict[str, Any]], state: CGState, agent_name: str) -> List[Dict[str, Any]]:
+    """Validate a list of outputs against a Pydantic model.
+    
+    On validation failure: log to state["validation_errors"], quarantine the record, continue.
+    Returns validated items (with invalid ones replaced by quarantine records).
+    """
+    validated = []
+    errors = list(state.get("validation_errors", []))
+    for i, item in enumerate(items):
+        try:
+            validated_model = model_class(**item)
+            validated.append(validated_model.model_dump())
+        except ValidationError as e:
+            error_info = {
+                "agent": agent_name,
+                "index": i,
+                "anomaly_id": item.get("anomaly_id", f"unknown_{i}"),
+                "errors": e.errors(),
+            }
+            errors.append(error_info)
+            # Create quarantine record
+            quarantine = item.copy()
+            quarantine["_validation_quarantined"] = True
+            quarantine["_validation_errors"] = e.errors()
+            validated.append(quarantine)
+    if errors != state.get("validation_errors", []):
+        state["validation_errors"] = errors
+    return validated
 
 
 def _bus(state: CGState) -> MessageBus:
@@ -31,47 +66,139 @@ def _bus(state: CGState) -> MessageBus:
 
 def n_planner(state: CGState) -> Dict[str, Any]:
     llm = get_chat_model()
-    plan = planner_agent.build_plan(state.get("request", "Triage ILI run"), len(state.get("anomalies", [])), llm)
+    n_anomalies = len(state.get("anomalies", []))
+    dirty_estimate = sum(1 for a in state.get("anomalies", []) if any(
+        v is None or (isinstance(v, float) and v != v) or (isinstance(v, (int, float)) and v < 0)
+        for v in a.values()
+    ))
+    plan = planner_agent.build_plan(state.get("request", "Triage ILI run"), n_anomalies, dirty_estimate, llm)
+    # Validate plan
+    try:
+        TaskPlan(**plan)
+    except ValidationError as e:
+        errors = list(state.get("validation_errors", []))
+        errors.append({"agent": "planner", "index": 0, "anomaly_id": "plan", "errors": e.errors()})
+        state["validation_errors"] = errors
     b = _bus(state)
     b.send("user", "planner", "TRIAGE_REQUEST", {"request": plan["request"]})
     b.send("planner", "research", "TASK_PLAN", {"tasks": plan["tasks"], "routing": plan["routing"]})
-    return {"plan": plan, "iteration": 0, "messages": b.messages, "trace_id": b.trace_id}
+    return {"plan": plan, "iteration": 0, "messages": b.messages, "trace_id": b.trace_id,
+            "rework_stats": {"history": []}}
 
 
 def n_research(state: CGState) -> Dict[str, Any]:
     enriched = research_agent.enrich(state.get("anomalies", []))
+    enriched_validated = _validate_outputs(EnrichedAnomaly, enriched, state, "research")
     b = _bus(state)
     b.send("research", "executor", "ENRICHED_BATCH",
-           {"n": len(enriched), "interacting": sum(1 for r in enriched if r.get("interacting")),
-            "dirty": sum(1 for r in enriched if r.get("quality_flags"))})
-    return {"enriched": enriched, "messages": b.messages}
+           {"n": len(enriched_validated), "interacting": sum(1 for r in enriched_validated if r.get("interacting")),
+            "dirty": sum(1 for r in enriched_validated if r.get("quality_flags"))})
+    return {"enriched": enriched_validated, "messages": b.messages}
 
 
 def n_executor(state: CGState) -> Dict[str, Any]:
     llm = get_chat_model()
-    cons: Dict[str, Dict[str, Any]] = {}
-    for o in state.get("critic_objections", []) or []:
-        cons[o["anomaly_id"]] = o.get("constraints", {})
-    results = exec_agent.execute(state.get("enriched", []), llm, cons if state.get("iteration", 0) > 0 else None)
+    it = state.get("iteration", 0) or 0
+    is_rework = it > 0
+
+    # On rework, only re-execute anomalies that the critic objected to
+    if is_rework:
+        objected_ids = {o["anomaly_id"] for o in state.get("critic_objections", []) or []}
+        enriched_all = state.get("enriched", []) or []
+        # Split into objected and non-objected
+        to_reexecute = [r for r in enriched_all if r["anomaly_id"] in objected_ids]
+        others = [r for r in enriched_all if r["anomaly_id"] not in objected_ids]
+
+        # Build constraints from objections
+        cons: Dict[str, Dict[str, Any]] = {}
+        for o in state.get("critic_objections", []) or []:
+            cons[o["anomaly_id"]] = o.get("constraints", {})
+
+        # Re-execute only objected anomalies with conservative mode
+        new_results = exec_agent.execute(to_reexecute, llm, cons, is_rework=True)
+
+        # Merge with previous results for non-objected
+        old_results = state.get("risk_results", []) or []
+        old_by_id = {r["anomaly_id"]: r for r in old_results}
+        merged_results = []
+        for r in enriched_all:
+            aid = r["anomaly_id"]
+            if aid in objected_ids:
+                # Find new result
+                nr = next((nr for nr in new_results if nr["anomaly_id"] == aid), None)
+                if nr:
+                    merged_results.append(nr)
+                else:
+                    merged_results.append(old_by_id.get(aid, {}))
+            else:
+                merged_results.append(old_by_id.get(aid, {}))
+        results = merged_results
+    else:
+        # First pass: execute all
+        results = exec_agent.execute(state.get("enriched", []), llm, None, is_rework=False)
+
+    results_validated = _validate_outputs(RiskResult, results, state, "executor")
     b = _bus(state)
     b.send("executor", "critic", "RISK_RESULTS",
-           {"n": len(results), "iteration": state.get("iteration", 0),
-            "immediate": sum(1 for r in results if r["triage_class"] == "IMMEDIATE")})
-    return {"risk_results": results, "messages": b.messages}
+           {"n": len(results_validated), "iteration": it,
+            "immediate": sum(1 for r in results_validated if r["triage_class"] == "IMMEDIATE")})
+    return {"risk_results": results_validated, "messages": b.messages}
 
 
 def n_critic(state: CGState) -> Dict[str, Any]:
     llm = get_chat_model()
     verdicts, objections = critic_agent.review(state.get("enriched", []), state.get("risk_results", []), llm)
+
+    # Track which objections were resolved this iteration
+    it = state.get("iteration", 0) or 0
+    if it > 0:
+        # Compare new executor class vs critic screen class for objected items
+        objected_ids = {o["anomaly_id"] for o in state.get("critic_objections", []) or []}
+        by_risk = {r["anomaly_id"]: r for r in state.get("risk_results", []) or []}
+        resolved = 0
+        resolved_ids = []
+        for v in verdicts:
+            if v["anomaly_id"] in objected_ids:
+                ex_cls = v.get("executor_class")
+                sc_cls = v.get("critic_screen_class")
+                if ex_cls and sc_cls and SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0):
+                    resolved += 1
+                    resolved_ids.append(v["anomaly_id"])
+        remaining = len(objected_ids) - resolved
+    else:
+        resolved = 0
+        resolved_ids = []
+        remaining = sum(1 for v in verdicts if v["verdict"] == "UPGRADE_REQUIRED")
+
+    # Record iteration stats
+    rework_stats = dict(state.get("rework_stats", {}))
+    history = rework_stats.get("history", [])
+    # Track all objection IDs ever raised
+    all_objection_ids = set(rework_stats.get("all_objection_ids", []))
+    for o in objections:
+        all_objection_ids.add(o["anomaly_id"])
+    history.append({
+        "iteration": it,
+        "objected": sum(1 for v in verdicts if v["verdict"] == "UPGRADE_REQUIRED"),
+        "resolved": resolved,
+        "resolved_ids": resolved_ids,
+        "remaining": remaining,
+    })
+    rework_stats["history"] = history
+    rework_stats["all_objection_ids"] = list(all_objection_ids)
+
     b = _bus(state)
     n_up = sum(1 for v in verdicts if v["verdict"] == "UPGRADE_REQUIRED")
     b.send("critic", "orchestrator", "CRITIC_VERDICTS",
-           {"n_upgrades": n_up, "n_missed": sum(1 for v in verdicts if v.get("missed_critical"))})
+           {"n_upgrades": n_up, "n_missed": sum(1 for v in verdicts if v.get("missed_critical")),
+            "resolved_this_iter": resolved, "remaining": remaining})
     if n_up:
         b.send("critic", "executor", "OBJECTION",
                {"objections": [{"anomaly_id": o["anomaly_id"], "reasons": o["reasons"]} for o in objections[:5]],
                 "note": f"{n_up} upgrade(s) demanded; showing first 5"})
-    return {"verdicts": verdicts, "critic_objections": objections, "messages": b.messages}
+    verdicts_validated = _validate_outputs(CriticVerdict, verdicts, state, "critic")
+    return {"verdicts": verdicts_validated, "critic_objections": objections, "messages": b.messages,
+            "rework_stats": rework_stats}
 
 
 def router(state: CGState) -> str:
@@ -85,66 +212,96 @@ def router(state: CGState) -> str:
 
 def n_rework(state: CGState) -> Dict[str, Any]:
     b = _bus(state)
+    it = state.get("iteration", 0) or 0
+    objected = sum(1 for v in state.get("verdicts", []) if v["verdict"] == "UPGRADE_REQUIRED")
     b.send("orchestrator", "executor", "REWORK",
-           {"iteration": state.get("iteration", 0) + 1, "constraints": len(state.get("critic_objections", []) or [])})
-    return {"iteration": state.get("iteration", 0) + 1, "messages": b.messages}
+           {"iteration": it + 1, "objected_anomalies": objected})
+    return {"iteration": it + 1, "messages": b.messages}
 
 
 def n_finalize(state: CGState) -> Dict[str, Any]:
-    """Apply escalation for still-unresolved upgrades, then run automation (auto-approve headless)."""
+    """Clean finalize: mark RESOLVED where executor >= critic screen, ESCALATE the rest."""
     verdicts = [dict(v) for v in state.get("verdicts", []) or []]
     by_risk = {r["anomaly_id"]: r for r in state.get("risk_results", []) or []}
     it = state.get("iteration", 0) or 0
-    escalated: list[str] = list(state.get("escalated_ids", []) or [])
-    still = [v for v in verdicts if v["verdict"] == "UPGRADE_REQUIRED"]
-    if still and it >= MAX_ITERS:
-        # Force the more severe option and mark ESCALATED.
-        for v in verdicts:
+    escalated: list[str] = []
+    resolved_on_rework: list[str] = []
+
+    # Use tracked objection IDs from rework stats
+    rework_stats = dict(state.get("rework_stats", {}))
+    all_objection_ids = set(rework_stats.get("all_objection_ids", []))
+
+    # For each anomaly that ever had an objection, check if it was resolved
+    for aid in all_objection_ids:
+        v = next((v for v in verdicts if v["anomaly_id"] == aid), None)
+        if not v:
+            continue
+        ex_cls = by_risk.get(aid, {}).get("triage_class", v.get("executor_class"))
+        sc_cls = v.get("critic_screen_class")
+        if SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0):
+            # Resolved on rework
             if v["verdict"] == "UPGRADE_REQUIRED":
-                ex, sc = v["executor_class"], v["critic_screen_class"]
-                v["final_class"] = ex if SEV[ex] >= SEV[sc] else sc
+                v["executor_class"] = ex_cls
+                v["final_class"] = ex_cls
+                v["verdict"] = "AGREE"
+                v["reasons"] = [f"converged on rework iteration {it}: executor adopted conservative assumptions"] + v["reasons"]
+            resolved_on_rework.append(aid)
+        else:
+            # Escalate to more severe
+            if v["verdict"] == "UPGRADE_REQUIRED":
+                v["final_class"] = ex_cls if SEV[ex_cls] >= SEV[sc_cls] else sc_cls
                 v["escalated"] = True
-                v["reasons"] = [f"ESCALATED after {it} iterations: forced to more severe of executor={ex}, critic={sc}"] + v["reasons"]
-                escalated.append(v["anomaly_id"])
-    elif still:
-        # Converged rework path: executor re-ran with constraints; accept critic screen where it demanded upgrade.
-        for v in verdicts:
-            if v["verdict"] == "UPGRADE_REQUIRED":
-                ex_risk = by_risk.get(v["anomaly_id"], {})
-                # Re-executor output already reflects constraints; if it now matches/agrees severity, take it.
-                new_cls = ex_risk.get("triage_class", v["executor_class"])
-                v["executor_class"] = new_cls
-                if SEV[new_cls] >= SEV[v["critic_screen_class"]]:
-                    v["final_class"] = new_cls
+                v["reasons"] = [f"ESCALATED after {it} iterations: forced to more severe of executor={ex_cls}, critic={sc_cls}"] + v["reasons"]
+                escalated.append(aid)
+
+    # For verdicts that never had objections
+    for v in verdicts:
+        if v["anomaly_id"] not in all_objection_ids:
+            if v["verdict"] in ("AGREE", "DOWNGRADE_RISK"):
+                v["final_class"] = v["executor_class"]
+            elif v["verdict"] == "UPGRADE_REQUIRED":
+                # Shouldn't happen, but handle it
+                ex_cls = by_risk.get(v["anomaly_id"], {}).get("triage_class", v["executor_class"])
+                sc_cls = v["critic_screen_class"]
+                if SEV.get(ex_cls, 0) >= SEV.get(sc_cls, 0):
+                    v["executor_class"] = ex_cls
+                    v["final_class"] = ex_cls
                     v["verdict"] = "AGREE"
-                    v["reasons"] = ["rework converged: executor adopted conservative assumptions"] + v["reasons"]
+                    resolved_on_rework.append(v["anomaly_id"])
                 else:
-                    v["final_class"] = v["critic_screen_class"]
+                    v["final_class"] = ex_cls if SEV[ex_cls] >= SEV[sc_cls] else sc_cls
                     v["escalated"] = True
-                    v["reasons"] = ["ESCALATED: executor still below critic screen; forced severe"] + v["reasons"]
+                    v["reasons"] = [f"ESCALATED after {it} iterations: forced to more severe of executor={ex_cls}, critic={sc_cls}"] + v["reasons"]
                     escalated.append(v["anomaly_id"])
+
+    rework_stats["resolved_on_rework"] = len(resolved_on_rework)
+    rework_stats["escalated"] = len(escalated)
+
     llm = get_chat_model()
     by_enrich = {str(r.get("anomaly_id")): r for r in state.get("enriched", []) or []}
-    # Headless default: approve all IMMEDIATE (UI gate overrides per-item).
     approvals = dict(state.get("human_decisions", {}) or {})
     for v in verdicts:
         if v["final_class"] == "IMMEDIATE" and v["anomaly_id"] not in approvals:
-            approvals[v["anomaly_id"]] = "APPROVED"
+            approvals[v["anomaly_id"]] = "AUTO_APPROVED_HEADLESS"
     outputs = auto_agent.build_outputs(
         state.get("enriched", []) or [], verdicts, state.get("risk_results", []) or [],
         (state.get("trace_id", "run") or "run"), "outputs", llm, approvals)
-    # Metrics vs ground truth carried on enriched rows (true_class column when present).
-    metrics = _metrics(state.get("enriched", []) or [], verdicts, by_enrich)
+
+    ground_truth = state.get("ground_truth", {})
+    metrics = _metrics(ground_truth, verdicts, by_enrich)
+    metrics["rework_stats"] = rework_stats
+
     b = _bus(state)
-    b.send("automation", "user", "RUN_COMPLETE", {"n_orders": outputs["n_orders"], "metrics": metrics})
+    b.send("automation", "user", "RUN_COMPLETE", {"n_work_orders": outputs["n_work_orders"], "n_scheduled": outputs["n_scheduled"], "metrics": metrics})
     return {"verdicts": verdicts, "escalated_ids": escalated, "human_decisions": approvals,
-            "outputs": outputs, "metrics": metrics, "messages": b.messages}
+            "outputs": outputs, "metrics": metrics, "messages": b.messages,
+            "rework_stats": rework_stats}
 
 
-def _metrics(enriched, verdicts, by_enrich) -> Dict[str, Any]:
+def _metrics(ground_truth: Dict[str, str], verdicts, by_enrich) -> Dict[str, Any]:
     from collections import Counter
 
-    truth = {str(r.get("anomaly_id")): r.get("true_class") for r in enriched if r.get("true_class")}
+    truth = ground_truth
     if not truth:
         return {}
 
