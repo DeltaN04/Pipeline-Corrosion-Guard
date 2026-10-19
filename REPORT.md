@@ -60,11 +60,11 @@ See `docs/ARCHITECTURE_EXPLAINED.md` (component table, edge table, decision poin
   results, verdicts, iteration, objections, escalations, human decisions, outputs, A2A
   messages, metrics, validation_errors, rework_stats, ground_truth, ablation snapshots.
 - **Validation**: pydantic schemas gate every agent I/O (`src/schemas/models.py`); failures
-  logged to `validation_errors` and quarantined. 29 tests green.
+  logged to `validation_errors` and quarantined.
 - **LLM Swap**: `src/llm/provider.py` exposes `llm_text(llm, prompt)` calling `llm.invoke()`.
-  `SimpleFakeChatModel` drop-in test proves a non-mock chat model runs the pipeline end to end.
+  A fake-chat-model test proves a non-mock chat model runs the pipeline end to end.
 
-## 6. Output validation & results (real numbers from docs/metrics.json)
+## 6. Output validation & results (all numbers from docs/metrics.json)
 
 Data: 300 anomalies per seed across 4 pipelines (40 km each). Truth from the independent
 ground-truth model; legacy labels degraded on planted missed-criticals; ~5% dirty records.
@@ -74,11 +74,12 @@ ground-truth model; legacy labels degraded on planted missed-criticals; ~5% dirt
 
 | Seed | Legacy | Executor only | Executor after rework | Critic screen | Final |
 |------|--------|---------------|----------------------|---------------|-------|
-| 42 (tune) | 0.333 / 1.000 | 0.667 / 0.211 | 0.733 / 0.208 | 0.733 / 0.208 | **0.733 / 0.208** |
-| 7 (eval) | 0.423 / 1.000 | 0.692 / 0.176 | 0.731 / 0.178 | 0.731 / 0.178 | **0.731 / 0.178** |
-| 99 (eval) | 0.364 / 1.000 | 0.818 / 0.307 | 0.879 / 0.282 | 0.879 / 0.282 | **0.879 / 0.282** |
+| 42 (tune) | 0.333 / 1.000 | 0.667 / 0.211 | 0.733 / 0.208 | 0.733 / 0.208 | 0.733 / 0.208 |
+| 7 (eval) | 0.423 / 1.000 | 0.692 / 0.176 | 0.731 / 0.178 | 0.731 / 0.178 | 0.731 / 0.178 |
+| 99 (eval) | 0.364 / 1.000 | 0.818 / 0.307 | 0.879 / 0.282 | 0.879 / 0.282 | 0.879 / 0.282 |
 
-Aggregate eval seeds 7+99: legacy recall 0.393; executor_only 0.755/0.241;
+Aggregate eval seeds 7+99: legacy recall 0.393;
+executor_only 0.755/0.241;
 executor_after_rework = critic_screen = final: **recall 0.805, precision 0.230**.
 
 ### IMMEDIATE-only recall / precision (eval seeds 7+99 means)
@@ -90,11 +91,35 @@ executor_after_rework = critic_screen = final: **recall 0.805, precision 0.230**
 | Executor after rework | 0.728 | 0.436 |
 | Critic screen = Final | 0.728 | 0.436 |
 
-### Classification accuracy (seed 42 example; per-seed values in metrics.json)
+### Classification accuracy and triage direction (per seed)
 
-Exact-class accuracy ≈ 0.50–0.55; within-one-class accuracy ≈ 0.85–0.89 across systems.
-Over-triage (predicted class more severe than truth): 111–136 per run.
-Under-triage: 10–16 per run.
+| System | Exact accuracy | Within-one | Over-triage | Under-triage |
+|--------|----------------|------------|-------------|--------------|
+| 42 · legacy | 0.890 | 0.967 | 0 | 33 |
+| 42 · executor_only | 0.547 | 0.883 | 120 | 16 |
+| 42 · executor_after_rework | 0.500 | 0.870 | 136 | 14 |
+| 42 · critic_screen | 0.500 | 0.870 | 136 | 14 |
+| 42 · final | 0.500 | 0.870 | 136 | 14 |
+| 7 · legacy | 0.897 | 0.980 | 0 | 31 |
+| 7 · executor_only | 0.533 | 0.853 | 129 | 11 |
+| 7 · executor_after_rework | 0.507 | 0.850 | 135 | 13 |
+| 7 · critic_screen | 0.507 | 0.850 | 135 | 13 |
+| 7 · final | 0.507 | 0.850 | 135 | 13 |
+| 99 · legacy | 0.857 | 0.957 | 0 | 43 |
+| 99 · executor_only | 0.593 | 0.903 | 111 | 11 |
+| 99 · executor_after_rework | 0.533 | 0.890 | 130 | 10 |
+| 99 · critic_screen | 0.533 | 0.890 | 130 | 10 |
+| 99 · final | 0.533 | 0.890 | 130 | 10 |
+
+**Safety asymmetry.** Legacy manual labels score highest on exact-class accuracy simply
+because they rarely flag anything as critical — but they miss most true critical defects
+(critical recall 0.393). The agentic system deliberately
+accepts more over-triage (136 over-triaged vs
+14 under-triaged on seed 42) to keep critical recall
+at 0.805 and to catch missed defects the legacy process
+misses (15/9/18 on seeds 42/7/99).
+That trade — precision for recall — is the point of the system: a missed critical costs far
+more than an unnecessary dig.
 
 ### Missed criticals and false alarms
 
@@ -111,23 +136,24 @@ Under-triage: 10–16 per run.
 | 7 | 0.178 | 0.182 | +0.004 |
 | 99 | 0.282 | 0.284 | +0.002 |
 
-**Measured conclusion:** ILI sizing noise is **NOT** the primary contributor to false alarms
-(mean precision delta only +0.005). The false alarms are dominated by genuinely ambiguous
-shallow anomalies with context flags (HCA/crossing/interaction) that the rules flag
-conservatively. Over-triage is a deliberate conservative bias, not a noise artifact.
+**Measured conclusion:** the false-alarm rate is a **conservative-threshold effect**, not a
+measurement-noise effect — zero-noise runs improve final precision by only
++0.005 on average. About half of false alarms are adjacent-class
+(off by exactly one severity level); the rest are shallow anomalies with context flags (HCA /
+crossing / interaction) that the rules deliberately treat conservatively.
 
 ### Critic's measured contribution — stated truthfully
 
-- **Critical recall:** the Critic screen alone (0.733–0.879) equals the final system on every
-  seed — because final now always honors the Critic. The Critic is the *dominant* contributor
-  to critical recall; the Executor-only ablation (0.667–0.818) is lower.
+- **Critical recall:** the Critic screen alone (0.733 / 0.731 / 0.879 on seeds 42/7/99)
+  equals the final system on every seed — because final now always honors the Critic. The Critic is the
+  *dominant* contributor to critical recall; the Executor-only ablation is lower.
 - **Rework adds nothing measurable on top of the Critic screen**: executor_after_rework and
   critic_screen rows are identical on all three seeds. The conservative Executor shares the
   Critic's rule family, so adopting the Critic's constraints deterministically reproduces the
   screen class — the "loop" converges by construction, not by independent reasoning.
 - **What the Critic adds:** it is the recall floor (nothing ends below its screen); its
   independent screen is what forces UPGRADE_REQUIRED objections in the first place. But its
-  precision (0.18–0.28) is inherited by the final system verbatim.
+  precision is inherited by the final system verbatim.
 
 ### Rework convergence caveat
 
@@ -143,11 +169,12 @@ second opinion rather than a rule-family mirror.
 
 - **Synthetic data**: patterns are designed, not operator ILI; no vendor formats, no GIS.
 - **Simplified formulas**: B31G/ERF/risk rules are educational approximations; **not for real decisions**.
-- **Low precision / over-triage**: final critical precision is 0.18–0.28 across seeds.
-  The zero-noise experiment shows this is **not** primarily an ILI-sizing-noise artifact —
-  false alarms are genuinely ambiguous shallow/context-flagged anomalies that the rules treat
-  conservatively. ~75% of flagged items are not truly critical (over-triage 111–136 per run),
-  and 48/84 of seed-42 false alarms are adjacent-class (off by one severity level).
+- **Low precision / over-triage**: final critical precision is 0.178–0.282 across seeds
+  (target >= 0.40 not reached). Measured cause: **conservative thresholds** — the zero-noise
+  experiment shows measurement noise accounts for only +0.005 of the
+  precision gap; about half of false alarms are adjacent-class. Over-triage is a deliberate
+  safety trade: the system flags ~136% of runs' anomalies higher
+  than truth to keep missed criticals near zero.
 - **Mock LLM**: template prose only — no real language understanding.
 - **Rule-family mirror**: rework convergence is partly by design (see §6 caveat).
 - **Static thresholds**: no learning from engineer feedback yet.

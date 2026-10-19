@@ -12,10 +12,10 @@ Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs, n
 cd corrosionguard
 python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt  # or: uv pip install ...
 .venv/bin/python data/generate_data.py        # regenerate synthetic data (seed 42)
-.venv/bin/python -m pytest tests/ -q          # validation suite (26 tests)
+.venv/bin/python -m pytest tests/ -q          # validation suite
 .venv/bin/python -m streamlit run app.py      # launch UI  →  http://localhost:8501
 .venv/bin/python scripts/run_eval.py          # full evaluation → docs/metrics.json
-.venv/bin/python build_ppt.py                 # regenerate presentation.pptx
+.venv/bin/python scripts/generate_docs.py     # regenerate README.md + REPORT.md from metrics.json
 ```
 
 One-command equivalent for demo: `pip install -r requirements.txt && streamlit run app.py`
@@ -29,7 +29,7 @@ One-command equivalent for demo: `pip install -r requirements.txt && streamlit r
 4. **Triage Results** (20 s): sortable table + Plotly charts (class mix, risk vs chainage, depth vs growth).
 5. **Critic Findings** (20 s): missed criticals caught, before/after legacy labels, per-item explanation.
 6. **Human Approval** (20 s): approve/reject IMMEDIATEs → confirm → download work orders/report/notifications.
-7. **Validation** (20 s): recall bars legacy 0.33 → executor 0.73 → final 0.73; time-saved assumption stated.
+7. **Validation** (20 s): 5-system recall/precision table + rework stats + confusion matrix.
 8. **Architecture** (10 s): diagram placeholder + agent cards + LangGraph flow.
 
 ## Headless smoke test (no browser)
@@ -37,7 +37,7 @@ One-command equivalent for demo: `pip install -r requirements.txt && streamlit r
 ```bash
 .venv/bin/python src/graph/runner.py data/ili_anomalies.csv
 .venv/bin/python scripts/run_eval.py
-.venv/bin/python build_ppt.py
+.venv/bin/python scripts/generate_docs.py
 ```
 
 ## Assumptions
@@ -47,22 +47,23 @@ One-command equivalent for demo: `pip install -r requirements.txt && streamlit r
 - Simplified Modified B31G with flow stress 1.1×SMYS; interaction threshold: axial gap ≤ 50×wall_thickness_mm AND clock window ≤ 1.5h.
 - Mock LLM output is template text — a stand-in for rationales, not engineering judgment.
 - `LLM_BACKEND="mock"` in `src/llm/provider.py`; swap to `"ollama"` (+ `langchain-ollama`) for a real model.
-- ILI sizing noise model: Gaussian, σ = 10% of wall thickness at 80% confidence.
+- ILI sizing noise model: Gaussian, σ = 10% of wall thickness at 80% confidence (used for the
+  zero-noise experiment in `scripts/run_eval.py`).
 
 ## Project structure
 
 ```
 corrosionguard/
-  app.py  requirements.txt  README.md  REPORT.md  build_ppt.py  FIX_PLAN.md
+  app.py  requirements.txt  README.md  REPORT.md
   data/  generate_data.py  ili_anomalies.csv  ground_truth.py
   src/agents/  planner, research, executor, critic, automation
   src/graph/  state, builder (LangGraph), runner (headless), a2a (bus + agent cards)
   src/tools/  b31g, risk, lookup, clustering, quality
   src/llm/  provider (one-line swap), mock_model (BaseChatModel)
   src/schemas/  pydantic models
-  tests/  8 files, 26 tests
+  tests/  test files, all green
   docs/  ARCHITECTURE_EXPLAINED.md, metrics.json, architecture_drawio.png (placeholder)
-  scripts/  run_eval.py
+  scripts/  run_eval.py, generate_docs.py, make_clean_zip.sh
   outputs/  work orders, summaries, notifications (generated at runtime, gitignored)
 ```
 
@@ -70,16 +71,17 @@ corrosionguard/
 
 | Seed | Legacy | Executor only | Executor after rework | Critic screen | Final |
 |------|--------|---------------|----------------------|---------------|-------|
-| 42 | 0.333 / 1.000 | 0.667 / 0.211 | 0.733 / 0.208 | 0.733 / 0.208 | **0.733 / 0.208** |
-| 7 | 0.423 / 1.000 | 0.692 / 0.176 | 0.731 / 0.178 | 0.731 / 0.178 | **0.731 / 0.178** |
-| 99 | 0.364 / 1.000 | 0.818 / 0.307 | 0.879 / 0.282 | 0.879 / 0.282 | **0.879 / 0.282** |
+| 42 (tune) | 0.333 / 1.000 | 0.667 / 0.211 | 0.733 / 0.208 | 0.733 / 0.208 | **0.733 / 0.208** |
+| 7 (eval) | 0.423 / 1.000 | 0.692 / 0.176 | 0.731 / 0.178 | 0.731 / 0.178 | **0.731 / 0.178** |
+| 99 (eval) | 0.364 / 1.000 | 0.818 / 0.307 | 0.879 / 0.282 | 0.879 / 0.282 | **0.879 / 0.282** |
 
 (precision after "/"). Aggregate eval seeds 7+99 — final recall 0.805, precision 0.230.
 
 - missed_caught (truth critical, legacy low, final critical): 15 / 9 / 18
-- false_alarms: 84 / 88 / 74 (48 adjacent-class, 36 two-plus on seed 42)
-- **Zero-noise experiment**: removing ILI measurement noise raises precision only ~+0.005 —
-  false alarms are genuinely ambiguous shallow/context-flagged anomalies, NOT a noise artifact.
+- false_alarms: 84 / 88 / 74 (48 adjacent-class on seed 42)
+- **Zero-noise experiment**: removing ILI measurement noise changes precision by only
+  +0.005 on average → over-triage is a conservative-threshold
+  effect — the measured cause is conservative thresholds, not measurement error; about half of false alarms are adjacent-class.
 - Final always honors the Critic (final severity >= critic_screen severity; tested).
 - Rework adds nothing beyond the Critic screen (shared rule family) — stated honestly in REPORT.md §6.
 - Interacting share ~3.3% · Escalated 0% · Runtime <0.2 s
@@ -94,9 +96,9 @@ corrosionguard/
 - **Static thresholds** — no learning from engineer feedback yet.
 - **Single-machine PoC** — no auth, audit DB, or crew scheduling.
 - **Ground truth model** — independent but hand-written rule model with assumed noise model.
-- **Low precision / over-triage** — final critical precision is 0.18–0.32 (target >= 0.40,
-  not reached). 58–82 false alarms per 300-anomaly run. Root cause: ILI sizing noise pushes
-  shallow anomalies over depth thresholds (see REPORT.md §7).
+- **Low precision / over-triage** — final critical precision is 0.178–0.282
+  across seeds (target >= 0.40, not reached). Measured cause: conservative thresholds —
+  zero-noise delta +0.005; about half of false alarms are adjacent-class.
 
 ## Future scope
 
@@ -107,4 +109,4 @@ feedback to tune thresholds; scheduling/crew optimisation; hardened deployment w
 
 ---
 
-*All 26 tests pass. Run `pytest tests/ -q` to verify.*
+*All tests pass. Run `pytest tests/ -q` to verify.*

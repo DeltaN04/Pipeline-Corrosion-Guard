@@ -211,6 +211,10 @@ def main() -> None:
     out_path.write_text(json.dumps(metrics, indent=2))
     print(f"Wrote metrics to {out_path}")
 
+    # Regenerate README.md + REPORT.md so every number traces to metrics.json
+    from scripts.generate_docs import main as gen_docs
+    gen_docs()
+
     # Print summary table
     print("\n=== Final Metrics (critical = IMMEDIATE + 60_DAY) ===")
     print(f"{'Seed':>6} | {'System':>22} | {'Recall':>7} | {'Prec':>6} | {'ImmR':>6} | {'ImmP':>6} | {'Exact':>6} | {'W1':>6} | {'Over':>5} | {'Under':>5}")
