@@ -94,13 +94,6 @@ corrosionguard/
 
 ## Honest limitations
 
-- **Synthetic data** — not real operator ILI; no vendor formats, no GIS.
-- **Simplified B31G/ERF** — educational only, **never for real dig decisions.**
-- **LLM** writes template prose only (mock mode) — no real language understanding;
-  swap to a real model via `LLM_BACKEND` for real prose.
-- **Static thresholds** — no learning from engineer feedback yet.
-- **Single-machine PoC** — no auth, audit DB, or crew scheduling.
-- **Ground truth model** — independent but hand-written rule model with assumed noise model.
 - **Low precision / over-triage** — final critical precision is 0.178–0.282
   across seeds (target >= 0.40, not reached). Measured cause: conservative thresholds —
   zero-noise delta +0.005; about half of false alarms are adjacent-class.
