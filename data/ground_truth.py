@@ -157,12 +157,16 @@ def generate_true_anomalies(
     seed: int = 42,
     n_total: int = 300,
     apply_noise: bool = True,
+    paraphrased_notes: bool = False,
 ) -> pd.DataFrame:
     """Generate anomalies with TRUE state (hidden) and observed (noisy) columns.
     
     This is the main entry point for data generation.
     apply_noise=False yields noise-free observations (used for the measurement-noise
     experiment in scripts/run_eval.py).
+    paraphrased_notes=True replaces some severe notes with paraphrases that contain
+    NO trigger keywords (used for the LLM ablation in scripts/run_llm_ablation.py).
+    Ground truth does not depend on note text, so labels stay correct either way.
     """
     rng = np.random.default_rng(seed)
     rnd = random.Random(seed)
@@ -188,6 +192,15 @@ def generate_true_anomalies(
         "Sharp crack-like indication, deep with leak stain nearby.",
         "Severe gouge with undercut edges, active corrosion.",
         "Deep sharp anomaly, severe profile per analyst.",
+    ]
+    # Paraphrases that convey severity WITHOUT any SEVERE_KEYWORDS trigger.
+    # Ground truth still treats them as severe (see _truth_class note handling).
+    NOTES_SEVERE_PARAPHRASED = [
+        "Product weeping steadily at the weld toe.",
+        "Wall feels paper-thin near the seam.",
+        "Corrosion is spreading fast along the joint.",
+        "Thin section with active bubbling at the surface.",
+        "Local wall nearly penetrated at the girth weld.",
     ]
 
     SEV_ORDER = {"MONITOR": 0, "180_DAY": 1, "60_DAY": 2, "IMMEDIATE": 3}
@@ -321,7 +334,10 @@ def generate_true_anomalies(
         df.loc[idx, "is_planted_miss"] = True
         mechanism = rnd.choice(["growth_hca", "note_contradiction", "interaction", "data_entry"])
         if mechanism == "note_contradiction":
-            df.loc[idx, "inspector_note"] = rnd.choice(NOTES_SEVERE)
+            if paraphrased_notes and rnd.random() < 0.5:
+                df.loc[idx, "inspector_note"] = rnd.choice(NOTES_SEVERE_PARAPHRASED)
+            else:
+                df.loc[idx, "inspector_note"] = rnd.choice(NOTES_SEVERE)
             if df.loc[idx, "depth_pct"] > 62:
                 df.loc[idx, "depth_pct"] = round(float(rnd.uniform(48, 60)), 1)
         elif mechanism == "data_entry" and df.loc[idx, "depth_pct"] >= 50:

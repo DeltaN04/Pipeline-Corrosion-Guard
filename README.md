@@ -1,10 +1,12 @@
 # CorrosionGuard
 
 Agentic AI that triages pipeline corrosion ILI findings by risk — and catches missed critical defects.
-Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs, no internet at runtime.
+Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs.
+Offline by default; **optional real-LLM mode** via `LLM_BACKEND` (ollama / anthropic).
 
 > **Synthetic data only.** Engineering formulas are **simplified educational approximations**,
-> **NOT for real integrity decisions.** Runs fully offline (Mock LLM).
+> **NOT for real integrity decisions.** Runs fully offline by default (Mock LLM); optional real-LLM
+> mode via `LLM_BACKEND` (ollama / anthropic) — see README.
 
 ## Setup & run
 
@@ -16,6 +18,7 @@ python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt  # 
 .venv/bin/python -m streamlit run app.py      # launch UI  →  http://localhost:8501
 .venv/bin/python scripts/run_eval.py          # full evaluation → docs/metrics.json
 .venv/bin/python scripts/generate_docs.py     # regenerate README.md + REPORT.md from metrics.json
+.venv/bin/python build_ppt.py                 # regenerate presentation.pptx
 ```
 
 One-command equivalent for demo: `pip install -r requirements.txt && streamlit run app.py`
@@ -38,6 +41,7 @@ One-command equivalent for demo: `pip install -r requirements.txt && streamlit r
 .venv/bin/python src/graph/runner.py data/ili_anomalies.csv
 .venv/bin/python scripts/run_eval.py
 .venv/bin/python scripts/generate_docs.py
+.venv/bin/python build_ppt.py
 ```
 
 ## Assumptions
@@ -92,7 +96,8 @@ corrosionguard/
 
 - **Synthetic data** — not real operator ILI; no vendor formats, no GIS.
 - **Simplified B31G/ERF** — educational only, **never for real dig decisions.**
-- **Mock LLM** writes template prose only — no real language understanding.
+- **LLM** writes template prose only (mock mode) — no real language understanding;
+  swap to a real model via `LLM_BACKEND` for real prose.
 - **Static thresholds** — no learning from engineer feedback yet.
 - **Single-machine PoC** — no auth, audit DB, or crew scheduling.
 - **Ground truth model** — independent but hand-written rule model with assumed noise model.

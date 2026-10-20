@@ -82,7 +82,7 @@ def run_with_trace(anomalies, request: str, ground_truth: dict | None = None):
 
 # ================= Sidebar =================
 st.sidebar.title("🛢️ CorrosionGuard")
-st.sidebar.caption(f"LLM backend: **{LLM_BACKEND}** (mock, offline, deterministic)")
+st.sidebar.caption(f"LLM backend: **{LLM_BACKEND}**" + (" (mock, offline, deterministic)" if LLM_BACKEND == "mock" else " (real model)"))
 page = st.sidebar.radio("Navigate",
                         ["1 · Home / Problem", "2 · Data", "3 · Run Agents", "4 · Triage Results",
                          "5 · Critic Findings", "6 · Human Approval & Work Orders",

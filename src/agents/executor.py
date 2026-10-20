@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from src.tools import b31g, risk
-from src.llm.provider import llm_text
+from src.llm.provider import llm_text_or_mock
 
 
 def _clean_depth(depth: Any, constraints: Optional[Dict[str, Any]] = None) -> Any:
@@ -68,10 +68,11 @@ def execute(
                 cls = "60_DAY"
                 score, factors = risk.risk_score(50, 0.7, growth, bool(r.get("hca")))
                 score, factors = 65.0, ["quarantined_dirty_record"] + factors
-            rationale = llm_text(
+            rationale = llm_text_or_mock(
                 llm,
                 f"[RISK_RATIONALE]\nanomaly_id={aid}\ndepth_pct={r.get('depth_pct')}\nerf=n/a\nclass={cls}\n"
-                f"factors=quarantined_dirty_record\nsafe_pressure=n/a\nmaop={r.get('maop_mpa')}\nprojected=n/a\ngrowth={growth}"
+                f"factors=quarantined_dirty_record\nsafe_pressure=n/a\nmaop={r.get('maop_mpa')}\nprojected=n/a\ngrowth={growth}",
+                cls,
             )
             results.append({"anomaly_id": aid, "safe_pressure_mpa": None, "erf": None, "depth_pct_used": None,
                             "projected_depth_pct_2yr": None, "risk_score": score, "risk_factors": factors,
@@ -100,11 +101,12 @@ def execute(
         else:
             cls = risk.executor_triage(depth, e, growth, proj)
 
-        rationale = llm_text(
+        rationale = llm_text_or_mock(
             llm,
             f"[RISK_RATIONALE]\nanomaly_id={aid}\ndepth_pct={depth}\nerf={round(e, 3) if e is not None else 'n/a'}\n"
             f"class={cls}\nfactors={','.join(factors)}\nsafe_pressure={round(sp, 3) if sp else 'n/a'}\n"
-            f"maop={r.get('maop_mpa')}\nprojected={round(proj, 1) if proj is not None else 'n/a'}\ngrowth={growth}"
+            f"maop={r.get('maop_mpa')}\nprojected={round(proj, 1) if proj is not None else 'n/a'}\ngrowth={growth}",
+            cls,
         )
         trace = {"safe_pressure_tool": "b31g.safe_pressure_mpa", "erf_tool": "b31g.erf",
                  "projection_tool": "risk.project_depth", "score_tool": "risk.risk_score",

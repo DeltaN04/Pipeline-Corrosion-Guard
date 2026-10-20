@@ -5,10 +5,10 @@ from typing import Any, Dict, List
 
 import pandas as pd
 
-from src.tools import clustering, lookup, quality
+from src.tools import clustering, lookup, note_llm, quality
 
 
-def enrich(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def enrich(anomalies: List[Dict[str, Any]], llm=None) -> List[Dict[str, Any]]:
     df = pd.DataFrame(anomalies)
     interactions = clustering.find_interactions(df) if not df.empty else {}
     enriched: List[Dict[str, Any]] = []
@@ -29,9 +29,10 @@ def enrich(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         r["location_class_confirmed"] = r.get("location_class")
         feats = lookup.nearby_features(r.get("dist_weld_m"), bool(r.get("near_road")), bool(r.get("near_water")))
         r["near_weld"] = feats["near_weld"]
-        flags, severe = lookup.note_keywords(r.get("inspector_note"))
+        flags, severe, reason = note_llm.assess_note(llm, r.get("inspector_note"), r.get("depth_pct"))
         r["note_flags"] = flags
         r["note_severe"] = severe
+        r["note_reason"] = reason
         nbrs = interactions.get(str(r.get("anomaly_id")), [])
         r["interacting"] = len(nbrs) > 0
         r["interacting_with"] = nbrs

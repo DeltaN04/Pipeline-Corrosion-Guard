@@ -26,7 +26,7 @@ CorrosionGuard is an offline, agentic AI system that triages pipeline corrosion 
 | **A2A Message Bus** | In-process typed envelope bus; every inter-agent handoff publishes a message; full trace available in UI and logs | AgentMessage (trace_id, sender, receiver, intent, payload, timestamp) | Log of all messages | In-memory list |
 | **Tools Group** | Pure Python functions, no external deps, ready for MCP exposure | Varies per tool | Varies per tool | b31g (safe_pressure_mpa, erf), risk (risk_score, project_depth, executor_triage, executor_triage_conservative, full_screen_class), lookup (pipeline_metadata, growth_rate, hca_lookup, nearby_features, note_keywords), clustering (find_interactions), quality (validate_record) |
 | **Data Stores** | ILI anomalies CSV (input), HCA/pipeline metadata (static dict in lookup.py), outputs folder (work orders, monitoring, notifications, summaries) | — | — | pandas, csv, json |
-| **LLM Provider + MockChatModel** | One-line swap interface: `LLM_BACKEND = "mock"` → MockChatModel (deterministic templates), `"ollama"` → ChatOllama. MockChatModel parses marker tags ([PLAN], [RISK_RATIONALE], [CRITIC], [SUMMARY], [WORKORDER]) + key=value facts from prompt and fills deterministic templates. | Prompt with markers + facts | Deterministic rationale/summary/objection text | langchain_core.BaseChatModel |
+| **LLM Provider** | One-line swap interface: `LLM_BACKEND = "mock"` (default, offline) → MockChatModel (deterministic templates); `"ollama"` → ChatOllama; `"anthropic"` → ChatAnthropic. Real mode prepends a SystemMessage (facts come from deterministic tools; never change numbers/classes; 1-3 plain sentences) + per-tag hint; list-of-blocks content is normalised to a string; any exception falls back to the mock model. The LLM only writes prose and can only RAISE a note's severe flag (never lower), never touching numbers or severity classes. `LLM_RATIONALE_CLASSES` (default `IMMEDIATE,60_DAY`) caps real-mode prose calls to critical items. | Prompt with markers + facts | Rationale/summary/objection/note-assessment text | langchain_core.BaseChatModel |
 | **Pydantic Validation Layer** | Validates every agent output (TaskPlan, EnrichedAnomaly, RiskResult, CriticVerdict, WorkOrder) inside graph nodes. Failures → logged to state["validation_errors"], record quarantined with `_validation_quarantined=True`, processing continues. | Agent output dict | Validated dict or quarantine record | pydantic.BaseModel |
 
 ---
@@ -114,7 +114,7 @@ flowchart TD
         D1[(ILI CSV)]
         D2[(HCA / Pipeline Metadata)]
         D3[(Outputs Folder)]
-        LLM[LLM Provider\nMockChatModel ↔ Ollama]
+        LLM[LLM Provider\nMockChatModel ↔ Ollama/Anthropic]
         VAL[Pydantic Validation\nTaskPlan · EnrichedAnomaly\nRiskResult · CriticVerdict · WorkOrder]
     end
 

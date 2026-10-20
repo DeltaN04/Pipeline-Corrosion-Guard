@@ -87,7 +87,8 @@ def n_planner(state: CGState) -> Dict[str, Any]:
 
 
 def n_research(state: CGState) -> Dict[str, Any]:
-    enriched = research_agent.enrich(state.get("anomalies", []))
+    llm = get_chat_model()
+    enriched = research_agent.enrich(state.get("anomalies", []), llm)
     enriched_validated = _validate_outputs(EnrichedAnomaly, enriched, state, "research")
     b = _bus(state)
     b.send("research", "executor", "ENRICHED_BATCH",

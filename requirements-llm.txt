@@ -1,0 +1,4 @@
+# Optional real-LLM backends. Install with: pip install -r requirements-llm.txt
+# Only needed when LLM_BACKEND=ollama or LLM_BACKEND=anthropic (default is mock/offline).
+langchain-ollama
+langchain-anthropic

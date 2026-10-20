@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Tuple
 
 from src.tools import risk
-from src.llm.provider import llm_text
+from src.llm.provider import llm_text_or_mock
 
 SEV = {"MONITOR": 0, "180_DAY": 1, "60_DAY": 2, "IMMEDIATE": 3}
 
@@ -63,10 +63,11 @@ def review(
         else:
             verdict = "AGREE"
             final = ex_class
-        text = llm_text(
+        text = llm_text_or_mock(
             llm,
             f"[CRITIC]\nanomaly_id={aid}\nexecutor_class={ex_class}\nscreen_class={screen}\nlegacy={legacy}\n"
-            f"verdict={verdict}\nreasons={'; '.join(reasons)}"
+            f"verdict={verdict}\nreasons={'; '.join(reasons)}",
+            screen,
         )
         _ = text  # rationale embedded in verdict record below
         verdicts.append({"anomaly_id": aid, "executor_class": ex_class, "critic_screen_class": screen,

@@ -1,0 +1,68 @@
+{
+  "requested_backend": "mock",
+  "paraphrased_seeds": [
+    7,
+    99
+  ],
+  "runs": [
+    {
+      "seed": 7,
+      "backend": "mock(keyword-only)",
+      "paraphrased_notes": true,
+      "missed_caught": 11,
+      "false_alarms": 93,
+      "critical": {
+        "legacy": {
+          "recall": 0.346,
+          "precision": 1.0
+        },
+        "executor_only": {
+          "recall": 0.538,
+          "precision": 0.137
+        },
+        "executor_after_rework": {
+          "recall": 0.692,
+          "precision": 0.162
+        },
+        "critic_screen": {
+          "recall": 0.692,
+          "precision": 0.162
+        },
+        "final": {
+          "recall": 0.692,
+          "precision": 0.162
+        }
+      }
+    },
+    {
+      "seed": 99,
+      "backend": "mock(keyword-only)",
+      "paraphrased_notes": true,
+      "missed_caught": 16,
+      "false_alarms": 74,
+      "critical": {
+        "legacy": {
+          "recall": 0.394,
+          "precision": 1.0
+        },
+        "executor_only": {
+          "recall": 0.727,
+          "precision": 0.282
+        },
+        "executor_after_rework": {
+          "recall": 0.818,
+          "precision": 0.267
+        },
+        "critic_screen": {
+          "recall": 0.818,
+          "precision": 0.267
+        },
+        "final": {
+          "recall": 0.818,
+          "precision": 0.267
+        }
+      }
+    }
+  ],
+  "skip_reason": "LLM_BACKEND=mock: keyword-only baseline only. Set LLM_BACKEND=ollama or anthropic to also run keyword+LLM."
+}

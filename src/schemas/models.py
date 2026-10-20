@@ -38,6 +38,7 @@ class EnrichedAnomaly(Anomaly):
     interacting: bool = False
     interacting_with: List[str] = Field(default_factory=list)
     note_flags: List[str] = Field(default_factory=list)
+    note_reason: Optional[str] = None
     quality_flags: List[str] = Field(default_factory=list)
     hca_confirmed: Optional[bool] = None
     location_class_confirmed: Optional[int] = None

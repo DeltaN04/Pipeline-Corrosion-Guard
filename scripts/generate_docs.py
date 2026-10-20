@@ -54,7 +54,8 @@ def render_report(m: dict) -> str:
 
 > Agentic AI triage of pipeline corrosion inspection findings.
 > **All data synthetic** (seeded generator). Formulas **simplified educational
-> approximations — NOT for real integrity decisions.** Runs fully offline (Mock LLM).
+> approximations — NOT for real integrity decisions.** Runs fully offline by default (Mock LLM);
+> optional real-LLM mode via `LLM_BACKEND` (ollama / anthropic) — see README.
 
 *Report generated from `docs/metrics.json` — see `scripts/run_eval.py`.*
 
@@ -105,9 +106,12 @@ See `docs/ARCHITECTURE_EXPLAINED.md` (component table, edge table, decision poin
 
 ## 5. Implementation details
 
-- **Mock LLM** (`src/llm/mock_model.py`): subclasses LangChain `BaseChatModel`; parses marker
-  tags (`[PLAN]`, `[RISK_RATIONALE]`, `[CRITIC]`, `[SUMMARY]`, `[WORKORDER]`) plus `key=value`
-  facts → fixed deterministic templates. Agents use it only for prose; **never for numbers**.
+- **LLM** (`src/llm/provider.py` + `src/llm/mock_model.py`): `LLLM_BACKEND` swap —
+  `"mock"` (default, offline, deterministic templates), `"ollama"` → ChatOllama,
+  `"anthropic"` → ChatAnthropic. Real mode writes prose only; can only RAISE a note's
+  severe flag (never lower), never touches numbers or severity classes; fails soft to mock
+  on any exception. MockChatModel parses marker tags ([PLAN], [RISK_RATIONALE], [CRITIC],
+  [SUMMARY], [WORKORDER]) + key=value facts and fills deterministic templates.
 - **State** (`src/graph/state.py`): TypedDict with request, plan, anomalies, enriched, risk
   results, verdicts, iteration, objections, escalations, human decisions, outputs, A2A
   messages, metrics, validation_errors, rework_stats, ground_truth, ablation snapshots.
@@ -207,7 +211,9 @@ second opinion rather than a rule-family mirror.
   precision gap; about half of false alarms are adjacent-class. Over-triage is a deliberate
   safety trade: the system flags ~{s42['per_system']['final']['over_triage']}% of runs' anomalies higher
   than truth to keep missed criticals near zero.
-- **Mock LLM**: template prose only — no real language understanding.
+- **LLM**: writes prose only — never computes numbers or changes severity classes;
+  in real mode it can only RAISE a note's severe flag (never lower); fails soft to the
+  deterministic mock on any error. Mock mode is template-only.
 - **Rule-family mirror**: rework convergence is partly by design (see §6 caveat).
 - **Static thresholds**: no learning from engineer feedback yet.
 - **Single-machine PoC**: no auth, audit DB, or crew scheduling.
@@ -237,10 +243,12 @@ def render_readme(m: dict) -> str:
     return f"""# CorrosionGuard
 
 Agentic AI that triages pipeline corrosion ILI findings by risk — and catches missed critical defects.
-Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs, no internet at runtime.
+Offline PoC: **Streamlit + LangGraph + deterministic Mock LLM**. No paid APIs.
+Offline by default; **optional real-LLM mode** via `LLM_BACKEND` (ollama / anthropic).
 
 > **Synthetic data only.** Engineering formulas are **simplified educational approximations**,
-> **NOT for real integrity decisions.** Runs fully offline (Mock LLM).
+> **NOT for real integrity decisions.** Runs fully offline by default (Mock LLM); optional real-LLM
+> mode via `LLM_BACKEND` (ollama / anthropic) — see README.
 
 ## Setup & run
 
@@ -330,7 +338,8 @@ corrosionguard/
 
 - **Synthetic data** — not real operator ILI; no vendor formats, no GIS.
 - **Simplified B31G/ERF** — educational only, **never for real dig decisions.**
-- **Mock LLM** writes template prose only — no real language understanding.
+- **LLM** writes template prose only (mock mode) — no real language understanding;
+  swap to a real model via `LLM_BACKEND` for real prose.
 - **Static thresholds** — no learning from engineer feedback yet.
 - **Single-machine PoC** — no auth, audit DB, or crew scheduling.
 - **Ground truth model** — independent but hand-written rule model with assumed noise model.
