@@ -95,7 +95,7 @@ corrosionguard/
 ## Honest limitations
 
 - **Low precision / over-triage** final critical precision is 0.178–0.282
-  across seeds (target >= 0.40, not reached). Measured cause: conservative thresholds —
+  across seeds (target >= 0.40, not reached). Measured cause: conservative thresholds
   zero-noise delta +0.005; about half of false alarms are adjacent-class.
 
 ## Future scope
